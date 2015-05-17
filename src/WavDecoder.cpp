@@ -1,0 +1,185 @@
+#pragma comment(user, "license")
+
+#include "WavDecoder.h"
+
+using namespace nqr;
+
+//////////////////////
+// Public Interface //
+//////////////////////
+
+int WavDecoder::LoadFromPath(AudioData * data, const std::string & path)
+{
+    auto fileBuffer = nqr::ReadFile(path);
+    return LoadFromBuffer(data, fileBuffer.buffer);
+}
+
+int WavDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
+{
+    //////////////////////
+    // Read RIFF Header //
+    //////////////////////
+    
+    //@todo swap methods for rifx
+    
+    RiffChunkHeader riffHeader = {};
+    memcpy(&riffHeader, memory.data(), 12);
+    
+    // Files should be 2-byte aligned
+    //@tofix: enforce this
+    bool usePaddingShort = ((riffHeader.file_size % sizeof(uint16_t)) == 1) ? true : false;
+    
+    // Check RIFF
+    if (riffHeader.id_riff != GenerateChunkCode('R', 'I', 'F', 'F'))
+    {
+        // Check RIFX + FFIR
+        if (riffHeader.id_riff == GenerateChunkCode('R', 'I', 'F', 'X') || riffHeader.id_riff == GenerateChunkCode('F', 'F', 'I', 'R'))
+        {
+            // We're not RIFF, and we don't match RIFX or FFIR either
+            throw std::runtime_error("libnyquist doesn't support big endian files");
+        }
+        else
+        {
+            throw std::runtime_error("bad RIFF/RIFX/FFIR file header");
+        }
+    }
+    
+    if (riffHeader.id_wave != GenerateChunkCode('W', 'A', 'V', 'E')) throw std::runtime_error("bad WAVE header");
+    
+    if ((memory.size() - riffHeader.file_size) != sizeof(uint32_t) * 2)
+    {
+        throw std::runtime_error("declared size of file less than file size"); //@todo warning instead of runtime_error
+    }
+    
+    //////////////////////
+    // Read WAVE Header //
+    //////////////////////
+    
+    auto WaveChunkInfo = ScanForChunk(memory, GenerateChunkCode('f', 'm', 't', ' '));
+    
+    if (WaveChunkInfo.offset == 0) throw std::runtime_error("couldn't find fmt chunk");
+    
+    assert(WaveChunkInfo.size == 16 || WaveChunkInfo.size == 18 || WaveChunkInfo.size == 40);
+    
+    WaveChunkHeader wavHeader = {};
+    memcpy(&wavHeader, memory.data() + WaveChunkInfo.offset, sizeof(WaveChunkHeader));
+    
+    if (wavHeader.chunk_size < 16)
+        throw std::runtime_error("format chunk too small");
+        
+    //@todo validate wav header (sane sample rate, bit depth, etc)
+    
+    data->channelCount = wavHeader.channel_count;
+    data->sampleRate = wavHeader.sample_rate;
+    data->frameSize = wavHeader.frame_size;
+    
+    std::cout << wavHeader << std::endl;
+    
+    bool scanForFact = false;
+    bool grabExtensibleData = false;
+    
+    if (wavHeader.format == WaveFormatCode::FORMAT_PCM)
+    {
+        std::cout << "[format id] pcm" << std::endl;
+    }
+    else if (wavHeader.format == WaveFormatCode::FORMAT_IEEE)
+    {
+        std::cout << "[format id] ieee" << std::endl;
+        scanForFact = true;
+    }
+    else if (wavHeader.format == WaveFormatCode::FORMAT_EXT)
+    {
+        // Used when (1) PCM data has more than 16 bits; (2) channels > 2; (3) bits/sample !== container size; (4) channel/speaker mapping specified
+        std::cout << "[format id] extended" << std::endl;
+        scanForFact = true;
+        grabExtensibleData = true;
+    }
+    else if (wavHeader.format ==  WaveFormatCode::FORMAT_UNKNOWN)
+    {
+        throw std::runtime_error("unknown wave format");
+    }
+    
+    ////////////////////////////
+    // Read Additional Chunks //
+    ////////////////////////////
+    
+    if (scanForFact)
+    {
+        auto FactChunkInfo = ScanForChunk(memory, GenerateChunkCode('f', 'a', 'c', 't'));
+        FactChunk factChunk = {};
+        
+        if (FactChunkInfo.size)
+        {
+            memcpy(&factChunk, memory.data() + FactChunkInfo.offset, sizeof(FactChunk));
+        }
+    }
+    
+    if (grabExtensibleData)
+    {
+        ExtensibleData extData = {};
+        memcpy(&extData, memory.data() + WaveChunkInfo.offset + sizeof(WaveChunkHeader), sizeof(ExtensibleData));
+        // extData can be compared against the multi-channel masks defined in the header
+        // eg. extData.channel_mask == SPEAKER_5POINT1
+    }
+    
+     //@todo smpl chunk could be useful
+    
+    /////////////////////
+    // Read Bext Chunk //
+    /////////////////////
+    
+    auto BextChunkInfo = ScanForChunk(memory, GenerateChunkCode('b', 'e', 'x', 't'));
+    BextChunk bextChunk = {};
+    
+    if (BextChunkInfo.size)
+    {
+        memcpy(&bextChunk, memory.data() + BextChunkInfo.offset, sizeof(BextChunk));
+    }
+    
+    /////////////////////
+    // Read DATA Chunk //
+    /////////////////////
+    
+    auto DataChunkInfo = ScanForChunk(memory, GenerateChunkCode('d', 'a', 't', 'a'));
+    
+    if (DataChunkInfo.offset == 0) throw std::runtime_error("couldn't find data chunk");
+    
+    DataChunkInfo.offset += 8; // ignore the header and size fields (2 uint32s)
+    
+    data->lengthSeconds = ((float) DataChunkInfo.size / (float) wavHeader.sample_rate) / wavHeader.frame_size;
+    
+    auto bit_depth = wavHeader.bit_depth;
+    
+    size_t totalSamples = (DataChunkInfo.size / wavHeader.frame_size) * wavHeader.channel_count;
+    data->samples.resize(totalSamples);
+
+    PCMFormat internalFmt = PCMFormat::PCM_END;
+
+	switch (bit_depth)
+	{
+	case 8:
+		internalFmt = PCMFormat::PCM_U8;
+		break;
+	case 16:
+		internalFmt = PCMFormat::PCM_16;
+		break;
+	case 24:
+		internalFmt = PCMFormat::PCM_24;
+		break;
+	case 32:
+		internalFmt = (wavHeader.format == WaveFormatCode::FORMAT_IEEE) ? PCMFormat::PCM_FLT : PCMFormat::PCM_32;
+		break;
+	case 64:
+		internalFmt = (wavHeader.format == WaveFormatCode::FORMAT_IEEE) ? PCMFormat::PCM_DBL : PCMFormat::PCM_64;
+		break;
+	}
+
+	ConvertToFloat32(data->samples.data(), memory.data() + DataChunkInfo.offset, totalSamples, internalFmt);
+    
+    return IOError::NoError;
+}
+
+std::vector<std::string> WavDecoder::GetSupportedFileExtensions()
+{
+    return {"wav", "wave"};
+}
