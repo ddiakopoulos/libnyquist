@@ -2,8 +2,8 @@
 #pragma comment(lib, "dsound.lib")
 #endif
 
-#include "AudioDevice.h"
-#include "AudioDecoder.h"
+#include "libnyquist/AudioDevice.h"
+#include "libnyquist/AudioDecoder.h"
 
 #include <thread>
 

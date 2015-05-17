@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "08B91D251AC26FC100335131"
-               BuildableName = "libnyquist.a"
+               BuildableName = "libnyquist"
                BlueprintName = "libnyquist"
                ReferencedContainer = "container:libnyquist.xcodeproj">
             </BuildableReference>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "08B91D251AC26FC100335131"
-            BuildableName = "libnyquist.a"
-            BlueprintName = "libnyquist"
-            ReferencedContainer = "container:libnyquist.xcodeproj">
+            BuildableName = "nyquist-example"
+            BlueprintName = "nyquist-example"
+            ReferencedContainer = "container:libnyquist-example.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -44,20 +44,21 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "YES"
-      customWorkingDirectory = "$(PROJECT_DIR)"
+      customWorkingDirectory = "$(PROJECT_DIR)/../"
       buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "08B91D251AC26FC100335131"
-            BuildableName = "libnyquist.a"
-            BlueprintName = "libnyquist"
-            ReferencedContainer = "container:libnyquist.xcodeproj">
+            BuildableName = "nyquist-example"
+            BlueprintName = "nyquist-example"
+            ReferencedContainer = "container:libnyquist-example.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -72,7 +73,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "08B91D251AC26FC100335131"
-            BuildableName = "libnyquist.a"
+            BuildableName = "libnyquist"
             BlueprintName = "libnyquist"
             ReferencedContainer = "container:libnyquist.xcodeproj">
          </BuildableReference>
