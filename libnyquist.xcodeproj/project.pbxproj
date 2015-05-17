@@ -10,6 +10,7 @@
 		0804D13F1AE69F0100F4B1FD /* OpusDependencies.c in Sources */ = {isa = PBXBuildFile; fileRef = 0804D13E1AE69F0100F4B1FD /* OpusDependencies.c */; };
 		0804D1451AE6BA5100F4B1FD /* celt_decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 0804D1431AE6BA5100F4B1FD /* celt_decoder.c */; };
 		0804D1461AE6BA5100F4B1FD /* celt_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 0804D1441AE6BA5100F4B1FD /* celt_encoder.c */; };
+		080A58581B0866F600302850 /* RiffUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 080A58571B0866F600302850 /* RiffUtils.cpp */; };
 		081FFB191ADF803800673073 /* FlacDependencies.c in Sources */ = {isa = PBXBuildFile; fileRef = 081FFB181ADF803800673073 /* FlacDependencies.c */; };
 		086DADAD1AE029860031F793 /* VorbisDependencies.c in Sources */ = {isa = PBXBuildFile; fileRef = 086DADAB1ADF9DF30031F793 /* VorbisDependencies.c */; };
 		08894F291AEAA5D7007AAF90 /* bits.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F1E1AEAA5D7007AAF90 /* bits.c */; };
@@ -56,6 +57,8 @@
 		0804D13E1AE69F0100F4B1FD /* OpusDependencies.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = OpusDependencies.c; path = src/OpusDependencies.c; sourceTree = SOURCE_ROOT; };
 		0804D1431AE6BA5100F4B1FD /* celt_decoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = celt_decoder.c; path = third_party/opus/celt/celt_decoder.c; sourceTree = SOURCE_ROOT; };
 		0804D1441AE6BA5100F4B1FD /* celt_encoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = celt_encoder.c; path = third_party/opus/celt/celt_encoder.c; sourceTree = SOURCE_ROOT; };
+		080A58561B0866AA00302850 /* RiffUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RiffUtils.h; path = include/libnyquist/RiffUtils.h; sourceTree = SOURCE_ROOT; };
+		080A58571B0866F600302850 /* RiffUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RiffUtils.cpp; path = src/RiffUtils.cpp; sourceTree = SOURCE_ROOT; };
 		081FFB181ADF803800673073 /* FlacDependencies.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = FlacDependencies.c; path = src/FlacDependencies.c; sourceTree = SOURCE_ROOT; };
 		086DADAB1ADF9DF30031F793 /* VorbisDependencies.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = VorbisDependencies.c; path = src/VorbisDependencies.c; sourceTree = SOURCE_ROOT; };
 		08894F1E1AEAA5D7007AAF90 /* bits.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bits.c; path = third_party/wavpack/src/bits.c; sourceTree = SOURCE_ROOT; };
@@ -221,6 +224,7 @@
 				08B91D881AC73B8000335131 /* FlacDecoder.h */,
 				08B91D891AC73B8000335131 /* VorbisDecoder.h */,
 				08B91D8A1AC73B8000335131 /* OpusDecoder.h */,
+				080A58561B0866AA00302850 /* RiffUtils.h */,
 				08B91D8B1AC73B8000335131 /* PostProcess.h */,
 				08B91D8C1AC73B8000335131 /* RingBuffer.h */,
 				08B91D8E1AC73B8000335131 /* WavDecoder.h */,
@@ -237,6 +241,7 @@
 				08B91D911AC73B8A00335131 /* AudioDecoder.cpp */,
 				08B91D921AC73B8A00335131 /* AudioDevice.cpp */,
 				08B91D931AC73B8A00335131 /* Common.cpp */,
+				080A58571B0866F600302850 /* RiffUtils.cpp */,
 				08B91D941AC73B8A00335131 /* FlacDecoder.cpp */,
 				08B91D951AC73B8A00335131 /* Main.cpp */,
 				08B91D961AC73B8A00335131 /* VorbisDecoder.cpp */,
@@ -321,6 +326,7 @@
 				08B91DA21AC73B8A00335131 /* WavDecoder.cpp in Sources */,
 				08B91D9A1AC73B8A00335131 /* CafDecoder.cpp in Sources */,
 				08894F2F1AEAA5D7007AAF90 /* tags.c in Sources */,
+				080A58581B0866F600302850 /* RiffUtils.cpp in Sources */,
 				08B91DA11AC73B8A00335131 /* OpusDecoder.cpp in Sources */,
 				08894F2D1AEAA5D7007AAF90 /* metadata.c in Sources */,
 				08B91D9E1AC73B8A00335131 /* FlacDecoder.cpp in Sources */,
