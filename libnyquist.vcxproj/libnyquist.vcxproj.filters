@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="$(SolutionDir)..\src\AudioDecoder.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SolutionDir)..\src\AudioDevice.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SolutionDir)..\src\Common.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SolutionDir)..\src\FlacDecoder.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SolutionDir)..\src\OpusDecoder.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SolutionDir)..\src\WavDecoder.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SolutionDir)..\src\WavPackDecoder.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\CafDecoder.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SolutionDir)..\third_party\rtaudio\RtAudio.cpp">
+      <Filter>third_party\rtaudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\wavpack\src\bits.c">
+      <Filter>third_party\wavpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\wavpack\src\extra1.c">
+      <Filter>third_party\wavpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\wavpack\src\extra2.c">
+      <Filter>third_party\wavpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\wavpack\src\float.c">
+      <Filter>third_party\wavpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\wavpack\src\metadata.c">
+      <Filter>third_party\wavpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\wavpack\src\pack.c">
+      <Filter>third_party\wavpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\wavpack\src\tags.c">
+      <Filter>third_party\wavpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\wavpack\src\unpack.c">
+      <Filter>third_party\wavpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\wavpack\src\unpack3.c">
+      <Filter>third_party\wavpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\wavpack\src\words.c">
+      <Filter>third_party\wavpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\wavpack\src\wputils.c">
+      <Filter>third_party\wavpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\FlacDependencies.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SolutionDir)..\src\Main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\VorbisDecoder.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\VorbisDependencies.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\opus\celt\celt_decoder.c">
+      <Filter>third_party\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\opus\celt\celt_encoder.c">
+      <Filter>third_party\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\OpusDependencies.c">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\AudioDecoder.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\AudioDevice.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\Common.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\FlacDecoder.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\OpusDecoder.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\RingBuffer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\PostProcess.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\WavDecoder.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\WavPackDecoder.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\Dither.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\libnyquist\CafDecoder.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SolutionDir)..\third_party\rtaudio\RtAudio.h">
+      <Filter>third_party\rtaudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\libnyquist\VorbisDecoder.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{f4ea8340-b8ea-4a42-bafb-6cb461e7a2f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{a18b19d5-5cd3-49fc-beec-ed17d8e81d6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party">
+      <UniqueIdentifier>{33572766-230e-4a7f-8c06-885c4780c1d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\rtaudio">
+      <UniqueIdentifier>{4d1d563a-f52c-4a30-b1cb-11c6a9da8fbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\wavpack">
+      <UniqueIdentifier>{d40a1038-d11f-45dc-820b-e32743336269}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\celt">
+      <UniqueIdentifier>{d38860a7-b4e5-4a1e-99a5-c4eac7e1c013}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

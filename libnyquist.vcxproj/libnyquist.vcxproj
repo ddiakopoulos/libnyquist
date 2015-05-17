@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(SolutionDir)..\third_party\rtaudio\RtAudio.cpp" />
+    <ClCompile Include="$(SolutionDir)..\src\AudioDecoder.cpp" />
+    <ClCompile Include="$(SolutionDir)..\src\Common.cpp" />
+    <ClCompile Include="$(SolutionDir)..\src\FlacDecoder.cpp" />
+    <ClCompile Include="$(SolutionDir)..\src\Main.cpp" />
+    <ClCompile Include="$(SolutionDir)..\src\OpusDecoder.cpp" />
+    <ClCompile Include="$(SolutionDir)..\src\WavDecoder.cpp" />
+    <ClCompile Include="$(SolutionDir)..\src\AudioDevice.cpp" />
+    <ClCompile Include="$(SolutionDir)..\src\WavPackDecoder.cpp" />
+    <ClCompile Include="..\src\CafDecoder.cpp" />
+    <ClCompile Include="..\src\FlacDependencies.c" />
+    <ClCompile Include="..\src\OpusDependencies.c" />
+    <ClCompile Include="..\src\VorbisDecoder.cpp" />
+    <ClCompile Include="..\src\VorbisDependencies.c" />
+    <ClCompile Include="..\third_party\opus\celt\celt_decoder.c" />
+    <ClCompile Include="..\third_party\opus\celt\celt_encoder.c" />
+    <ClCompile Include="..\third_party\wavpack\src\bits.c" />
+    <ClCompile Include="..\third_party\wavpack\src\extra1.c" />
+    <ClCompile Include="..\third_party\wavpack\src\extra2.c" />
+    <ClCompile Include="..\third_party\wavpack\src\float.c" />
+    <ClCompile Include="..\third_party\wavpack\src\metadata.c" />
+    <ClCompile Include="..\third_party\wavpack\src\pack.c" />
+    <ClCompile Include="..\third_party\wavpack\src\tags.c" />
+    <ClCompile Include="..\third_party\wavpack\src\unpack.c" />
+    <ClCompile Include="..\third_party\wavpack\src\unpack3.c" />
+    <ClCompile Include="..\third_party\wavpack\src\words.c" />
+    <ClCompile Include="..\third_party\wavpack\src\wputils.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(SolutionDir)..\third_party\rtaudio\RtAudio.h" />
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\AudioDecoder.h" />
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\FlacDecoder.h" />
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\OpusDecoder.h" />
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\PostProcess.h" />
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\WavDecoder.h" />
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\AudioDevice.h" />
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\Common.h" />
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\Dither.h" />
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\RingBuffer.h" />
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\WavPackDecoder.h" />
+    <ClInclude Include="..\include\libnyquist\CafDecoder.h" />
+    <ClInclude Include="..\include\libnyquist\VorbisDecoder.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0EEC3739-F60A-4B90-8B75-9E1AFF28106A}</ProjectGuid>
+    <RootNamespace>libaudiodata</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;__WINDOWS_DS__;D_SCL_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNING;WIN32;_WIN32;USE_ALLOCA;OPUS_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\third_party\;$(SolutionDir)..\include\libnyquist\;$(SolutionDir)..\third_party\libvorbis\include;$(SolutionDir)..\third_party\libogg\include;$(SolutionDir)..\third_party\wavpack\include;$(SolutionDir)..\third_party\flac\src\include;$(SolutionDir)..\third_party\opus\celt;$(SolutionDir)..\third_party\opus\libopus\include;$(SolutionDir)..\third_party\opus\libopus\src;$(SolutionDir)..\third_party\opus\opusfile\include;$(SolutionDir)..\third_party\opus\opusfile\src;$(SolutionDir)..\third_party\opus\opusfile\src\include;$(SolutionDir)..\third_party\opus\silk;$(SolutionDir)..\third_party\opus\silk\float;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;__WINDOWS_DS__;D_SCL_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNING;WIN32;_WIN32;USE_ALLOCA;OPUS_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\third_party\;$(SolutionDir)..\include\libnyquist\;$(SolutionDir)..\third_party\libvorbis\include;$(SolutionDir)..\third_party\libogg\include;$(SolutionDir)..\third_party\wavpack\include;$(SolutionDir)..\third_party\flac\src\include;$(SolutionDir)..\third_party\opus\celt;$(SolutionDir)..\third_party\opus\libopus\include;$(SolutionDir)..\third_party\opus\libopus\src;$(SolutionDir)..\third_party\opus\opusfile\include;$(SolutionDir)..\third_party\opus\opusfile\src;$(SolutionDir)..\third_party\opus\opusfile\src\include;$(SolutionDir)..\third_party\opus\silk;$(SolutionDir)..\third_party\opus\silk\float;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
