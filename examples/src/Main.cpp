@@ -4,6 +4,7 @@
 
 #include "libnyquist/AudioDevice.h"
 #include "libnyquist/AudioDecoder.h"
+#include "libnyquist/WavEncoder.h"
 
 #include <thread>
 
@@ -20,10 +21,14 @@ int main()
 	AudioData * fileData = new AudioData();
 	
 	NyquistIO loader;
+    
+    WavEncoder encoder;
 	
 	try
 	{
-		
+        // Circular libnyquist testing!
+        //auto result = loader.Load(fileData, "encoded.wav");
+        
 		//auto result = loader.Load(fileData, "test_data/1ch/44100/8/test.wav");
 		//auto result = loader.Load(fileData, "test_data/1ch/44100/16/test.wav");
 		//auto result = loader.Load(fileData, "test_data/1ch/44100/24/test.wav");
@@ -33,7 +38,7 @@ int main()
 		//auto result = loader.Load(fileData, "test_data/2ch/44100/8/test.wav");
 		//auto result = loader.Load(fileData, "test_data/2ch/44100/16/test.wav");
 		//auto result = loader.Load(fileData, "test_data/2ch/44100/24/test.wav");
-		auto result = loader.Load(fileData, "test_data/2ch/44100/32/test.wav");
+		//auto result = loader.Load(fileData, "test_data/2ch/44100/32/test.wav");
 		//auto result = loader.Load(fileData, "test_data/2ch/44100/64/test.wav");
 		
 		//auto result = loader.Load(fileData, "test_data/ad_hoc/6_channel_44k_16b.wav");
@@ -42,7 +47,7 @@ int main()
 		//auto result = loader.Load(fileData, "test_data/ad_hoc/TestLaugh_44k.ogg");
 		//auto result = loader.Load(fileData, "test_data/ad_hoc/TestBeat.ogg");
 		//auto result = loader.Load(fileData, "test_data/ad_hoc/TestBeatMono.ogg");
-		//auto result = loader.Load(fileData, "test_data/ad_hoc/BlockWoosh_Stereo.ogg");
+		auto result = loader.Load(fileData, "test_data/ad_hoc/BlockWoosh_Stereo.ogg");
 		
 		//auto result = loader.Load(fileData, "test_data/ad_hoc/KittyPurr8_Stereo_Dithered.flac");
 		//auto result = loader.Load(fileData, "test_data/ad_hoc/KittyPurr16_Stereo.flac");
@@ -91,6 +96,9 @@ int main()
 		std::cout << "Playing for: " << fileData->lengthSeconds << " seconds..." << std::endl;
 		myDevice.Play(fileData->samples);
 	}
-
+    
+    // Test wav file encoder 
+    encoder.WriteFile({2, 44100, 32, PCM_FLT}, fileData->samples, "encoded.wav");
+        
 	return 0;
 }

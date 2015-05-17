@@ -23,62 +23,32 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef RIFF_UTILS_H
-#define RIFF_UTILS_H
+#ifndef WAVE_ENCODER_H
+#define WAVE_ENCODER_H
 
 #include "Common.h"
-#include "WavDecoder.h"
+#include "WavDecoder.h" // For reference structs
+#include "RiffUtils.h"
 
 namespace nqr
 {
-    
-/////////////////////
-// Chunk utilities //
-/////////////////////
 
-struct EncoderParams
+// A simplistic encoder that takes a blob of data, conforms it to the user's
+// EncoderParams preference, and writes to disk. Be warned, does not support resampling!
+// @todo support dithering, samplerate conversion, etc.
+class WavEncoder
 {
-    int channels;
-    int samplerate;
-    int bit_depth;
-    PCMFormat fmt;
+    
+public:
+    
+    WavEncoder();
+    ~WavEncoder();
+    
+    // Assume data adheres to EncoderParams, except for bit depth and fmt
+    void WriteFile(const EncoderParams p, const std::vector<float> & data, const std::string & path);
+    
 };
-
-struct ChunkHeaderInfo
-{
-    uint32_t offset;			// Byte offset into chunk
-    uint32_t size;				// Size of the chunk in bytes
-};
-
-inline uint32_t GenerateChunkCode(uint8_t a, uint8_t b, uint8_t c, uint8_t d)
-{
-    #ifdef ARCH_CPU_LITTLE_ENDIAN
-        return ((uint32_t) ((a) | ((b) << 8) | ((c) << 16) | (((uint32_t) (d)) << 24)));
-    #else
-        return ((uint32_t) ((((uint32_t) (a)) << 24) | ((b) << 16) | ((c) << 8) | (d)));
-    #endif
-}
     
-inline char * GenerateChunkCodeChar(uint8_t a, uint8_t b, uint8_t c, uint8_t d)
-{
-auto chunk = GenerateChunkCode(a, b, c, d);
-    
-   char * outArr = new char[4];
-    
-    uint32_t t = 0x000000FF;
-    
-    for(size_t i = 0; i < 4; i++)
-    {
-        outArr[i] = chunk & t;
-        chunk >>= 8;
-    }
-    return outArr;
-}
-
-ChunkHeaderInfo ScanForChunk(const std::vector<uint8_t> & fileData, uint32_t chunkMarker);
-    
-WaveChunkHeader MakeWaveHeader(const EncoderParams param);
-
 } // end namespace nqr
 
 #endif

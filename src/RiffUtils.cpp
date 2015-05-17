@@ -46,3 +46,21 @@ ChunkHeaderInfo nqr::ScanForChunk(const std::vector<uint8_t> & fileData, uint32_
     }
     return {0, 0};
 };
+
+
+
+WaveChunkHeader nqr::MakeWaveHeader(const EncoderParams param)
+{
+    WaveChunkHeader header;
+    
+    header.fmt_id = GenerateChunkCode('f', 'm', 't', ' ');
+    header.chunk_size = 16;
+    header.format = (param.fmt <= PCMFormat::PCM_32) ? WaveFormatCode::FORMAT_PCM : WaveFormatCode::FORMAT_IEEE;
+    header.channel_count = param.channels;
+    header.sample_rate = param.samplerate;
+    header.data_rate = param.samplerate * param.channels * (param.bit_depth / 8);
+    header.frame_size = param.channels * (param.bit_depth / 8);
+    header.bit_depth = param.bit_depth;
+    
+    return header;
+}

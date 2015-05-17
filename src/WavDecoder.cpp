@@ -70,7 +70,8 @@ int WavDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & me
     
     if (riffHeader.id_wave != GenerateChunkCode('W', 'A', 'V', 'E')) throw std::runtime_error("bad WAVE header");
     
-    if ((memory.size() - riffHeader.file_size) != sizeof(uint32_t) * 2)
+    auto expectedSize = (memory.size() - riffHeader.file_size);
+    if (expectedSize != sizeof(uint32_t) * 2)
     {
         throw std::runtime_error("declared size of file less than file size"); //@todo warning instead of runtime_error
     }

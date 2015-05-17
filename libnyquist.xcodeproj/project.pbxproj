@@ -12,6 +12,7 @@
 		0804D1461AE6BA5100F4B1FD /* celt_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 0804D1441AE6BA5100F4B1FD /* celt_encoder.c */; };
 		080A58581B0866F600302850 /* RiffUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 080A58571B0866F600302850 /* RiffUtils.cpp */; };
 		081FFB191ADF803800673073 /* FlacDependencies.c in Sources */ = {isa = PBXBuildFile; fileRef = 081FFB181ADF803800673073 /* FlacDependencies.c */; };
+		083DB3F31B091C1100FB0661 /* WavEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 083DB3F21B091C1100FB0661 /* WavEncoder.cpp */; };
 		086DADAD1AE029860031F793 /* VorbisDependencies.c in Sources */ = {isa = PBXBuildFile; fileRef = 086DADAB1ADF9DF30031F793 /* VorbisDependencies.c */; };
 		08894F291AEAA5D7007AAF90 /* bits.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F1E1AEAA5D7007AAF90 /* bits.c */; };
 		08894F2A1AEAA5D7007AAF90 /* extra1.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F1F1AEAA5D7007AAF90 /* extra1.c */; };
@@ -62,6 +63,8 @@
 		080A586C1B086D9100302850 /* libnyquistPriv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libnyquistPriv.h; sourceTree = "<group>"; };
 		080A586E1B086D9100302850 /* libnyquist.cp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = libnyquist.cp; sourceTree = "<group>"; };
 		081FFB181ADF803800673073 /* FlacDependencies.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = FlacDependencies.c; path = src/FlacDependencies.c; sourceTree = SOURCE_ROOT; };
+		083DB3F21B091C1100FB0661 /* WavEncoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WavEncoder.cpp; path = src/WavEncoder.cpp; sourceTree = SOURCE_ROOT; };
+		083DB3F41B091C1E00FB0661 /* WavEncoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WavEncoder.h; path = include/libnyquist/WavEncoder.h; sourceTree = SOURCE_ROOT; };
 		086DADAB1ADF9DF30031F793 /* VorbisDependencies.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = VorbisDependencies.c; path = src/VorbisDependencies.c; sourceTree = SOURCE_ROOT; };
 		08894F1E1AEAA5D7007AAF90 /* bits.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bits.c; path = third_party/wavpack/src/bits.c; sourceTree = SOURCE_ROOT; };
 		08894F1F1AEAA5D7007AAF90 /* extra1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = extra1.c; path = third_party/wavpack/src/extra1.c; sourceTree = SOURCE_ROOT; };
@@ -247,6 +250,7 @@
 				08B91D881AC73B8000335131 /* FlacDecoder.h */,
 				08B91D891AC73B8000335131 /* VorbisDecoder.h */,
 				08B91D8A1AC73B8000335131 /* OpusDecoder.h */,
+				083DB3F41B091C1E00FB0661 /* WavEncoder.h */,
 				08B91D8E1AC73B8000335131 /* WavDecoder.h */,
 				08B91D8F1AC73B8000335131 /* WavPackDecoder.h */,
 			);
@@ -265,6 +269,7 @@
 				08B91D941AC73B8A00335131 /* FlacDecoder.cpp */,
 				08B91D961AC73B8A00335131 /* VorbisDecoder.cpp */,
 				08B91D971AC73B8A00335131 /* OpusDecoder.cpp */,
+				083DB3F21B091C1100FB0661 /* WavEncoder.cpp */,
 				08B91D981AC73B8A00335131 /* WavDecoder.cpp */,
 				08B91D991AC73B8A00335131 /* WavPackDecoder.cpp */,
 			);
@@ -328,6 +333,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				08894F2C1AEAA5D7007AAF90 /* float.c in Sources */,
+				083DB3F31B091C1100FB0661 /* WavEncoder.cpp in Sources */,
 				08894F2E1AEAA5D7007AAF90 /* pack.c in Sources */,
 				08894F2A1AEAA5D7007AAF90 /* extra1.c in Sources */,
 				08894F321AEAA5D7007AAF90 /* words.c in Sources */,

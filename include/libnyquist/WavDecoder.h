@@ -56,7 +56,7 @@ struct WaveChunkHeader
 	uint16_t channel_count;		// Num interleaved channels
 	uint32_t sample_rate;		// SR
 	uint32_t data_rate;			// Data rate
-	uint16_t frame_size;		// 1 frame = channels * bits per sample
+	uint16_t frame_size;		// 1 frame = channels * bits per sample (also known as block align)
 	uint16_t bit_depth;			// Bits per sample	
 };
 
