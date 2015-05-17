@@ -68,7 +68,7 @@
 		08B91D1D1AC26FC100335131 = {
 			isa = PBXGroup;
 			children = (
-				08B91D281AC26FC100335131 /* libnyquist */,
+				08B91D281AC26FC100335131 /* Example */,
 				08B91D801AC73B3B00335131 /* Frameworks */,
 				08B91D271AC26FC100335131 /* Products */,
 			);
@@ -82,12 +82,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		08B91D281AC26FC100335131 /* libnyquist */ = {
+		08B91D281AC26FC100335131 /* Example */ = {
 			isa = PBXGroup;
 			children = (
 				08B91D821AC73B6900335131 /* src */,
 				083DB3EB1B0871B300FB0661 /* third_party */,
 			);
+			name = Example;
 			path = libnyquist;
 			sourceTree = "<group>";
 		};
