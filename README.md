@@ -1,7 +1,7 @@
 # Libnyquist
-Libnyquist is a small C++11 library for reading sampled audio data from disk or memory. It's ideal to use as an audio asset loading frontend for games, audio sequencers, music players, and more.
+Libnyquist is a small C++11 library for reading sampled audio data from disk or memory. It's ideal to use as an audio asset frontend for games, audio sequencers, music players, and more.
 
-The library steers away from patent-encumbered formats and formats with non-BSD licensed reference implementations (such as MP3 and AAC, respectively). 
+The library steers away from patent-encumbered formats and those with non-BSD licensed codec implementations (such as MP3 and AAC, respectively). 
 
 Libnyquist is meant to be statically linked, which is not the case with other popular libraries like libsndfile (LGPL). Furthermore, the library is not concerned with legacy format support (for instance, A-law PCM encoding or SND files). 
  
