@@ -137,6 +137,17 @@
 			name = deps;
 			sourceTree = "<group>";
 		};
+		080A58591B0867E500302850 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				08B91D871AC73B8000335131 /* Dither.h */,
+				080A58561B0866AA00302850 /* RiffUtils.h */,
+				08B91D8C1AC73B8000335131 /* RingBuffer.h */,
+				08B91D8B1AC73B8000335131 /* PostProcess.h */,
+			);
+			name = util;
+			sourceTree = "<group>";
+		};
 		08894F1D1AEAA5B7007AAF90 /* wavpack */ = {
 			isa = PBXGroup;
 			children = (
@@ -216,17 +227,14 @@
 		08B91D811AC73B5A00335131 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				080A58591B0867E500302850 /* util */,
 				08B91D831AC73B8000335131 /* CafDecoder.h */,
 				08B91D841AC73B8000335131 /* AudioDecoder.h */,
 				08B91D851AC73B8000335131 /* AudioDevice.h */,
 				08B91D861AC73B8000335131 /* Common.h */,
-				08B91D871AC73B8000335131 /* Dither.h */,
 				08B91D881AC73B8000335131 /* FlacDecoder.h */,
 				08B91D891AC73B8000335131 /* VorbisDecoder.h */,
 				08B91D8A1AC73B8000335131 /* OpusDecoder.h */,
-				080A58561B0866AA00302850 /* RiffUtils.h */,
-				08B91D8B1AC73B8000335131 /* PostProcess.h */,
-				08B91D8C1AC73B8000335131 /* RingBuffer.h */,
 				08B91D8E1AC73B8000335131 /* WavDecoder.h */,
 				08B91D8F1AC73B8000335131 /* WavPackDecoder.h */,
 			);

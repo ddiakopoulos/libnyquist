@@ -57,8 +57,6 @@ namespace nqr
 	#error ARCH_CPU_BIG_ENDIAN and ARCH_CPU_LITTLE_ENDIAN both defined.
 #endif
 
-
-    
 static inline uint16_t Swap16(uint16_t value)
 {
     return (uint16_t)((value >> 8) | (value << 8));
