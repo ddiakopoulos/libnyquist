@@ -1,6 +1,7 @@
 #pragma comment(user, "license")
 
 #include "WavDecoder.h"
+#include "RiffUtils.h"
 
 using namespace nqr;
 
