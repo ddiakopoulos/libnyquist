@@ -1,0 +1,525 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0804D13F1AE69F0100F4B1FD /* OpusDependencies.c in Sources */ = {isa = PBXBuildFile; fileRef = 0804D13E1AE69F0100F4B1FD /* OpusDependencies.c */; };
+		0804D1451AE6BA5100F4B1FD /* celt_decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 0804D1431AE6BA5100F4B1FD /* celt_decoder.c */; };
+		0804D1461AE6BA5100F4B1FD /* celt_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 0804D1441AE6BA5100F4B1FD /* celt_encoder.c */; };
+		081FFB191ADF803800673073 /* FlacDependencies.c in Sources */ = {isa = PBXBuildFile; fileRef = 081FFB181ADF803800673073 /* FlacDependencies.c */; };
+		086DADAD1AE029860031F793 /* VorbisDependencies.c in Sources */ = {isa = PBXBuildFile; fileRef = 086DADAB1ADF9DF30031F793 /* VorbisDependencies.c */; };
+		08894F291AEAA5D7007AAF90 /* bits.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F1E1AEAA5D7007AAF90 /* bits.c */; };
+		08894F2A1AEAA5D7007AAF90 /* extra1.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F1F1AEAA5D7007AAF90 /* extra1.c */; };
+		08894F2B1AEAA5D7007AAF90 /* extra2.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F201AEAA5D7007AAF90 /* extra2.c */; };
+		08894F2C1AEAA5D7007AAF90 /* float.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F211AEAA5D7007AAF90 /* float.c */; };
+		08894F2D1AEAA5D7007AAF90 /* metadata.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F221AEAA5D7007AAF90 /* metadata.c */; };
+		08894F2E1AEAA5D7007AAF90 /* pack.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F231AEAA5D7007AAF90 /* pack.c */; };
+		08894F2F1AEAA5D7007AAF90 /* tags.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F241AEAA5D7007AAF90 /* tags.c */; };
+		08894F301AEAA5D7007AAF90 /* unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F251AEAA5D7007AAF90 /* unpack.c */; };
+		08894F311AEAA5D7007AAF90 /* unpack3.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F261AEAA5D7007AAF90 /* unpack3.c */; };
+		08894F321AEAA5D7007AAF90 /* words.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F271AEAA5D7007AAF90 /* words.c */; };
+		08894F331AEAA5D7007AAF90 /* wputils.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F281AEAA5D7007AAF90 /* wputils.c */; };
+		08B91D771AC2713900335131 /* RtAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D751AC2713900335131 /* RtAudio.cpp */; };
+		08B91D791AC273A900335131 /* libpthread.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B91D781AC273A900335131 /* libpthread.dylib */; };
+		08B91D7B1AC273AE00335131 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B91D7A1AC273AE00335131 /* CoreAudio.framework */; };
+		08B91D7D1AC273E400335131 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B91D7C1AC273E400335131 /* CoreFoundation.framework */; };
+		08B91D7F1AC273EA00335131 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B91D7E1AC273EA00335131 /* CoreServices.framework */; };
+		08B91D9A1AC73B8A00335131 /* CafDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D901AC73B8A00335131 /* CafDecoder.cpp */; };
+		08B91D9B1AC73B8A00335131 /* AudioDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D911AC73B8A00335131 /* AudioDecoder.cpp */; };
+		08B91D9C1AC73B8A00335131 /* AudioDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D921AC73B8A00335131 /* AudioDevice.cpp */; };
+		08B91D9D1AC73B8A00335131 /* Common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D931AC73B8A00335131 /* Common.cpp */; };
+		08B91D9E1AC73B8A00335131 /* FlacDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D941AC73B8A00335131 /* FlacDecoder.cpp */; };
+		08B91D9F1AC73B8A00335131 /* Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D951AC73B8A00335131 /* Main.cpp */; };
+		08B91DA01AC73B8A00335131 /* VorbisDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D961AC73B8A00335131 /* VorbisDecoder.cpp */; };
+		08B91DA11AC73B8A00335131 /* OpusDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D971AC73B8A00335131 /* OpusDecoder.cpp */; };
+		08B91DA21AC73B8A00335131 /* WavDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D981AC73B8A00335131 /* WavDecoder.cpp */; };
+		08B91DA31AC73B8A00335131 /* WavPackDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D991AC73B8A00335131 /* WavPackDecoder.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		08B91D241AC26FC100335131 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0804D13E1AE69F0100F4B1FD /* OpusDependencies.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = OpusDependencies.c; path = src/OpusDependencies.c; sourceTree = SOURCE_ROOT; };
+		0804D1431AE6BA5100F4B1FD /* celt_decoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = celt_decoder.c; path = third_party/opus/celt/celt_decoder.c; sourceTree = SOURCE_ROOT; };
+		0804D1441AE6BA5100F4B1FD /* celt_encoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = celt_encoder.c; path = third_party/opus/celt/celt_encoder.c; sourceTree = SOURCE_ROOT; };
+		081FFB181ADF803800673073 /* FlacDependencies.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = FlacDependencies.c; path = src/FlacDependencies.c; sourceTree = SOURCE_ROOT; };
+		086DADAB1ADF9DF30031F793 /* VorbisDependencies.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = VorbisDependencies.c; path = src/VorbisDependencies.c; sourceTree = SOURCE_ROOT; };
+		08894F1E1AEAA5D7007AAF90 /* bits.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bits.c; path = third_party/wavpack/src/bits.c; sourceTree = SOURCE_ROOT; };
+		08894F1F1AEAA5D7007AAF90 /* extra1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = extra1.c; path = third_party/wavpack/src/extra1.c; sourceTree = SOURCE_ROOT; };
+		08894F201AEAA5D7007AAF90 /* extra2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = extra2.c; path = third_party/wavpack/src/extra2.c; sourceTree = SOURCE_ROOT; };
+		08894F211AEAA5D7007AAF90 /* float.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = float.c; path = third_party/wavpack/src/float.c; sourceTree = SOURCE_ROOT; };
+		08894F221AEAA5D7007AAF90 /* metadata.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = metadata.c; path = third_party/wavpack/src/metadata.c; sourceTree = SOURCE_ROOT; };
+		08894F231AEAA5D7007AAF90 /* pack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pack.c; path = third_party/wavpack/src/pack.c; sourceTree = SOURCE_ROOT; };
+		08894F241AEAA5D7007AAF90 /* tags.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tags.c; path = third_party/wavpack/src/tags.c; sourceTree = SOURCE_ROOT; };
+		08894F251AEAA5D7007AAF90 /* unpack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = unpack.c; path = third_party/wavpack/src/unpack.c; sourceTree = SOURCE_ROOT; };
+		08894F261AEAA5D7007AAF90 /* unpack3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = unpack3.c; path = third_party/wavpack/src/unpack3.c; sourceTree = SOURCE_ROOT; };
+		08894F271AEAA5D7007AAF90 /* words.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = words.c; path = third_party/wavpack/src/words.c; sourceTree = SOURCE_ROOT; };
+		08894F281AEAA5D7007AAF90 /* wputils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = wputils.c; path = third_party/wavpack/src/wputils.c; sourceTree = SOURCE_ROOT; };
+		08B91D261AC26FC100335131 /* libnyquist */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = libnyquist; sourceTree = BUILT_PRODUCTS_DIR; };
+		08B91D751AC2713900335131 /* RtAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RtAudio.cpp; path = third_party/rtaudio/RtAudio.cpp; sourceTree = SOURCE_ROOT; };
+		08B91D761AC2713900335131 /* RtAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RtAudio.h; path = third_party/rtaudio/RtAudio.h; sourceTree = SOURCE_ROOT; };
+		08B91D781AC273A900335131 /* libpthread.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpthread.dylib; path = usr/lib/libpthread.dylib; sourceTree = SDKROOT; };
+		08B91D7A1AC273AE00335131 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		08B91D7C1AC273E400335131 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		08B91D7E1AC273EA00335131 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		08B91D831AC73B8000335131 /* CafDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CafDecoder.h; path = include/libnyquist/CafDecoder.h; sourceTree = SOURCE_ROOT; };
+		08B91D841AC73B8000335131 /* AudioDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioDecoder.h; path = include/libnyquist/AudioDecoder.h; sourceTree = SOURCE_ROOT; };
+		08B91D851AC73B8000335131 /* AudioDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioDevice.h; path = include/libnyquist/AudioDevice.h; sourceTree = SOURCE_ROOT; };
+		08B91D861AC73B8000335131 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Common.h; path = include/libnyquist/Common.h; sourceTree = SOURCE_ROOT; };
+		08B91D871AC73B8000335131 /* Dither.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Dither.h; path = include/libnyquist/Dither.h; sourceTree = SOURCE_ROOT; };
+		08B91D881AC73B8000335131 /* FlacDecoder.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; name = FlacDecoder.h; path = include/libnyquist/FlacDecoder.h; sourceTree = SOURCE_ROOT; };
+		08B91D891AC73B8000335131 /* VorbisDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VorbisDecoder.h; path = include/libnyquist/VorbisDecoder.h; sourceTree = SOURCE_ROOT; };
+		08B91D8A1AC73B8000335131 /* OpusDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OpusDecoder.h; path = include/libnyquist/OpusDecoder.h; sourceTree = SOURCE_ROOT; };
+		08B91D8B1AC73B8000335131 /* PostProcess.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PostProcess.h; path = include/libnyquist/PostProcess.h; sourceTree = SOURCE_ROOT; };
+		08B91D8C1AC73B8000335131 /* RingBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RingBuffer.h; path = include/libnyquist/RingBuffer.h; sourceTree = SOURCE_ROOT; };
+		08B91D8E1AC73B8000335131 /* WavDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WavDecoder.h; path = include/libnyquist/WavDecoder.h; sourceTree = SOURCE_ROOT; };
+		08B91D8F1AC73B8000335131 /* WavPackDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WavPackDecoder.h; path = include/libnyquist/WavPackDecoder.h; sourceTree = SOURCE_ROOT; };
+		08B91D901AC73B8A00335131 /* CafDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CafDecoder.cpp; path = src/CafDecoder.cpp; sourceTree = SOURCE_ROOT; };
+		08B91D911AC73B8A00335131 /* AudioDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioDecoder.cpp; path = src/AudioDecoder.cpp; sourceTree = SOURCE_ROOT; };
+		08B91D921AC73B8A00335131 /* AudioDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioDevice.cpp; path = src/AudioDevice.cpp; sourceTree = SOURCE_ROOT; };
+		08B91D931AC73B8A00335131 /* Common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Common.cpp; path = src/Common.cpp; sourceTree = SOURCE_ROOT; };
+		08B91D941AC73B8A00335131 /* FlacDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FlacDecoder.cpp; path = src/FlacDecoder.cpp; sourceTree = SOURCE_ROOT; };
+		08B91D951AC73B8A00335131 /* Main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Main.cpp; path = src/Main.cpp; sourceTree = SOURCE_ROOT; };
+		08B91D961AC73B8A00335131 /* VorbisDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VorbisDecoder.cpp; path = src/VorbisDecoder.cpp; sourceTree = SOURCE_ROOT; };
+		08B91D971AC73B8A00335131 /* OpusDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpusDecoder.cpp; path = src/OpusDecoder.cpp; sourceTree = SOURCE_ROOT; };
+		08B91D981AC73B8A00335131 /* WavDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WavDecoder.cpp; path = src/WavDecoder.cpp; sourceTree = SOURCE_ROOT; };
+		08B91D991AC73B8A00335131 /* WavPackDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WavPackDecoder.cpp; path = src/WavPackDecoder.cpp; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		08B91D231AC26FC100335131 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08B91D7F1AC273EA00335131 /* CoreServices.framework in Frameworks */,
+				08B91D7D1AC273E400335131 /* CoreFoundation.framework in Frameworks */,
+				08B91D7B1AC273AE00335131 /* CoreAudio.framework in Frameworks */,
+				08B91D791AC273A900335131 /* libpthread.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0804D1421AE6BA2F00F4B1FD /* celt */ = {
+			isa = PBXGroup;
+			children = (
+				0804D1431AE6BA5100F4B1FD /* celt_decoder.c */,
+				0804D1441AE6BA5100F4B1FD /* celt_encoder.c */,
+			);
+			name = celt;
+			sourceTree = "<group>";
+		};
+		080A58551B083D5100302850 /* deps */ = {
+			isa = PBXGroup;
+			children = (
+				081FFB181ADF803800673073 /* FlacDependencies.c */,
+				086DADAB1ADF9DF30031F793 /* VorbisDependencies.c */,
+				0804D13E1AE69F0100F4B1FD /* OpusDependencies.c */,
+			);
+			name = deps;
+			sourceTree = "<group>";
+		};
+		08894F1D1AEAA5B7007AAF90 /* wavpack */ = {
+			isa = PBXGroup;
+			children = (
+				08894F1E1AEAA5D7007AAF90 /* bits.c */,
+				08894F1F1AEAA5D7007AAF90 /* extra1.c */,
+				08894F201AEAA5D7007AAF90 /* extra2.c */,
+				08894F211AEAA5D7007AAF90 /* float.c */,
+				08894F221AEAA5D7007AAF90 /* metadata.c */,
+				08894F231AEAA5D7007AAF90 /* pack.c */,
+				08894F241AEAA5D7007AAF90 /* tags.c */,
+				08894F251AEAA5D7007AAF90 /* unpack.c */,
+				08894F261AEAA5D7007AAF90 /* unpack3.c */,
+				08894F271AEAA5D7007AAF90 /* words.c */,
+				08894F281AEAA5D7007AAF90 /* wputils.c */,
+			);
+			name = wavpack;
+			sourceTree = "<group>";
+		};
+		08B91D1D1AC26FC100335131 = {
+			isa = PBXGroup;
+			children = (
+				08B91D281AC26FC100335131 /* libnyquist */,
+				08B91D511AC270BB00335131 /* third_party */,
+				08B91D801AC73B3B00335131 /* Frameworks */,
+				08B91D271AC26FC100335131 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		08B91D271AC26FC100335131 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				08B91D261AC26FC100335131 /* libnyquist */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		08B91D281AC26FC100335131 /* libnyquist */ = {
+			isa = PBXGroup;
+			children = (
+				08B91D811AC73B5A00335131 /* include */,
+				08B91D821AC73B6900335131 /* src */,
+			);
+			path = libnyquist;
+			sourceTree = "<group>";
+		};
+		08B91D511AC270BB00335131 /* third_party */ = {
+			isa = PBXGroup;
+			children = (
+				08894F1D1AEAA5B7007AAF90 /* wavpack */,
+				0804D1421AE6BA2F00F4B1FD /* celt */,
+				08B91D741AC2712A00335131 /* rtaudio */,
+			);
+			name = third_party;
+			path = libnyquist;
+			sourceTree = "<group>";
+		};
+		08B91D741AC2712A00335131 /* rtaudio */ = {
+			isa = PBXGroup;
+			children = (
+				08B91D751AC2713900335131 /* RtAudio.cpp */,
+				08B91D761AC2713900335131 /* RtAudio.h */,
+			);
+			name = rtaudio;
+			sourceTree = "<group>";
+		};
+		08B91D801AC73B3B00335131 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				08B91D7E1AC273EA00335131 /* CoreServices.framework */,
+				08B91D7C1AC273E400335131 /* CoreFoundation.framework */,
+				08B91D7A1AC273AE00335131 /* CoreAudio.framework */,
+				08B91D781AC273A900335131 /* libpthread.dylib */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		08B91D811AC73B5A00335131 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				08B91D831AC73B8000335131 /* CafDecoder.h */,
+				08B91D841AC73B8000335131 /* AudioDecoder.h */,
+				08B91D851AC73B8000335131 /* AudioDevice.h */,
+				08B91D861AC73B8000335131 /* Common.h */,
+				08B91D871AC73B8000335131 /* Dither.h */,
+				08B91D881AC73B8000335131 /* FlacDecoder.h */,
+				08B91D891AC73B8000335131 /* VorbisDecoder.h */,
+				08B91D8A1AC73B8000335131 /* OpusDecoder.h */,
+				08B91D8B1AC73B8000335131 /* PostProcess.h */,
+				08B91D8C1AC73B8000335131 /* RingBuffer.h */,
+				08B91D8E1AC73B8000335131 /* WavDecoder.h */,
+				08B91D8F1AC73B8000335131 /* WavPackDecoder.h */,
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		08B91D821AC73B6900335131 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				080A58551B083D5100302850 /* deps */,
+				08B91D901AC73B8A00335131 /* CafDecoder.cpp */,
+				08B91D911AC73B8A00335131 /* AudioDecoder.cpp */,
+				08B91D921AC73B8A00335131 /* AudioDevice.cpp */,
+				08B91D931AC73B8A00335131 /* Common.cpp */,
+				08B91D941AC73B8A00335131 /* FlacDecoder.cpp */,
+				08B91D951AC73B8A00335131 /* Main.cpp */,
+				08B91D961AC73B8A00335131 /* VorbisDecoder.cpp */,
+				08B91D971AC73B8A00335131 /* OpusDecoder.cpp */,
+				08B91D981AC73B8A00335131 /* WavDecoder.cpp */,
+				08B91D991AC73B8A00335131 /* WavPackDecoder.cpp */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		08B91D251AC26FC100335131 /* libnyquist */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 08B91D2D1AC26FC100335131 /* Build configuration list for PBXNativeTarget "libnyquist" */;
+			buildPhases = (
+				08B91D221AC26FC100335131 /* Sources */,
+				08B91D231AC26FC100335131 /* Frameworks */,
+				08B91D241AC26FC100335131 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libnyquist;
+			productName = libnyquist;
+			productReference = 08B91D261AC26FC100335131 /* libnyquist */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08B91D1E1AC26FC100335131 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Dimitri Diakopoulos";
+				TargetAttributes = {
+					08B91D251AC26FC100335131 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+				};
+			};
+			buildConfigurationList = 08B91D211AC26FC100335131 /* Build configuration list for PBXProject "libnyquist" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 08B91D1D1AC26FC100335131;
+			productRefGroup = 08B91D271AC26FC100335131 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				08B91D251AC26FC100335131 /* libnyquist */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		08B91D221AC26FC100335131 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08894F2C1AEAA5D7007AAF90 /* float.c in Sources */,
+				08894F2E1AEAA5D7007AAF90 /* pack.c in Sources */,
+				08894F2A1AEAA5D7007AAF90 /* extra1.c in Sources */,
+				08894F321AEAA5D7007AAF90 /* words.c in Sources */,
+				08B91D9B1AC73B8A00335131 /* AudioDecoder.cpp in Sources */,
+				08894F291AEAA5D7007AAF90 /* bits.c in Sources */,
+				081FFB191ADF803800673073 /* FlacDependencies.c in Sources */,
+				08B91D9F1AC73B8A00335131 /* Main.cpp in Sources */,
+				0804D13F1AE69F0100F4B1FD /* OpusDependencies.c in Sources */,
+				08B91DA01AC73B8A00335131 /* VorbisDecoder.cpp in Sources */,
+				08894F2B1AEAA5D7007AAF90 /* extra2.c in Sources */,
+				08894F301AEAA5D7007AAF90 /* unpack.c in Sources */,
+				0804D1451AE6BA5100F4B1FD /* celt_decoder.c in Sources */,
+				0804D1461AE6BA5100F4B1FD /* celt_encoder.c in Sources */,
+				08894F331AEAA5D7007AAF90 /* wputils.c in Sources */,
+				08B91DA21AC73B8A00335131 /* WavDecoder.cpp in Sources */,
+				08B91D9A1AC73B8A00335131 /* CafDecoder.cpp in Sources */,
+				08894F2F1AEAA5D7007AAF90 /* tags.c in Sources */,
+				08B91DA11AC73B8A00335131 /* OpusDecoder.cpp in Sources */,
+				08894F2D1AEAA5D7007AAF90 /* metadata.c in Sources */,
+				08B91D9E1AC73B8A00335131 /* FlacDecoder.cpp in Sources */,
+				08B91D9C1AC73B8A00335131 /* AudioDevice.cpp in Sources */,
+				08894F311AEAA5D7007AAF90 /* unpack3.c in Sources */,
+				086DADAD1AE029860031F793 /* VorbisDependencies.c in Sources */,
+				08B91DA31AC73B8A00335131 /* WavPackDecoder.cpp in Sources */,
+				08B91D9D1AC73B8A00335131 /* Common.cpp in Sources */,
+				08B91D771AC2713900335131 /* RtAudio.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		08B91D2B1AC26FC100335131 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		08B91D2C1AC26FC100335131 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		08B91D2E1AC26FC100335131 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				GCC_CHAR_IS_UNSIGNED_CHAR = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_BUILTIN_FUNCTIONS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_INPUT_FILETYPE = automatic;
+				GCC_LINK_WITH_DYNAMIC_LIBRARIES = YES;
+				GCC_NO_COMMON_BLOCKS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					__MACOSX_CORE__,
+					USE_ALLOCA,
+					OPUS_BUILD,
+				);
+				GCC_STRICT_ALIASING = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/third_party",
+					"$(SRCROOT)/third_party/stb_vorbis",
+					"$(SRCROOT)/third_party/rtaudio",
+					"$(SRCROOT)/third_party/flac/src/include",
+					"$(SRCROOT)/third_party/libogg/include",
+					"$(SRCROOT)/third_party/libvorbis/src",
+					"$(SRCROOT)/third_party/libvorbis/include",
+					"$(SRCROOT)/third_party/opus/silk",
+					"$(SRCROOT)/third_party/opus/silk/float",
+					"$(SRCROOT)/third_party/opus/celt",
+					"$(SRCROOT)/third_party/opus/libopus/include",
+					"$(SRCROOT)/third_party/opus/opusfile/src/include",
+					"$(SRCROOT)/third_party/opus/opusfile/include",
+					"$(SRCROOT)/third_party/wavpack/include",
+					"$(SRCROOT)/third_party/wavpack/src",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+			};
+			name = Debug;
+		};
+		08B91D2F1AC26FC100335131 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				GCC_CHAR_IS_UNSIGNED_CHAR = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_BUILTIN_FUNCTIONS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_INPUT_FILETYPE = automatic;
+				GCC_LINK_WITH_DYNAMIC_LIBRARIES = YES;
+				GCC_NO_COMMON_BLOCKS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					__MACOSX_CORE__,
+					USE_ALLOCA,
+					OPUS_BUILD,
+				);
+				GCC_STRICT_ALIASING = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/third_party",
+					"$(SRCROOT)/third_party/stb_vorbis",
+					"$(SRCROOT)/third_party/rtaudio",
+					"$(SRCROOT)/third_party/flac/src/include",
+					"$(SRCROOT)/third_party/libogg/include",
+					"$(SRCROOT)/third_party/libvorbis/src",
+					"$(SRCROOT)/third_party/libvorbis/include",
+					"$(SRCROOT)/third_party/opus/silk",
+					"$(SRCROOT)/third_party/opus/silk/float",
+					"$(SRCROOT)/third_party/opus/celt",
+					"$(SRCROOT)/third_party/opus/libopus/include",
+					"$(SRCROOT)/third_party/opus/opusfile/src/include",
+					"$(SRCROOT)/third_party/opus/opusfile/include",
+					"$(SRCROOT)/third_party/wavpack/include",
+					"$(SRCROOT)/third_party/wavpack/src",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		08B91D211AC26FC100335131 /* Build configuration list for PBXProject "libnyquist" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08B91D2B1AC26FC100335131 /* Debug */,
+				08B91D2C1AC26FC100335131 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		08B91D2D1AC26FC100335131 /* Build configuration list for PBXNativeTarget "libnyquist" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08B91D2E1AC26FC100335131 /* Debug */,
+				08B91D2F1AC26FC100335131 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08B91D1E1AC26FC100335131 /* Project object */;
+}
