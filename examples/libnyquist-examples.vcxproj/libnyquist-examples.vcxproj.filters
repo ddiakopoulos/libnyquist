@@ -11,15 +11,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\Main.cpp">
+    <ClCompile Include="..\src\Main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\third_party\rtaudio\RtAudio.cpp">
+    <ClCompile Include="..\..\third_party\rtaudio\RtAudio.cpp">
       <Filter>third_party</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\third_party\rtaudio\RtAudio.h">
+    <ClInclude Include="..\..\third_party\rtaudio\RtAudio.h">
       <Filter>third_party</Filter>
     </ClInclude>
   </ItemGroup>
