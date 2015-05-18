@@ -55,12 +55,12 @@ WaveChunkHeader nqr::MakeWaveHeader(const EncoderParams param)
     
     header.fmt_id = GenerateChunkCode('f', 'm', 't', ' ');
     header.chunk_size = 16;
-    header.format = (param.fmt <= PCMFormat::PCM_32) ? WaveFormatCode::FORMAT_PCM : WaveFormatCode::FORMAT_IEEE;
-    header.channel_count = param.channels;
-    header.sample_rate = param.samplerate;
-    header.data_rate = param.samplerate * param.channels * (param.bit_depth / 8);
-    header.frame_size = param.channels * (param.bit_depth / 8);
-    header.bit_depth = param.bit_depth;
+    header.format = (param.targetFormat <= PCMFormat::PCM_32) ? WaveFormatCode::FORMAT_PCM : WaveFormatCode::FORMAT_IEEE;
+    header.channel_count = param.channelCount;
+    header.sample_rate = param.sampleRate;
+    header.data_rate = param.sampleRate * param.channelCount * (param.bitDepth / 8);
+    header.frame_size = param.channelCount * (param.bitDepth / 8);
+    header.bit_depth = param.bitDepth;
     
     return header;
 }

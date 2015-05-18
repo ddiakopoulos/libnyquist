@@ -35,6 +35,7 @@ namespace nqr
     
 enum DitherType
 {
+    DITHER_NONE,
     DITHER_ONE,
     DITHER_TWO
 };

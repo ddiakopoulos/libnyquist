@@ -48,7 +48,6 @@ WavEncoder::~WavEncoder()
 
 int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std::string & path)
 {
-    
     if (d->samples.size() <= 32)
     {
         return EncoderError::InsufficientSampleData;
@@ -86,28 +85,37 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
     // Initial size
     toBytes(36, chunkSizeBuff);
 
-    // RIFF File Header
+    // RIFF file header
     fout.write(GenerateChunkCodeChar('R', 'I', 'F', 'F'), 4);
     fout.write(chunkSizeBuff, 4);
     
     fout.write(GenerateChunkCodeChar('W', 'A', 'V', 'E'), 4);
     
-    // Fmt Header
+    // Fmt header
     auto header = MakeWaveHeader(p);
     fout.write(reinterpret_cast<char*>(&header), sizeof(WaveChunkHeader));
     
-    // Data Header
+    // Data header
     fout.write(GenerateChunkCodeChar('d', 'a', 't', 'a'), 4);
     
     // + data chunk size
     auto numSamplesBytes =  d->samples.size() * sizeof(float);
-    toBytes(numSamplesBytes, chunkSizeBuff);
+    toBytes(samplesSizeInBytes, chunkSizeBuff);
     fout.write(chunkSizeBuff, 4);
     
     // Debugging -- assume IEEE_Float
-    
-    auto what = GetFormatBitsPerSample(d->sourceFmt);
-    fout.write(reinterpret_cast<const char*>(d->samples.data()), numSamplesBytes);
+    auto sourceBits = GetFormatBitsPerSample(d->sourceFormat);
+    auto targetBits = GetFormatBitsPerSample(p.targetFormat);
+
+    // Apply dithering
+    if (sourceBits != targetBits && p.dither != DITHER_NONE)
+    {
+        
+    }
+    else
+    {
+        fout.write(reinterpret_cast<const char*>(d->samples.data()), samplesSizeInBytes);
+    }
     
     // Find size
     long totalSize = fout.tellp();
@@ -115,7 +123,7 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
     // Modify RIFF header
     fout.seekp(4);
     
-    // Total size of the file, less 8 for the RIFF header
+    // Total size of the file, less 8 bytes for the RIFF header
     toBytes(totalSize - 8 , chunkSizeBuff);
     
     fout.write(chunkSizeBuff, 4);
