@@ -97,7 +97,7 @@ int main()
 		myDevice.Play(fileData->samples);
 	}
     
-    // Test wav file encoder 
+    // Test wav file encoder
     encoder.WriteFile({2, 44100, 32, PCM_FLT}, fileData->samples, "encoded.wav");
         
 	return 0;

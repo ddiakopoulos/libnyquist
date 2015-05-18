@@ -28,7 +28,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace nqr;
 
-// Big-endian convert
 inline void toBytes(int value, char * arr)
 {
     arr[0] = (value) & 0xFF;
@@ -47,10 +46,28 @@ WavEncoder::~WavEncoder()
     
 }
 
-//@todo check for max file length, sanity checks, etc.
-void WavEncoder::WriteFile(const EncoderParams p, const std::vector<float> & data, const std::string & path)
+int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std::string & path)
 {
     
+    if (d->samples.size() <= 32)
+    {
+        return EncoderError::InsufficientSampleData;
+    }
+    
+    if (d->channelCount < 1 || d->channelCount > 8)
+    {
+        return EncoderError::UnsupportedChannelConfiguration;
+    }
+    
+    auto maxFileSizeInBytes = std::numeric_limits<uint32_t>::max();
+    auto samplesSizeInBytes = d->samples.size() * sizeof(float);
+    
+    // 64 arbitrary
+    if ((samplesSizeInBytes - 64) >= maxFileSizeInBytes)
+    {
+        return EncoderError::BufferTooBig;
+    }
+        
     std::ofstream fout(path.c_str(), std::ios::out | std::ios::binary);
     
     if (!fout.is_open())

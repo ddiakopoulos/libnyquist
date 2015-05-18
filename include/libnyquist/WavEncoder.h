@@ -27,17 +27,27 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define WAVE_ENCODER_H
 
 #include "Common.h"
-#include "WavDecoder.h" // For reference structs
+#include "WavDecoder.h"
 #include "RiffUtils.h"
 
 namespace nqr
 {
 
+    
 // A simplistic encoder that takes a blob of data, conforms it to the user's
 // EncoderParams preference, and writes to disk. Be warned, does not support resampling!
 // @todo support dithering, samplerate conversion, etc.
 class WavEncoder
 {
+    enum EncoderError
+    {
+        NoError,
+        InsufficientSampleData,
+        FileIOError,
+        UnsupportedSamplerate,
+        UnsupportedChannelConfiguration,
+        BufferTooBig,
+    };
     
 public:
     
@@ -45,7 +55,7 @@ public:
     ~WavEncoder();
     
     // Assume data adheres to EncoderParams, except for bit depth and fmt
-    void WriteFile(const EncoderParams p, const std::vector<float> & data, const std::string & path);
+    int WriteFile(const EncoderParams p, const AudioData * d, const std::string & path);
     
 };
     
