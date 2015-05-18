@@ -5,6 +5,7 @@
 #include "libnyquist/AudioDevice.h"
 #include "libnyquist/AudioDecoder.h"
 #include "libnyquist/WavEncoder.h"
+#include "libnyquist/PostProcess.h"
 
 #include <thread>
 
@@ -32,7 +33,7 @@ int main()
 		//auto result = loader.Load(fileData, "test_data/1ch/44100/8/test.wav");
 		//auto result = loader.Load(fileData, "test_data/1ch/44100/16/test.wav");
 		//auto result = loader.Load(fileData, "test_data/1ch/44100/24/test.wav");
-		//auto result = loader.Load(fileData, "test_data/1ch/44100/32/test.wav");
+		auto result = loader.Load(fileData, "test_data/1ch/44100/32/test.wav");
 		//auto result = loader.Load(fileData, "test_data/1ch/44100/64/test.wav");
 		
 		//auto result = loader.Load(fileData, "test_data/2ch/44100/8/test.wav");
@@ -47,7 +48,7 @@ int main()
 		//auto result = loader.Load(fileData, "test_data/ad_hoc/TestLaugh_44k.ogg");
 		//auto result = loader.Load(fileData, "test_data/ad_hoc/TestBeat.ogg");
 		//auto result = loader.Load(fileData, "test_data/ad_hoc/TestBeatMono.ogg");
-		auto result = loader.Load(fileData, "test_data/ad_hoc/BlockWoosh_Stereo.ogg");
+		//auto result = loader.Load(fileData, "test_data/ad_hoc/BlockWoosh_Stereo.ogg");
 		
 		//auto result = loader.Load(fileData, "test_data/ad_hoc/KittyPurr8_Stereo_Dithered.flac");
 		//auto result = loader.Load(fileData, "test_data/ad_hoc/KittyPurr16_Stereo.flac");
@@ -81,14 +82,7 @@ int main()
 	if (fileData->channelCount == 1)
 	{
 		std::vector<float> stereoCopy(fileData->samples.size() * 2);
-		
-		int m = 0;
-		for (size_t i = 0; i < stereoCopy.size(); i+=2)
-		{
-			stereoCopy[i] = fileData->samples[m];
-			stereoCopy[i+1] = fileData->samples[m];
-			m++;
-		}
+        MonoToStereo(fileData->samples.data(), stereoCopy.data(), fileData->samples.size());
 		myDevice.Play(stereoCopy);
 	}
 	else
@@ -98,7 +92,7 @@ int main()
 	}
     
     // Test wav file encoder
-    int encoderStatus = encoder.WriteFile({2, PCM_24, DITHER_NONE}, fileData, "encoded.wav");
+    int encoderStatus = encoder.WriteFile({1, PCM_24, DITHER_NONE}, fileData, "encoded.wav");
     std::cout << "Encoder Status: " << encoderStatus << std::endl;
     
 	return 0;

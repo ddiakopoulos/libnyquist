@@ -46,13 +46,13 @@ inline void DeinterleaveStereo(T * c1, T * c2, T const * src, size_t count)
 }
 
 template<typename T>
-void InterleaveArbitrary(const T * src, T * dest, size_t numFramesPerChannel, size_t numChannels, size_t numCopyFrames)
+void InterleaveChannels(const T * src, T * dest, size_t numFramesPerChannel, size_t numChannels, size_t N)
 {
     for (size_t ch = 0; ch < numChannels; ch++)
     {
         size_t x = ch;
         const T * srcChannel = &src[ch * numFramesPerChannel];
-        for(size_t i = 0; i < numCopyFrames; i++)
+        for(size_t i = 0; i < N; i++)
         {
             dest[x] = srcChannel[i];
             x += numChannels;
@@ -61,23 +61,42 @@ void InterleaveArbitrary(const T * src, T * dest, size_t numFramesPerChannel, si
 }
 
 template<typename T>
-void DeinterleaveArbitrary(const T * src, T * dest, size_t numFramesPerChannel, size_t numChannels, size_t numCopyFrames)
+void DeinterleaveChannels(const T * src, T * dest, size_t numFramesPerChannel, size_t numChannels, size_t N)
 {
     for(size_t ch = 0; ch < numChannels; ch++)
     {
         size_t x = ch;
         T *destChannel = &dest[ch * numFramesPerChannel];
-        for (size_t i = 0; i < numCopyFrames; i++)
+        for (size_t i = 0; i < N; i++)
         {
             destChannel[i] = (T) src[x];
             x += numChannels;
         }
     }
 }
+    
+template <typename T>
+void StereoToMono(const T * src, T * dest, size_t N)
+{
+    for (size_t i = 0, j = 0; i < N; i += 2, ++j)
+    {
+        dest[j] = (src[i] + src[i + 1]) / 2.0f;
+    }
+}
+
+template <typename T>
+void MonoToStereo(const T * src, T * dest, size_t N)
+{
+    for(int i = 0, j = 0; i < N; ++i, j += 2)
+    {
+        dest[j] = src[i];
+        dest[j + 1] = src[i];
+    }
+}
 
 inline void TrimSilenceInterleaved(std::vector<float> & buffer, float v, bool fromFront, bool fromEnd)
 {
-    //@todo implement me
+    //@todo implement me!
 }
     
 } // end namespace nqr
