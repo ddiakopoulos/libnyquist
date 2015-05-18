@@ -245,6 +245,8 @@ struct NyquistFileBuffer
 };
 
 NyquistFileBuffer ReadFile(std::string pathToFile);
+    
+int GetFormatBitsPerSample(PCMFormat f);
 
 } // end namespace nqr
 

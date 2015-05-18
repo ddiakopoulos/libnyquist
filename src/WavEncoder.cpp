@@ -67,12 +67,18 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
     {
         return EncoderError::BufferTooBig;
     }
-        
+    
+    // No resampling
+    if (d->sampleRate != p.sampleRate)
+    {
+        return EncoderError::UnsupportedSamplerate;
+    }
+    
     std::ofstream fout(path.c_str(), std::ios::out | std::ios::binary);
     
     if (!fout.is_open())
     {
-        throw std::runtime_error("File cannot be opened");
+        return EncoderError::FileIOError;
     }
     
     char * chunkSizeBuff = new char[4];
@@ -94,12 +100,14 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
     fout.write(GenerateChunkCodeChar('d', 'a', 't', 'a'), 4);
     
     // + data chunk size
-    auto numSamplesBytes =  data.size() * sizeof(float);
+    auto numSamplesBytes =  d->samples.size() * sizeof(float);
     toBytes(numSamplesBytes, chunkSizeBuff);
     fout.write(chunkSizeBuff, 4);
     
     // Debugging -- assume IEEE_Float
-    fout.write(reinterpret_cast<const char*>(data.data()), numSamplesBytes);
+    
+    auto LookupB
+    fout.write(reinterpret_cast<const char*>(d->samples.data()), numSamplesBytes);
     
     // Find size
     long totalSize = fout.tellp();
@@ -113,4 +121,6 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
     fout.write(chunkSizeBuff, 4);
 
     delete[] chunkSizeBuff;
+    
+    return EncoderError::NoError;
 }

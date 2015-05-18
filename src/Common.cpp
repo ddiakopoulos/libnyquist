@@ -145,3 +145,25 @@ void nqr::ConvertToFloat32(float * dst, const int32_t * src, const size_t N, PCM
             dst[i] = int32_to_float32(Read32(src[i]));
     }
 }
+
+int nqr::GetFormatBitsPerSample(PCMFormat f)
+{
+    switch(f)
+    {
+        case PCM_U8:
+        case PCM_S8:
+            return 8;
+        case PCM_16:
+            return 16;
+        case PCM_24:
+            return 24;
+        case PCM_32:
+        case PCM_FLT:
+            return 32;
+        case PCM_64:
+        case PCM_DBL:
+            return 64;
+        default:
+            return 0;
+    }
+}

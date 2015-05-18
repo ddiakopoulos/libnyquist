@@ -33,6 +33,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace nqr
 {
     
+enum DitherType
+{
+    DITHER_ONE,
+    DITHER_TWO
+};
+    
 } // end namespace nqr
 
 #endif

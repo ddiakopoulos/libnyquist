@@ -28,6 +28,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Common.h"
 #include "WavDecoder.h"
+#include "Dither.h"
 
 namespace nqr
 {
@@ -38,10 +39,11 @@ namespace nqr
 
 struct EncoderParams
 {
-    int channels;
-    int samplerate;
-    int bit_depth;
-    PCMFormat fmt;
+    int channelCount;
+    int sampleRate;
+    int bitDepth;
+    PCMFormat targetFormat;
+    DitherType dither;
 };
 
 struct ChunkHeaderInfo
