@@ -112,6 +112,12 @@ static inline uint64_t Swap64(uint64_t value)
             ((value & 0xff00000000000000LL) >> 56));
 }
 
+inline bool isOdd(const uint32_t x)
+{
+    return (x & 0x1);
+}
+
+    
 #ifdef ARCH_CPU_LITTLE_ENDIAN
     #define Read16(n) (n)
     #define Read24(n) (n)

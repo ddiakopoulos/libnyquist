@@ -125,6 +125,12 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
         fout.write(reinterpret_cast<const char*>(d->samples.data()), samplesSizeInBytes);
     }
     
+    // Padding byte
+    if (isOdd(samplesSizeInBytes))
+    {
+        fout.write(reinterpret_cast<const char *>(1), 1);
+    }
+    
     // Find size
     long totalSize = fout.tellp();
     
