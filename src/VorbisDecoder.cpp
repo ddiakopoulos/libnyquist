@@ -80,9 +80,9 @@ public:
         
         d->sampleRate = int(ovInfo->rate);
         d->channelCount = ovInfo->channels;
-        d->bitDepth = 32; // float
+        d->sourceFormat = MakeFormatForBits(32, true, false);
         d->lengthSeconds = double(getLengthInSeconds());
-        d->frameSize = ovInfo->channels * d->bitDepth;
+        d->frameSize = ovInfo->channels * GetFormatBitsPerSample(d->sourceFormat);
         
         // Samples in a single channel
         auto totalSamples = size_t(getTotalSamples());

@@ -69,9 +69,9 @@ public:
         
         d->sampleRate = OPUS_SAMPLE_RATE;
         d->channelCount = (uint32_t) header->channel_count;
-        d->bitDepth = 32;
+        d->sourceFormat = MakeFormatForBits(32, true, false);
         d->lengthSeconds = double(getLengthInSeconds());
-        d->frameSize = (uint32_t) header->channel_count * d->bitDepth;
+        d->frameSize = (uint32_t) header->channel_count * GetFormatBitsPerSample(d->sourceFormat);
         
         // Samples in a single channel
         auto totalSamples = size_t(getTotalSamples());

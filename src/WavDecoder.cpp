@@ -178,28 +178,26 @@ int WavDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & me
     size_t totalSamples = (DataChunkInfo.size / wavHeader.frame_size) * wavHeader.channel_count;
     data->samples.resize(totalSamples);
 
-    PCMFormat internalFmt = PCMFormat::PCM_END;
-
 	switch (bit_depth)
 	{
 	case 8:
-		internalFmt = PCMFormat::PCM_U8;
+		data->sourceFormat = PCMFormat::PCM_U8;
 		break;
 	case 16:
-		internalFmt = PCMFormat::PCM_16;
+		data->sourceFormat = PCMFormat::PCM_16;
 		break;
 	case 24:
-		internalFmt = PCMFormat::PCM_24;
+		data->sourceFormat = PCMFormat::PCM_24;
 		break;
 	case 32:
-		internalFmt = (wavHeader.format == WaveFormatCode::FORMAT_IEEE) ? PCMFormat::PCM_FLT : PCMFormat::PCM_32;
+		data->sourceFormat = (wavHeader.format == WaveFormatCode::FORMAT_IEEE) ? PCMFormat::PCM_FLT : PCMFormat::PCM_32;
 		break;
 	case 64:
-		internalFmt = (wavHeader.format == WaveFormatCode::FORMAT_IEEE) ? PCMFormat::PCM_DBL : PCMFormat::PCM_64;
+		data->sourceFormat = (wavHeader.format == WaveFormatCode::FORMAT_IEEE) ? PCMFormat::PCM_DBL : PCMFormat::PCM_64;
 		break;
 	}
 
-	ConvertToFloat32(data->samples.data(), memory.data() + DataChunkInfo.offset, totalSamples, internalFmt);
+	ConvertToFloat32(data->samples.data(), memory.data() + DataChunkInfo.offset, totalSamples, data->sourceFormat);
     
     return IOError::NoError;
 }

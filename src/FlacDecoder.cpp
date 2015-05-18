@@ -75,26 +75,6 @@ public:
             d->lengthSeconds = (float) numSamples / (float) d->sampleRate;
             
             auto totalSamples = numSamples * d->channelCount;
-            
-			// N.B.: "Currently the reference encoder and decoders only support up to 24 bits per sample."
-
-            d->sourceFormat = PCMFormat::PCM_END;
-
-			switch (d->bitDepth)
-			{
-			case 8:
-				internalFmt = PCMFormat::PCM_S8;
-				break;
-			case 16:
-				internalFmt = PCMFormat::PCM_16;
-				break;
-			case 24:
-				internalFmt = PCMFormat::PCM_24;
-				break;
-			default:
-				throw std::runtime_error("unsupported FLAC bit depth");
-				break;
-			}
 
             // Next, process internal buffer into the user-visible samples array
             ConvertToFloat32(d->samples.data(), internalBuffer.data(), totalSamples, d->sourceFormat);
@@ -118,12 +98,13 @@ public:
     
     void processMetadata(const FLAC__StreamMetadata_StreamInfo & info)
     {
+        // N.B.: "Currently the reference encoder and decoders only support up to 24 bits per sample."
         d->sampleRate = info.sample_rate;
         d->channelCount = info.channels; // Assert 1 to 8
-        d->sourceF = info.bits_per_sample; // Assert 4 to 32
+        d->sourceFormat = MakeFormatForBits(info.bits_per_sample, false, true);
         d->frameSize = info.channels * info.bits_per_sample;
         
-        const size_t bytesPerSample = d->bitDepth / 8;
+        const size_t bytesPerSample = GetFormatBitsPerSample(d->sourceFormat) / 8;
 
         numSamples = (size_t) info.total_samples;
         
@@ -139,7 +120,7 @@ public:
     {
         FlacDecoderInternal * decoder = reinterpret_cast<FlacDecoderInternal *>(userPtr);
         
-        const size_t bytesPerSample = decoder->d->bitDepth / 8;
+        const size_t bytesPerSample = GetFormatBitsPerSample(decoder->d->sourceFormat) / 8;
         
         auto dataPtr = decoder->internalBuffer.data();
         

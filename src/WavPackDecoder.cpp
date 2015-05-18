@@ -43,38 +43,23 @@ public:
             throw std::runtime_error("Not a WavPack file");
         }
         
+        auto bitdepth = WavpackGetBitsPerSample(context);
+        
         d->sampleRate = WavpackGetSampleRate(context);
         d->channelCount = WavpackGetNumChannels(context);
-        d->bitDepth = WavpackGetBitsPerSample(context);
         d->lengthSeconds = double(getLengthInSeconds());
-        d->frameSize = d->channelCount * d->bitDepth;
+        d->frameSize = d->channelCount * bitdepth;
         
         //@todo support channel masks
         // WavpackGetChannelMask
         
         auto totalSamples = size_t(getTotalSamples());
         
-        PCMFormat internalFmt = PCMFormat::PCM_END;
-        
         int mode = WavpackGetMode(context);
         int isFloatingPoint = (MODE_FLOAT & mode);
         
-        switch (d->bitDepth)
-        {
-            case 16:
-                internalFmt = PCMFormat::PCM_16;
-                break;
-            case 24:
-                internalFmt = PCMFormat::PCM_24;
-                break;
-            case 32:
-                internalFmt = isFloatingPoint ? PCMFormat::PCM_FLT : PCMFormat::PCM_32;
-                break;
-            default:
-                throw std::runtime_error("unsupported WavPack bit depth");
-                break;
-        }
-        
+        d->sourceFormat = MakeFormatForBits(bitdepth, isFloatingPoint, false);
+
         /* From the docs:
             "... required memory at "buffer" is 4 * samples * num_channels bytes. The
             audio data is returned right-justified in 32-bit longs in the endian
@@ -89,7 +74,7 @@ public:
         
         // Next, process internal buffer into the user-visible samples array
         if (!isFloatingPoint)
-            ConvertToFloat32(d->samples.data(), internalBuffer.data(), totalSamples * d->channelCount, internalFmt);
+            ConvertToFloat32(d->samples.data(), internalBuffer.data(), totalSamples * d->channelCount, d->sourceFormat);
         
     }
     
