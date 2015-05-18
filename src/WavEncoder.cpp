@@ -99,8 +99,7 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
     fout.write(GenerateChunkCodeChar('d', 'a', 't', 'a'), 4);
     
     // + data chunk size
-    auto numSamplesBytes =  d->samples.size() * sizeof(float);
-    toBytes(samplesSizeInBytes, chunkSizeBuff);
+    toBytes(int(samplesSizeInBytes), chunkSizeBuff);
     fout.write(chunkSizeBuff, 4);
     
     // Debugging -- assume IEEE_Float
@@ -124,7 +123,7 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
     fout.seekp(4);
     
     // Total size of the file, less 8 bytes for the RIFF header
-    toBytes(totalSize - 8 , chunkSizeBuff);
+    toBytes(int(totalSize - 8), chunkSizeBuff);
     
     fout.write(chunkSizeBuff, 4);
 
