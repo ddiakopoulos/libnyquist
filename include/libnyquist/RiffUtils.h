@@ -40,8 +40,6 @@ namespace nqr
 struct EncoderParams
 {
     int channelCount;
-    int sampleRate;
-    int bitDepth;
     PCMFormat targetFormat;
     DitherType dither;
 };
