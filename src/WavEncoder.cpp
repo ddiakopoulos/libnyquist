@@ -67,12 +67,6 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
         return EncoderError::BufferTooBig;
     }
     
-    // No resampling
-    if (d->sampleRate != p.sampleRate)
-    {
-        return EncoderError::UnsupportedSamplerate;
-    }
-    
     // Don't support PCM_64 or PCM_DBL
     if (GetFormatBitsPerSample(p.targetFormat) > 32)
     {
@@ -98,15 +92,20 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
     fout.write(GenerateChunkCodeChar('W', 'A', 'V', 'E'), 4);
     
     // Fmt header
-    auto header = MakeWaveHeader(p);
+    auto header = MakeWaveHeader(p, d->sampleRate);
     fout.write(reinterpret_cast<char*>(&header), sizeof(WaveChunkHeader));
     
     auto sourceBits = GetFormatBitsPerSample(d->sourceFormat);
     auto targetBits = GetFormatBitsPerSample(p.targetFormat);
     
-    if (p.targetFormat == PCM_FLT || p.targetFormat == PCM_DBL)
+    // Write out fact chunk
+    if (p.targetFormat == PCM_FLT)
     {
-        
+        uint32_t four = 4;
+        uint32_t dataSz = int(d->samples.size() / d->channelCount);
+        fout.write(GenerateChunkCodeChar('f', 'a', 'c', 't'), 4);
+        fout.write(reinterpret_cast<const char *>(&four), sizeof(four));
+        fout.write(reinterpret_cast<const char *>(&dataSz), sizeof(dataSz)); // Number of samples (per channel)
     }
     
     // Data header

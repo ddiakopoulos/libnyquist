@@ -77,7 +77,7 @@ auto chunk = GenerateChunkCode(a, b, c, d);
 
 ChunkHeaderInfo ScanForChunk(const std::vector<uint8_t> & fileData, uint32_t chunkMarker);
     
-WaveChunkHeader MakeWaveHeader(const EncoderParams param);
+WaveChunkHeader MakeWaveHeader(const EncoderParams param, const int sampleRate);
 
 } // end namespace nqr
 
