@@ -61,16 +61,7 @@
     <ClCompile Include="..\third_party\wavpack\src\wputils.c">
       <Filter>third_party\wavpack</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\FlacDependencies.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(SolutionDir)..\src\Main.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\VorbisDecoder.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\VorbisDependencies.c">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\third_party\opus\celt\celt_decoder.c">
@@ -79,7 +70,16 @@
     <ClCompile Include="..\third_party\opus\celt\celt_encoder.c">
       <Filter>third_party\celt</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\FlacDependencies.c">
+      <Filter>src\deps</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\OpusDependencies.c">
+      <Filter>src\deps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\VorbisDependencies.c">
+      <Filter>src\deps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\WavEncoder.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -99,19 +99,10 @@
     <ClInclude Include="$(SolutionDir)..\include\libnyquist\OpusDecoder.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="$(SolutionDir)..\include\libnyquist\RingBuffer.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SolutionDir)..\include\libnyquist\PostProcess.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="$(SolutionDir)..\include\libnyquist\WavDecoder.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="$(SolutionDir)..\include\libnyquist\WavPackDecoder.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="$(SolutionDir)..\include\libnyquist\Dither.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\libnyquist\CafDecoder.h">
@@ -121,6 +112,18 @@
       <Filter>third_party\rtaudio</Filter>
     </ClInclude>
     <ClInclude Include="..\include\libnyquist\VorbisDecoder.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\Dither.h">
+      <Filter>include\util</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\RingBuffer.h">
+      <Filter>include\util</Filter>
+    </ClInclude>
+    <ClInclude Include="$(SolutionDir)..\include\libnyquist\PostProcess.h">
+      <Filter>include\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\libnyquist\WavEncoder.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
@@ -142,6 +145,12 @@
     </Filter>
     <Filter Include="third_party\celt">
       <UniqueIdentifier>{d38860a7-b4e5-4a1e-99a5-c4eac7e1c013}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\util">
+      <UniqueIdentifier>{f27e7823-c56c-4e03-af63-2ef0b1e83cbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\deps">
+      <UniqueIdentifier>{d839471f-71d1-471e-95e0-c33af9bb64bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

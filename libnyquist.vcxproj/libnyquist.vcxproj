@@ -15,7 +15,6 @@
     <ClCompile Include="$(SolutionDir)..\src\AudioDecoder.cpp" />
     <ClCompile Include="$(SolutionDir)..\src\Common.cpp" />
     <ClCompile Include="$(SolutionDir)..\src\FlacDecoder.cpp" />
-    <ClCompile Include="$(SolutionDir)..\src\Main.cpp" />
     <ClCompile Include="$(SolutionDir)..\src\OpusDecoder.cpp" />
     <ClCompile Include="$(SolutionDir)..\src\WavDecoder.cpp" />
     <ClCompile Include="$(SolutionDir)..\src\AudioDevice.cpp" />
@@ -25,6 +24,7 @@
     <ClCompile Include="..\src\OpusDependencies.c" />
     <ClCompile Include="..\src\VorbisDecoder.cpp" />
     <ClCompile Include="..\src\VorbisDependencies.c" />
+    <ClCompile Include="..\src\WavEncoder.cpp" />
     <ClCompile Include="..\third_party\opus\celt\celt_decoder.c" />
     <ClCompile Include="..\third_party\opus\celt\celt_encoder.c" />
     <ClCompile Include="..\third_party\wavpack\src\bits.c" />
@@ -53,6 +53,7 @@
     <ClInclude Include="$(SolutionDir)..\include\libnyquist\WavPackDecoder.h" />
     <ClInclude Include="..\include\libnyquist\CafDecoder.h" />
     <ClInclude Include="..\include\libnyquist\VorbisDecoder.h" />
+    <ClInclude Include="..\include\libnyquist\WavEncoder.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0EEC3739-F60A-4B90-8B75-9E1AFF28106A}</ProjectGuid>
@@ -60,13 +61,13 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
