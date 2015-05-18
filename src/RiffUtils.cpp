@@ -47,8 +47,6 @@ ChunkHeaderInfo nqr::ScanForChunk(const std::vector<uint8_t> & fileData, uint32_
     return {0, 0};
 };
 
-
-
 WaveChunkHeader nqr::MakeWaveHeader(const EncoderParams param, const int sampleRate)
 {
     WaveChunkHeader header;

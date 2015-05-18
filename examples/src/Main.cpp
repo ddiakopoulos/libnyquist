@@ -98,7 +98,8 @@ int main()
 	}
     
     // Test wav file encoder
-    encoder.WriteFile({2, PCM_FLT, DITHER_NONE}, fileData, "encoded.wav");
-        
+    int encoderStatus = encoder.WriteFile({2, PCM_24, DITHER_NONE}, fileData, "encoded.wav");
+    std::cout << "Encoder Status: " << encoderStatus << std::endl;
+    
 	return 0;
 }

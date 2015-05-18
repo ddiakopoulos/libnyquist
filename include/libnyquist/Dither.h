@@ -26,9 +26,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef DITHER_OPERATIONS_H
 #define DITHER_OPERATIONS_H
 
-#include "Common.h"
-
-//@todo libnyquist will, at some point, allow conversion between arbitrary bit-depths
+#include <random>
 
 namespace nqr
 {
@@ -36,10 +34,27 @@ namespace nqr
 enum DitherType
 {
     DITHER_NONE,
-    DITHER_ONE,
-    DITHER_TWO
+    DITHER_TRIANGLE
 };
     
+class TriDither
+{
+    std::uniform_real_distribution<float> distribution;
+    std::mt19937 rndGen;
+    float prev = 0.0f;
+public:
+    
+    TriDither() : distribution(-0.5f, +0.5f) {}
+    
+    float operator()(float s)
+    {
+        const float value = distribution(rndGen);
+        s = s + value - prev;
+        prev = value;
+        return s;
+    }
+};
+
 } // end namespace nqr
 
 #endif

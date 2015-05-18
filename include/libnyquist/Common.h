@@ -35,7 +35,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <cassert>
 #include <type_traits>
 #include <numeric>
+#include <array>
 #include "PostProcess.h"
+#include "Dither.h"
 
 namespace nqr
 {
@@ -116,7 +118,6 @@ inline bool isOdd(const uint32_t x)
 {
     return (x & 0x1);
 }
-
     
 #ifdef ARCH_CPU_LITTLE_ENDIAN
     #define Read16(n) (n)
@@ -181,6 +182,22 @@ inline int32_t Pack(uint8_t a, uint8_t b, uint8_t c)
     #endif
 }
 
+inline std::array<uint8_t, 3> Unpack(uint32_t a)
+{
+    static std::array<uint8_t, 3> output;
+    
+    #ifdef ARCH_CPU_LITTLE_ENDIAN
+        output[0] = a >> 0;
+        output[1] = a >> 8;
+        output[2] = a >> 16;
+    #else
+        output[0] = a >> 16;
+        output[1] = a >> 8;
+        output[2] = a >> 0;
+    #endif
+    return output;
+}
+
 //////////////////////////
 // Conversion Utilities //
 //////////////////////////
@@ -192,11 +209,17 @@ inline int32_t Pack(uint8_t a, uint8_t b, uint8_t c)
 
 static const float NQR_BYTE_2_FLT = 1.0f / 127.0f;
 
-#define int8_to_float32(s)  ( (float) (s) * NQR_BYTE_2_FLT)
-#define uint8_to_float32(s) ( ((float) (s) - 128) * NQR_BYTE_2_FLT)
-#define int16_to_float32(s) ( (float) (s) / NQR_INT16_MAX)
-#define int24_to_float32(s) ( (float) (s) / NQR_INT24_MAX)
-#define int32_to_float32(s) ( (float) (s) / NQR_INT32_MAX)
+#define int8_to_float32(s)  ((float) (s) * NQR_BYTE_2_FLT)
+#define uint8_to_float32(s)(((float) (s) - 128) * NQR_BYTE_2_FLT)
+#define int16_to_float32(s) ((float) (s) / NQR_INT16_MAX)
+#define int24_to_float32(s) ((float) (s) / NQR_INT24_MAX)
+#define int32_to_float32(s) ((float) (s) / NQR_INT32_MAX)
+    
+#define float32_to_int8(s)  (int8_t)  (s * 127.f)
+#define float32_to_uint8(s) (uint8_t)((s * 127.f) + 128)
+#define float32_to_int16(s) (int16_t) (s * NQR_INT16_MAX)
+#define float32_to_int24(s) (int32_t) (s * NQR_INT24_MAX)
+#define float32_to_int32(s) (int32_t) (s * NQR_INT32_MAX)
 
 //@todo add 12, 20 for flac
 enum PCMFormat
@@ -218,6 +241,8 @@ void ConvertToFloat32(float * dst, const uint8_t * src, const size_t N, PCMForma
 
 // Src data is always aligned to 4 bytes (WavPack, primarily)
 void ConvertToFloat32(float * dst, const int32_t * src, const size_t N, PCMFormat f);
+
+void ConvertFromFloat32(uint8_t * dst, const float * src, const size_t N, PCMFormat f, DitherType t = DITHER_NONE);
 
 //////////////////////////
 // User Data + File Ops //

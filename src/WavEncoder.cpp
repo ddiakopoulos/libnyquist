@@ -36,15 +36,9 @@ inline void toBytes(int value, char * arr)
     arr[3] = (value >> 24) & 0xFF;
 }
 
-WavEncoder::WavEncoder()
-{
-    
-}
+WavEncoder::WavEncoder() {}
 
-WavEncoder::~WavEncoder()
-{
-    
-}
+WavEncoder::~WavEncoder() {}
 
 int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std::string & path)
 {
@@ -59,7 +53,7 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
     }
     
     auto maxFileSizeInBytes = std::numeric_limits<uint32_t>::max();
-    auto samplesSizeInBytes = d->samples.size() * sizeof(float);
+    auto samplesSizeInBytes = (d->samples.size() * GetFormatBitsPerSample(p.targetFormat)) / 8;
     
     // 64 arbitrary
     if ((samplesSizeInBytes - 64) >= maxFileSizeInBytes)
@@ -82,7 +76,7 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
     
     char * chunkSizeBuff = new char[4];
     
-    // Initial size
+    // Initial size (this is changed after we're done writing the file)
     toBytes(36, chunkSizeBuff);
 
     // RIFF file header
@@ -98,14 +92,18 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
     auto sourceBits = GetFormatBitsPerSample(d->sourceFormat);
     auto targetBits = GetFormatBitsPerSample(p.targetFormat);
     
+    ////////////////////////////
+    //@todo - channel mixing! //
+    ////////////////////////////
+    
     // Write out fact chunk
     if (p.targetFormat == PCM_FLT)
     {
         uint32_t four = 4;
         uint32_t dataSz = int(d->samples.size() / d->channelCount);
         fout.write(GenerateChunkCodeChar('f', 'a', 'c', 't'), 4);
-        fout.write(reinterpret_cast<const char *>(&four), sizeof(four));
-        fout.write(reinterpret_cast<const char *>(&dataSz), sizeof(dataSz)); // Number of samples (per channel)
+        fout.write(reinterpret_cast<const char *>(&four), 4);
+        fout.write(reinterpret_cast<const char *>(&dataSz), 4); // Number of samples (per channel)
     }
     
     // Data header
@@ -115,13 +113,17 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
     toBytes(int(samplesSizeInBytes), chunkSizeBuff);
     fout.write(chunkSizeBuff, 4);
     
-    // Apply dithering
-    if (sourceBits != targetBits && p.dither != DITHER_NONE)
+    if (targetBits <= sourceBits && p.targetFormat != PCM_FLT)
     {
-        
+        // At most need this number of bytes in our copy
+        std::vector<uint8_t> samplesCopy(samplesSizeInBytes);
+        ConvertFromFloat32(samplesCopy.data(), d->samples.data(), d->samples.size(), p.targetFormat, p.dither);
+        fout.write(reinterpret_cast<const char*>(samplesCopy.data()), samplesSizeInBytes);
     }
     else
     {
+        // Handle PCM_FLT. Coming in from AudioData ensures we start with 32 bits, so we're fine
+        // since we've also rejected formats with more than 32 bits above.
         fout.write(reinterpret_cast<const char*>(d->samples.data()), samplesSizeInBytes);
     }
     
