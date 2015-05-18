@@ -152,23 +152,25 @@ void nqr::ConvertFromFloat32(uint8_t * dst, const float * src, const size_t N, P
     
     assert(f != PCM_END);
     
+    TriDither dither;
+    
     if (f == PCM_U8)
     {
         uint8_t * destPtr = reinterpret_cast<uint8_t *>(dst);
         for (size_t i = 0; i < N; ++i)
-            destPtr[i] = float32_to_uint8(src[i]);
+            destPtr[i] = (t == DITHER_TRIANGLE) ? (uint8_t) lroundf(dither(float32_to_uint8(src[i]))) : (uint8_t) float32_to_uint8(src[i]);
     }
     else if (f == PCM_S8)
     {
         int8_t * destPtr = reinterpret_cast<int8_t *>(dst);
         for (size_t i = 0; i < N; ++i)
-            destPtr[i] = float32_to_int8(src[i]);
+            destPtr[i] = (t == DITHER_TRIANGLE) ? (int8_t) lroundf(dither(float32_to_int8(src[i]))) : (int8_t) float32_to_int8(src[i]);
     }
     else if (f == PCM_16)
     {
         int16_t * destPtr = reinterpret_cast<int16_t *>(dst);
         for (size_t i = 0; i < N; ++i)
-            destPtr[i] = float32_to_int16(src[i]);
+            destPtr[i] = (t == DITHER_TRIANGLE) ? (int16_t) lroundf(dither(float32_to_int16(src[i]))) : (int16_t) float32_to_int16(src[i]);
     }
     else if (f == PCM_24)
     {
@@ -176,7 +178,7 @@ void nqr::ConvertFromFloat32(uint8_t * dst, const float * src, const size_t N, P
         size_t c = 0;
         for (size_t i = 0; i < N; ++i)
         {
-            auto sample = float32_to_int24(src[i]);
+            int32_t sample = (t == DITHER_TRIANGLE) ? (int32_t) lroundf(dither(float32_to_int24(src[i]))) : (int32_t) float32_to_int24(src[i]);
             auto unpacked = Unpack(sample); // Handles endian swap
             destPtr[c] = unpacked[0];
             destPtr[c+1] = unpacked[1];
@@ -188,7 +190,7 @@ void nqr::ConvertFromFloat32(uint8_t * dst, const float * src, const size_t N, P
     {
         int32_t * destPtr = reinterpret_cast<int32_t *>(dst);
         for (size_t i = 0; i < N; ++i)
-            destPtr[i] = float32_to_int32(src[i]);
+            destPtr[i] = (t == DITHER_TRIANGLE) ? (int32_t) lroundf(dither(float32_to_int32(src[i]))) : (int32_t) float32_to_int32(src[i]);
     }
 }
 

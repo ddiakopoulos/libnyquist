@@ -215,11 +215,11 @@ static const float NQR_BYTE_2_FLT = 1.0f / 127.0f;
 #define int24_to_float32(s) ((float) (s) / NQR_INT24_MAX)
 #define int32_to_float32(s) ((float) (s) / NQR_INT32_MAX)
     
-#define float32_to_int8(s)  (int8_t)  (s * 127.f)
-#define float32_to_uint8(s) (uint8_t)((s * 127.f) + 128)
-#define float32_to_int16(s) (int16_t) (s * NQR_INT16_MAX)
-#define float32_to_int24(s) (int32_t) (s * NQR_INT24_MAX)
-#define float32_to_int32(s) (int32_t) (s * NQR_INT32_MAX)
+#define float32_to_int8(s)  (float) (s * 127.f)
+#define float32_to_uint8(s) (float) ((s * 127.f) + 128)
+#define float32_to_int16(s) (float) (s * NQR_INT16_MAX)
+#define float32_to_int24(s) (float) (s * NQR_INT24_MAX)
+#define float32_to_int32(s) (float) (s * NQR_INT32_MAX)
 
 //@todo add 12, 20 for flac
 enum PCMFormat
