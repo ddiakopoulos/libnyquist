@@ -106,7 +106,7 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
     
     // Debugging -- assume IEEE_Float
     
-    auto LookupB
+    auto what = GetFormatBitsPerSample(d->sourceFmt);
     fout.write(reinterpret_cast<const char*>(d->samples.data()), numSamplesBytes);
     
     // Find size

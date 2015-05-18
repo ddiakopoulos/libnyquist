@@ -167,3 +167,22 @@ int nqr::GetFormatBitsPerSample(PCMFormat f)
             return 0;
     }
 }
+
+PCMFormat nqr::MakeFormatForBits(int bits, bool floatingPt, bool isSigned)
+{
+    switch(bits)
+    {
+        case 8:
+            return (isSigned) ? PCM_S8 : PCM_U8;
+        case 16:
+            return PCM_16;
+        case 24:
+            return PCM_24;
+        case 32:
+            return (floatingPt) ? PCM_FLT : PCM_32;
+        case 64:
+            return (floatingPt) ? PCM_DBL : PCM_64;
+        default:
+            return PCM_END;
+    }
+}

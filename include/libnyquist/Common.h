@@ -221,10 +221,11 @@ struct AudioData
 {
 	int channelCount;
 	int sampleRate;
-    int bitDepth;
 	double lengthSeconds;
 	size_t frameSize; // channels * bits per sample
 	std::vector<float> samples;
+    PCMFormat sourceFormat;
+    
     //@todo: add field: channel layout
     //@todo: add field: lossy / lossless
     //@todo: audio data loaded (for metadata only)
@@ -247,6 +248,7 @@ struct NyquistFileBuffer
 NyquistFileBuffer ReadFile(std::string pathToFile);
     
 int GetFormatBitsPerSample(PCMFormat f);
+PCMFormat MakeFormatForBits(int bits, bool floatingPt, bool isSigned);
 
 } // end namespace nqr
 

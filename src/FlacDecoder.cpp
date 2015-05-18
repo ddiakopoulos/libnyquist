@@ -78,7 +78,7 @@ public:
             
 			// N.B.: "Currently the reference encoder and decoders only support up to 24 bits per sample."
 
-            PCMFormat internalFmt = PCMFormat::PCM_END;
+            d->sourceFormat = PCMFormat::PCM_END;
 
 			switch (d->bitDepth)
 			{
@@ -97,7 +97,7 @@ public:
 			}
 
             // Next, process internal buffer into the user-visible samples array
-            ConvertToFloat32(d->samples.data(), internalBuffer.data(), totalSamples, internalFmt);
+            ConvertToFloat32(d->samples.data(), internalBuffer.data(), totalSamples, d->sourceFormat);
         }
         
         else
@@ -120,7 +120,7 @@ public:
     {
         d->sampleRate = info.sample_rate;
         d->channelCount = info.channels; // Assert 1 to 8
-        d->bitDepth = info.bits_per_sample; // Assert 4 to 32
+        d->sourceF = info.bits_per_sample; // Assert 4 to 32
         d->frameSize = info.channels * info.bits_per_sample;
         
         const size_t bytesPerSample = d->bitDepth / 8;
