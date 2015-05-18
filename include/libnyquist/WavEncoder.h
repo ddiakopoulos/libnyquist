@@ -46,6 +46,7 @@ class WavEncoder
         FileIOError,
         UnsupportedSamplerate,
         UnsupportedChannelConfiguration,
+        UnsupportedBitdepth,
         BufferTooBig,
     };
     

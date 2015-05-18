@@ -73,6 +73,12 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
         return EncoderError::UnsupportedSamplerate;
     }
     
+    // Don't support PCM_64 or PCM_DBL
+    if (GetFormatBitsPerSample(p.targetFormat) > 32)
+    {
+        return EncoderError::UnsupportedBitdepth;
+    }
+    
     std::ofstream fout(path.c_str(), std::ios::out | std::ios::binary);
     
     if (!fout.is_open())
@@ -95,6 +101,14 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
     auto header = MakeWaveHeader(p);
     fout.write(reinterpret_cast<char*>(&header), sizeof(WaveChunkHeader));
     
+    auto sourceBits = GetFormatBitsPerSample(d->sourceFormat);
+    auto targetBits = GetFormatBitsPerSample(p.targetFormat);
+    
+    if (p.targetFormat == PCM_FLT || p.targetFormat == PCM_DBL)
+    {
+        
+    }
+    
     // Data header
     fout.write(GenerateChunkCodeChar('d', 'a', 't', 'a'), 4);
     
@@ -102,10 +116,6 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
     toBytes(int(samplesSizeInBytes), chunkSizeBuff);
     fout.write(chunkSizeBuff, 4);
     
-    // Debugging -- assume IEEE_Float
-    auto sourceBits = GetFormatBitsPerSample(d->sourceFormat);
-    auto targetBits = GetFormatBitsPerSample(p.targetFormat);
-
     // Apply dithering
     if (sourceBits != targetBits && p.dither != DITHER_NONE)
     {
