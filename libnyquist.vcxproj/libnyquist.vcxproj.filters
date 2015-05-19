@@ -79,7 +79,9 @@
     <ClCompile Include="$(ProjectDir)..\src\Common.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="$(ProjectDir)..\src\RiffUtils.cpp" />
+    <ClCompile Include="$(ProjectDir)..\src\RiffUtils.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(ProjectDir)..\include\libnyquist\OpusDecoder.h">
@@ -121,7 +123,9 @@
     <ClInclude Include="$(ProjectDir)..\include\libnyquist\Dither.h">
       <Filter>include\util</Filter>
     </ClInclude>
-    <ClInclude Include="$(ProjectDir)..\include\libnyquist\RiffUtils.h" />
+    <ClInclude Include="$(ProjectDir)..\include\libnyquist\RiffUtils.h">
+      <Filter>include\util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">
