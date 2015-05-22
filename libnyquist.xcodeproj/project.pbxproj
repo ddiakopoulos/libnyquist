@@ -58,9 +58,6 @@
 		0804D1441AE6BA5100F4B1FD /* celt_encoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = celt_encoder.c; path = third_party/opus/celt/celt_encoder.c; sourceTree = SOURCE_ROOT; };
 		080A58561B0866AA00302850 /* RiffUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RiffUtils.h; path = include/libnyquist/RiffUtils.h; sourceTree = SOURCE_ROOT; };
 		080A58571B0866F600302850 /* RiffUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RiffUtils.cpp; path = src/RiffUtils.cpp; sourceTree = SOURCE_ROOT; };
-		080A586A1B086D9100302850 /* libnyquist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libnyquist.h; sourceTree = "<group>"; };
-		080A586C1B086D9100302850 /* libnyquistPriv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libnyquistPriv.h; sourceTree = "<group>"; };
-		080A586E1B086D9100302850 /* libnyquist.cp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = libnyquist.cp; sourceTree = "<group>"; };
 		081FFB181ADF803800673073 /* FlacDependencies.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = FlacDependencies.c; path = src/FlacDependencies.c; sourceTree = SOURCE_ROOT; };
 		083DB3F21B091C1100FB0661 /* WavEncoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WavEncoder.cpp; path = src/WavEncoder.cpp; sourceTree = SOURCE_ROOT; };
 		083DB3F41B091C1E00FB0661 /* WavEncoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WavEncoder.h; path = include/libnyquist/WavEncoder.h; sourceTree = SOURCE_ROOT; };
@@ -149,16 +146,6 @@
 			name = util;
 			sourceTree = "<group>";
 		};
-		080A58691B086D9100302850 /* libnyquist */ = {
-			isa = PBXGroup;
-			children = (
-				080A586A1B086D9100302850 /* libnyquist.h */,
-				080A586C1B086D9100302850 /* libnyquistPriv.h */,
-				080A586E1B086D9100302850 /* libnyquist.cp */,
-			);
-			path = libnyquist;
-			sourceTree = "<group>";
-		};
 		08894F1D1AEAA5B7007AAF90 /* wavpack */ = {
 			isa = PBXGroup;
 			children = (
@@ -182,7 +169,6 @@
 			children = (
 				08B91D281AC26FC100335131 /* libnyquist */,
 				08B91D511AC270BB00335131 /* third_party */,
-				080A58691B086D9100302850 /* libnyquist */,
 				08B91D801AC73B3B00335131 /* Frameworks */,
 				08B91D271AC26FC100335131 /* Products */,
 			);
