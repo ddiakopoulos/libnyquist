@@ -243,10 +243,10 @@
 			isa = PBXGroup;
 			children = (
 				080A58591B0867E500302850 /* util */,
-				08B91D831AC73B8000335131 /* CafDecoder.h */,
 				08B91D841AC73B8000335131 /* AudioDecoder.h */,
 				08B91D851AC73B8000335131 /* AudioDevice.h */,
 				08B91D861AC73B8000335131 /* Common.h */,
+				08B91D831AC73B8000335131 /* CafDecoder.h */,
 				08B91D881AC73B8000335131 /* FlacDecoder.h */,
 				08B91D891AC73B8000335131 /* VorbisDecoder.h */,
 				08B91D8A1AC73B8000335131 /* OpusDecoder.h */,

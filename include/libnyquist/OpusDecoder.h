@@ -27,7 +27,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define OPUS_DECODER_H
 
 #include "AudioDecoder.h"
-#include "opus/opusfile/include/opusfile.h"
 
 namespace nqr
 {

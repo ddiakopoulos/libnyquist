@@ -27,7 +27,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define VORBIS_DECODER_H
 
 #include "AudioDecoder.h"
-#include "libvorbis/include/vorbis/vorbisfile.h"
 
 namespace nqr
 {
