@@ -37,25 +37,33 @@ enum DitherType
     DITHER_TRIANGLE
 };
     
-class TriDither
+class Dither
 {
     std::uniform_real_distribution<float> distribution;
     std::mt19937 rndGen;
     float prev = 0.0f;
+    DitherType d;
 public:
     
-    TriDither() : distribution(-0.5f, +0.5f) {}
+    Dither(DitherType d) : distribution(-0.5f, +0.5f), d(d) {}
     
     float operator()(float s)
     {
-        const float value = distribution(rndGen);
-        s = s + value - prev;
-        prev = value;
-        return s;
+        if (d == DITHER_TRIANGLE)
+        {
+            const float value = distribution(rndGen);
+            s = s + value - prev;
+            prev = value;
+            return s;
+        }
+        else
+        {
+            return s;
+        }
+
     }
 };
 
 } // end namespace nqr
 
 #endif
-
