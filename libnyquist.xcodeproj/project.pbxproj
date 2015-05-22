@@ -25,10 +25,6 @@
 		08894F311AEAA5D7007AAF90 /* unpack3.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F261AEAA5D7007AAF90 /* unpack3.c */; };
 		08894F321AEAA5D7007AAF90 /* words.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F271AEAA5D7007AAF90 /* words.c */; };
 		08894F331AEAA5D7007AAF90 /* wputils.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F281AEAA5D7007AAF90 /* wputils.c */; };
-		08B91D791AC273A900335131 /* libpthread.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B91D781AC273A900335131 /* libpthread.dylib */; };
-		08B91D7B1AC273AE00335131 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B91D7A1AC273AE00335131 /* CoreAudio.framework */; };
-		08B91D7D1AC273E400335131 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B91D7C1AC273E400335131 /* CoreFoundation.framework */; };
-		08B91D7F1AC273EA00335131 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B91D7E1AC273EA00335131 /* CoreServices.framework */; };
 		08B91D9A1AC73B8A00335131 /* CafDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D901AC73B8A00335131 /* CafDecoder.cpp */; };
 		08B91D9B1AC73B8A00335131 /* AudioDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D911AC73B8A00335131 /* AudioDecoder.cpp */; };
 		08B91D9C1AC73B8A00335131 /* AudioDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D921AC73B8A00335131 /* AudioDevice.cpp */; };
@@ -74,10 +70,6 @@
 		08894F271AEAA5D7007AAF90 /* words.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = words.c; path = third_party/wavpack/src/words.c; sourceTree = SOURCE_ROOT; };
 		08894F281AEAA5D7007AAF90 /* wputils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = wputils.c; path = third_party/wavpack/src/wputils.c; sourceTree = SOURCE_ROOT; };
 		08B91D261AC26FC100335131 /* libnyquist.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnyquist.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		08B91D781AC273A900335131 /* libpthread.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpthread.dylib; path = usr/lib/libpthread.dylib; sourceTree = SDKROOT; };
-		08B91D7A1AC273AE00335131 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
-		08B91D7C1AC273E400335131 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		08B91D7E1AC273EA00335131 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		08B91D831AC73B8000335131 /* CafDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CafDecoder.h; path = include/libnyquist/CafDecoder.h; sourceTree = SOURCE_ROOT; };
 		08B91D841AC73B8000335131 /* AudioDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioDecoder.h; path = include/libnyquist/AudioDecoder.h; sourceTree = SOURCE_ROOT; };
 		08B91D851AC73B8000335131 /* AudioDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioDevice.h; path = include/libnyquist/AudioDevice.h; sourceTree = SOURCE_ROOT; };
@@ -106,10 +98,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08B91D7F1AC273EA00335131 /* CoreServices.framework in Frameworks */,
-				08B91D7D1AC273E400335131 /* CoreFoundation.framework in Frameworks */,
-				08B91D7B1AC273AE00335131 /* CoreAudio.framework in Frameworks */,
-				08B91D791AC273A900335131 /* libpthread.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,10 +192,6 @@
 		08B91D801AC73B3B00335131 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				08B91D7E1AC273EA00335131 /* CoreServices.framework */,
-				08B91D7C1AC273E400335131 /* CoreFoundation.framework */,
-				08B91D7A1AC273AE00335131 /* CoreAudio.framework */,
-				08B91D781AC273A900335131 /* libpthread.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
