@@ -42,7 +42,13 @@ WavEncoder::~WavEncoder() {}
 
 int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std::string & path)
 {
-    if (d->samples.size() <= 32)
+    // Cast away const because we know what we are doing (Hopefully?)
+    float * sampleData = const_cast<float *>(d->samples.data());
+    size_t sampleDataSize = d->samples.size();
+    
+    std::vector<float> sampleDataOptionalMix;
+    
+    if (sampleDataSize <= 32)
     {
         return EncoderError::InsufficientSampleData;
     }
@@ -52,8 +58,44 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
         return EncoderError::UnsupportedChannelConfiguration;
     }
     
+    // Handle Channel Mixing --
+    
+    // Mono => Stereo
+    if (d->channelCount == 1 && p.channelCount == 2)
+    {
+        sampleDataOptionalMix.resize(sampleDataSize * 2);
+        MonoToStereo(sampleData, sampleDataOptionalMix.data(), sampleDataSize); // Mix
+        
+        // Re-point data
+        sampleData = sampleDataOptionalMix.data();
+        sampleDataSize = sampleDataOptionalMix.size();
+    }
+    
+    // Stereo => Mono
+    else if (d->channelCount == 2 && p.channelCount == 1)
+    {
+        sampleDataOptionalMix.resize(sampleDataSize / 2);
+        StereoToMono(sampleData, sampleDataOptionalMix.data(), sampleDataSize); // Mix
+        
+        // Re-point data
+        sampleData = sampleDataOptionalMix.data();
+        sampleDataSize = sampleDataOptionalMix.size();
+        
+    }
+    
+    else if (d->channelCount == p.channelCount)
+    {
+        // No op
+    }
+    
+    else
+    {
+        return EncoderError::UnsupportedChannelMix;
+    }
+    // -- End Channel Mixing
+    
     auto maxFileSizeInBytes = std::numeric_limits<uint32_t>::max();
-    auto samplesSizeInBytes = (d->samples.size() * GetFormatBitsPerSample(p.targetFormat)) / 8;
+    auto samplesSizeInBytes = (sampleDataSize * GetFormatBitsPerSample(p.targetFormat)) / 8;
     
     // 64 arbitrary
     if ((samplesSizeInBytes - 64) >= maxFileSizeInBytes)
@@ -100,7 +142,7 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
     if (p.targetFormat == PCM_FLT)
     {
         uint32_t four = 4;
-        uint32_t dataSz = int(d->samples.size() / d->channelCount);
+        uint32_t dataSz = int(sampleDataSize / p.channelCount);
         fout.write(GenerateChunkCodeChar('f', 'a', 'c', 't'), 4);
         fout.write(reinterpret_cast<const char *>(&four), 4);
         fout.write(reinterpret_cast<const char *>(&dataSz), 4); // Number of samples (per channel)
@@ -117,14 +159,14 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
     {
         // At most need this number of bytes in our copy
         std::vector<uint8_t> samplesCopy(samplesSizeInBytes);
-        ConvertFromFloat32(samplesCopy.data(), d->samples.data(), d->samples.size(), p.targetFormat, p.dither);
+        ConvertFromFloat32(samplesCopy.data(), sampleData, sampleDataSize, p.targetFormat, p.dither);
         fout.write(reinterpret_cast<const char*>(samplesCopy.data()), samplesSizeInBytes);
     }
     else
     {
         // Handle PCM_FLT. Coming in from AudioData ensures we start with 32 bits, so we're fine
         // since we've also rejected formats with more than 32 bits above.
-        fout.write(reinterpret_cast<const char*>(d->samples.data()), samplesSizeInBytes);
+        fout.write(reinterpret_cast<const char*>(sampleData), samplesSizeInBytes);
     }
     
     // Padding byte

@@ -47,6 +47,7 @@ class WavEncoder
         UnsupportedSamplerate,
         UnsupportedChannelConfiguration,
         UnsupportedBitdepth,
+        UnsupportedChannelMix,
         BufferTooBig,
     };
     

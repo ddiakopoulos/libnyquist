@@ -33,13 +33,13 @@ int main()
 		//auto result = loader.Load(fileData, "test_data/1ch/44100/8/test.wav");
 		//auto result = loader.Load(fileData, "test_data/1ch/44100/16/test.wav");
 		//auto result = loader.Load(fileData, "test_data/1ch/44100/24/test.wav");
-		//auto result = loader.Load(fileData, "test_data/1ch/44100/32/test.wav");
+		auto result = loader.Load(fileData, "test_data/1ch/44100/32/test.wav");
 		//auto result = loader.Load(fileData, "test_data/1ch/44100/64/test.wav");
 		
 		//auto result = loader.Load(fileData, "test_data/2ch/44100/8/test.wav");
 		//auto result = loader.Load(fileData, "test_data/2ch/44100/16/test.wav");
 		//auto result = loader.Load(fileData, "test_data/2ch/44100/24/test.wav");
-		auto result = loader.Load(fileData, "test_data/2ch/44100/32/test.wav");
+		//auto result = loader.Load(fileData, "test_data/2ch/44100/32/test.wav");
 		//auto result = loader.Load(fileData, "test_data/2ch/44100/64/test.wav");
 		
 		//auto result = loader.Load(fileData, "test_data/ad_hoc/6_channel_44k_16b.wav");
