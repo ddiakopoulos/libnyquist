@@ -25,7 +25,6 @@
 		08894F311AEAA5D7007AAF90 /* unpack3.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F261AEAA5D7007AAF90 /* unpack3.c */; };
 		08894F321AEAA5D7007AAF90 /* words.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F271AEAA5D7007AAF90 /* words.c */; };
 		08894F331AEAA5D7007AAF90 /* wputils.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F281AEAA5D7007AAF90 /* wputils.c */; };
-		08B91D771AC2713900335131 /* RtAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D751AC2713900335131 /* RtAudio.cpp */; };
 		08B91D791AC273A900335131 /* libpthread.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B91D781AC273A900335131 /* libpthread.dylib */; };
 		08B91D7B1AC273AE00335131 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B91D7A1AC273AE00335131 /* CoreAudio.framework */; };
 		08B91D7D1AC273E400335131 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B91D7C1AC273E400335131 /* CoreFoundation.framework */; };
@@ -78,8 +77,6 @@
 		08894F271AEAA5D7007AAF90 /* words.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = words.c; path = third_party/wavpack/src/words.c; sourceTree = SOURCE_ROOT; };
 		08894F281AEAA5D7007AAF90 /* wputils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = wputils.c; path = third_party/wavpack/src/wputils.c; sourceTree = SOURCE_ROOT; };
 		08B91D261AC26FC100335131 /* libnyquist.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnyquist.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		08B91D751AC2713900335131 /* RtAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RtAudio.cpp; path = third_party/rtaudio/RtAudio.cpp; sourceTree = SOURCE_ROOT; };
-		08B91D761AC2713900335131 /* RtAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RtAudio.h; path = third_party/rtaudio/RtAudio.h; sourceTree = SOURCE_ROOT; };
 		08B91D781AC273A900335131 /* libpthread.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpthread.dylib; path = usr/lib/libpthread.dylib; sourceTree = SDKROOT; };
 		08B91D7A1AC273AE00335131 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		08B91D7C1AC273E400335131 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -213,19 +210,9 @@
 			children = (
 				08894F1D1AEAA5B7007AAF90 /* wavpack */,
 				0804D1421AE6BA2F00F4B1FD /* celt */,
-				08B91D741AC2712A00335131 /* rtaudio */,
 			);
 			name = third_party;
 			path = libnyquist;
-			sourceTree = "<group>";
-		};
-		08B91D741AC2712A00335131 /* rtaudio */ = {
-			isa = PBXGroup;
-			children = (
-				08B91D751AC2713900335131 /* RtAudio.cpp */,
-				08B91D761AC2713900335131 /* RtAudio.h */,
-			);
-			name = rtaudio;
 			sourceTree = "<group>";
 		};
 		08B91D801AC73B3B00335131 /* Frameworks */ = {
@@ -359,7 +346,6 @@
 				086DADAD1AE029860031F793 /* VorbisDependencies.c in Sources */,
 				08B91DA31AC73B8A00335131 /* WavPackDecoder.cpp in Sources */,
 				08B91D9D1AC73B8A00335131 /* Common.cpp in Sources */,
-				08B91D771AC2713900335131 /* RtAudio.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
