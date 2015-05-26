@@ -19,7 +19,7 @@
     <ClCompile Include="$(ProjectDir)..\src\AudioDevice.cpp" />
     <ClCompile Include="$(ProjectDir)..\src\WavPackDecoder.cpp" />
     <ClCompile Include="$(ProjectDir)..\src\CafDecoder.cpp" />
-    <ClCompile Include="$(ProjectDir)..\src\FlacDependencies.c" />
+    <ClCompile Include="..\src\FlacDependencies.c" />
     <ClCompile Include="$(ProjectDir)..\src\OpusDependencies.c" />
     <ClCompile Include="$(ProjectDir)..\src\VorbisDecoder.cpp" />
     <ClCompile Include="$(ProjectDir)..\src\VorbisDependencies.c" />
