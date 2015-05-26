@@ -89,13 +89,13 @@ public:
     
     size_t readInternal(size_t requestedFrameCount, size_t frameOffset = 0)
     {
-        float *buffer = (float *) d->samples.data();
+        float * buffer = (float *) d->samples.data();
         size_t framesRemaining = requestedFrameCount;
         size_t totalFramesRead = 0;
         
         while(0 < framesRemaining)
         {
-            int64_t framesRead = op_read_float(fileHandle, buffer, (int)(framesRemaining * d->channelCount), nullptr);
+            auto framesRead = size_t(op_read_float(fileHandle, buffer, (int)(framesRemaining * d->channelCount), nullptr));
             
             // EOF
             if(!framesRead)
