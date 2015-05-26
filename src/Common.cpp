@@ -29,7 +29,7 @@ using namespace nqr;
 
 NyquistFileBuffer nqr::ReadFile(std::string pathToFile)
 {
-	std::cout << "[Debug] Open: " << pathToFile << std::endl;
+	//std::cout << "[Debug] Open: " << pathToFile << std::endl;
     
     FILE * audioFile = fopen(pathToFile.c_str(), "rb");
     

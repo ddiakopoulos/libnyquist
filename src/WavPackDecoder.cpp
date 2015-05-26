@@ -113,8 +113,6 @@ public:
             //if (framesRead == 0)
             //    break;
             
-            std::cout << framesRead << std::endl;
-            
             totalFramesRead += framesRead;
             framesRemaining -= framesRead;
         }

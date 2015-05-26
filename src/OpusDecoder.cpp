@@ -65,9 +65,7 @@ public:
         const OpusHead *header = op_head(fileHandle, 0);
 
         int originalSampleRate = header->input_sample_rate;
-        
-        std::cout << "Original Sample Rate: " << originalSampleRate << std::endl;
-        
+
         d->sampleRate = OPUS_SAMPLE_RATE;
         d->channelCount = (uint32_t) header->channel_count;
         d->sourceFormat = MakeFormatForBits(32, true, false);
