@@ -74,7 +74,7 @@ int NyquistIO::Load(AudioData * data, const std::string & path)
     return IOError::UnknownError;
 }
 
-int NyquistIO::Load(AudioData *data, std::string extension, std::vector<uint8_t> & buffer)
+int NyquistIO::Load(AudioData * data, std::string extension, const std::vector<uint8_t> & buffer)
 {
 	if (decoderTable.find(extension) == decoderTable.end())
     {
