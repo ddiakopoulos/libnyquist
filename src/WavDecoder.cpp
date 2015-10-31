@@ -98,24 +98,24 @@ int WavDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & me
     data->sampleRate = wavHeader.sample_rate;
     data->frameSize = wavHeader.frame_size;
     
-    std::cout << wavHeader << std::endl;
+    //std::cout << wavHeader << std::endl;
     
     bool scanForFact = false;
     bool grabExtensibleData = false;
     
     if (wavHeader.format == WaveFormatCode::FORMAT_PCM)
     {
-        std::cout << "[format id] pcm" << std::endl;
+        //std::cout << "[format id] pcm" << std::endl;
     }
     else if (wavHeader.format == WaveFormatCode::FORMAT_IEEE)
     {
-        std::cout << "[format id] ieee" << std::endl;
+        //std::cout << "[format id] ieee" << std::endl;
         scanForFact = true;
     }
     else if (wavHeader.format == WaveFormatCode::FORMAT_EXT)
     {
         // Used when (1) PCM data has more than 16 bits; (2) channels > 2; (3) bits/sample !== container size; (4) channel/speaker mapping specified
-        std::cout << "[format id] extended" << std::endl;
+        //std::cout << "[format id] extended" << std::endl;
         scanForFact = true;
         grabExtensibleData = true;
     }
