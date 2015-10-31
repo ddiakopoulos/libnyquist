@@ -56,7 +56,7 @@ public:
         auto totalSamples = size_t(getTotalSamples());
         
         int mode = WavpackGetMode(context);
-        int isFloatingPoint = (MODE_FLOAT & mode);
+        bool isFloatingPoint = (MODE_FLOAT & mode);
         
         d->sourceFormat = MakeFormatForBits(bitdepth, isFloatingPoint, false);
 
@@ -112,8 +112,6 @@ public:
             // EOF
             //if (framesRead == 0)
             //    break;
-            
-            std::cout << framesRead << std::endl;
             
             totalFramesRead += framesRead;
             framesRemaining -= framesRead;

@@ -26,6 +26,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef FLAC_DECODER_H
 #define FLAC_DECODER_H
 
+// http://lists.xiph.org/pipermail/flac-dev/2012-March/003276.html
+#define FLAC__NO_DLL
+
 #include "AudioDecoder.h"
 #include <map>
 

@@ -87,7 +87,7 @@ void StereoToMono(const T * src, T * dest, size_t N)
 template <typename T>
 void MonoToStereo(const T * src, T * dest, size_t N)
 {
-    for(int i = 0, j = 0; i < N; ++i, j += 2)
+    for(size_t i = 0, j = 0; i < N; ++i, j += 2)
     {
         dest[j] = src[i];
         dest[j + 1] = src[i];

@@ -25,6 +25,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "FlacDecoder.h"
 #include "flac/all.h"
+#include "flac/stream_decoder.h"
+
 #include "AudioDecoder.h"
 
 using namespace nqr;

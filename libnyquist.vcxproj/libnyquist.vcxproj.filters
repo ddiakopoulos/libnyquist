@@ -46,9 +46,6 @@
     <ClCompile Include="$(ProjectDir)..\src\OpusDependencies.c">
       <Filter>src\deps</Filter>
     </ClCompile>
-    <ClCompile Include="$(ProjectDir)..\src\FlacDependencies.c">
-      <Filter>src\deps</Filter>
-    </ClCompile>
     <ClCompile Include="$(ProjectDir)..\src\AudioDecoder.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -81,6 +78,9 @@
     </ClCompile>
     <ClCompile Include="$(ProjectDir)..\src\RiffUtils.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\FlacDependencies.c">
+      <Filter>src\deps</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
