@@ -37,6 +37,7 @@ class MusepackInternal
     
     static const uint32_t STDIO_MAGIC = 0xF36D656D;
     
+    // Methods borrowed from r-lyeh (https://github.com/r-lyeh) (zlib)
     struct mpc_reader_state
     {
         unsigned char *p_file;
