@@ -142,7 +142,7 @@ inline bool isOdd(const T x)
 
 inline uint64_t Pack(uint32_t a, uint32_t b)
 {
-    uint64_t tmp =  (uint64_t) b << 32 | (uint64_t) a;
+    uint64_t tmp = (uint64_t) b << 32 | (uint64_t) a;
 #ifdef ARCH_CPU_LITTLE_ENDIAN
     return tmp;
 #else
@@ -152,7 +152,7 @@ inline uint64_t Pack(uint32_t a, uint32_t b)
 
 inline uint32_t Pack(uint16_t a, uint16_t b)
 {
-    uint32_t tmp =  (uint32_t) b << 16 | (uint32_t) a;
+    uint32_t tmp = (uint32_t) b << 16 | (uint32_t) a;
 #ifdef ARCH_CPU_LITTLE_ENDIAN
     return tmp;
 #else
@@ -162,7 +162,7 @@ inline uint32_t Pack(uint16_t a, uint16_t b)
 
 inline uint16_t Pack(uint8_t a, uint8_t b)
 {
-    uint16_t tmp =  (uint16_t) b << 8 | (uint16_t) a;
+    uint16_t tmp = (uint16_t) b << 8 | (uint16_t) a;
 #ifdef ARCH_CPU_LITTLE_ENDIAN
     return tmp;
 #else

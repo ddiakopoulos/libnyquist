@@ -37,7 +37,7 @@ int main()
 		//auto result = loader.Load(fileData, "test_data/1ch/44100/64/test.wav");
 		
 		//auto result = loader.Load(fileData, "test_data/2ch/44100/8/test.wav");
-		auto result = loader.Load(fileData, "test_data/2ch/44100/16/test.wav");
+		//auto result = loader.Load(fileData, "test_data/2ch/44100/16/test.wav");
 		//auto result = loader.Load(fileData, "test_data/2ch/44100/24/test.wav");
 		//auto result = loader.Load(fileData, "test_data/2ch/44100/32/test.wav");
 		//auto result = loader.Load(fileData, "test_data/2ch/44100/64/test.wav");
@@ -64,6 +64,9 @@ int main()
 		//auto result = loader.Load(fileData, "test_data/ad_hoc/TestBeat_Int32.wv");
 		//auto result = loader.Load(fileData, "test_data/ad_hoc/TestBeat_Int24_Mono.wv");
 		
+        //auto result = loader.Load(fileData, "test_data/ad_hoc/44_16_stereo.mpc");
+        auto result = loader.Load(fileData, "test_data/ad_hoc/44_16_mono.mpc");
+        
 		std::cout << "[Debug] Loader Status: " << result << std::endl;
 	}
 	catch (std::exception e)
