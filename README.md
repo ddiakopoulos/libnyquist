@@ -16,6 +16,7 @@ Regardless of input bit depth, the library hands over an interleaved float array
 * Ogg Opus
 * FLAC
 * WavPack
+* Musepack
 * Core Audio Format (Apple Lossless / AIFF) (WIP)
 
 ## Supported Project Files
