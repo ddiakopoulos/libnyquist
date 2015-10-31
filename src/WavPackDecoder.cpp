@@ -70,7 +70,8 @@ public:
         if (!isFloatingPoint)
             internalBuffer.resize(totalSamples * d->channelCount);
         
-        auto r = readInternal(totalSamples);
+        if (!readInternal(totalSamples))
+            throw std::runtime_error("could not read any data");
         
         // Next, process internal buffer into the user-visible samples array
         if (!isFloatingPoint)

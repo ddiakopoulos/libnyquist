@@ -8,23 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		0804D13F1AE69F0100F4B1FD /* OpusDependencies.c in Sources */ = {isa = PBXBuildFile; fileRef = 0804D13E1AE69F0100F4B1FD /* OpusDependencies.c */; };
-		0804D1451AE6BA5100F4B1FD /* celt_decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 0804D1431AE6BA5100F4B1FD /* celt_decoder.c */; };
-		0804D1461AE6BA5100F4B1FD /* celt_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 0804D1441AE6BA5100F4B1FD /* celt_encoder.c */; };
+		0804D1451AE6BA5100F4B1FD /* celt_decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 0804D1431AE6BA5100F4B1FD /* celt_decoder.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		0804D1461AE6BA5100F4B1FD /* celt_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 0804D1441AE6BA5100F4B1FD /* celt_encoder.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		080A58581B0866F600302850 /* RiffUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 080A58571B0866F600302850 /* RiffUtils.cpp */; };
 		081FFB191ADF803800673073 /* FlacDependencies.c in Sources */ = {isa = PBXBuildFile; fileRef = 081FFB181ADF803800673073 /* FlacDependencies.c */; };
 		083DB3F31B091C1100FB0661 /* WavEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 083DB3F21B091C1100FB0661 /* WavEncoder.cpp */; };
 		086DADAD1AE029860031F793 /* VorbisDependencies.c in Sources */ = {isa = PBXBuildFile; fileRef = 086DADAB1ADF9DF30031F793 /* VorbisDependencies.c */; };
-		08894F291AEAA5D7007AAF90 /* bits.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F1E1AEAA5D7007AAF90 /* bits.c */; };
-		08894F2A1AEAA5D7007AAF90 /* extra1.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F1F1AEAA5D7007AAF90 /* extra1.c */; };
-		08894F2B1AEAA5D7007AAF90 /* extra2.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F201AEAA5D7007AAF90 /* extra2.c */; };
-		08894F2C1AEAA5D7007AAF90 /* float.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F211AEAA5D7007AAF90 /* float.c */; };
-		08894F2D1AEAA5D7007AAF90 /* metadata.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F221AEAA5D7007AAF90 /* metadata.c */; };
-		08894F2E1AEAA5D7007AAF90 /* pack.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F231AEAA5D7007AAF90 /* pack.c */; };
-		08894F2F1AEAA5D7007AAF90 /* tags.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F241AEAA5D7007AAF90 /* tags.c */; };
-		08894F301AEAA5D7007AAF90 /* unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F251AEAA5D7007AAF90 /* unpack.c */; };
-		08894F311AEAA5D7007AAF90 /* unpack3.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F261AEAA5D7007AAF90 /* unpack3.c */; };
-		08894F321AEAA5D7007AAF90 /* words.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F271AEAA5D7007AAF90 /* words.c */; };
-		08894F331AEAA5D7007AAF90 /* wputils.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F281AEAA5D7007AAF90 /* wputils.c */; };
+		08894F291AEAA5D7007AAF90 /* bits.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F1E1AEAA5D7007AAF90 /* bits.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		08894F2A1AEAA5D7007AAF90 /* extra1.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F1F1AEAA5D7007AAF90 /* extra1.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		08894F2B1AEAA5D7007AAF90 /* extra2.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F201AEAA5D7007AAF90 /* extra2.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		08894F2C1AEAA5D7007AAF90 /* float.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F211AEAA5D7007AAF90 /* float.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		08894F2D1AEAA5D7007AAF90 /* metadata.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F221AEAA5D7007AAF90 /* metadata.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		08894F2E1AEAA5D7007AAF90 /* pack.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F231AEAA5D7007AAF90 /* pack.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		08894F2F1AEAA5D7007AAF90 /* tags.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F241AEAA5D7007AAF90 /* tags.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		08894F301AEAA5D7007AAF90 /* unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F251AEAA5D7007AAF90 /* unpack.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		08894F311AEAA5D7007AAF90 /* unpack3.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F261AEAA5D7007AAF90 /* unpack3.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		08894F321AEAA5D7007AAF90 /* words.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F271AEAA5D7007AAF90 /* words.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		08894F331AEAA5D7007AAF90 /* wputils.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F281AEAA5D7007AAF90 /* wputils.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		08B91D9A1AC73B8A00335131 /* CafDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D901AC73B8A00335131 /* CafDecoder.cpp */; };
 		08B91D9B1AC73B8A00335131 /* AudioDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D911AC73B8A00335131 /* AudioDecoder.cpp */; };
 		08B91D9C1AC73B8A00335131 /* AudioDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D921AC73B8A00335131 /* AudioDevice.cpp */; };
@@ -290,29 +290,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				08894F2C1AEAA5D7007AAF90 /* float.c in Sources */,
-				083DB3F31B091C1100FB0661 /* WavEncoder.cpp in Sources */,
 				08894F2E1AEAA5D7007AAF90 /* pack.c in Sources */,
 				08894F2A1AEAA5D7007AAF90 /* extra1.c in Sources */,
 				08894F321AEAA5D7007AAF90 /* words.c in Sources */,
-				08B91D9B1AC73B8A00335131 /* AudioDecoder.cpp in Sources */,
 				08894F291AEAA5D7007AAF90 /* bits.c in Sources */,
-				081FFB191ADF803800673073 /* FlacDependencies.c in Sources */,
-				0804D13F1AE69F0100F4B1FD /* OpusDependencies.c in Sources */,
-				08B91DA01AC73B8A00335131 /* VorbisDecoder.cpp in Sources */,
 				08894F2B1AEAA5D7007AAF90 /* extra2.c in Sources */,
 				08894F301AEAA5D7007AAF90 /* unpack.c in Sources */,
 				0804D1451AE6BA5100F4B1FD /* celt_decoder.c in Sources */,
 				0804D1461AE6BA5100F4B1FD /* celt_encoder.c in Sources */,
 				08894F331AEAA5D7007AAF90 /* wputils.c in Sources */,
+				08894F2F1AEAA5D7007AAF90 /* tags.c in Sources */,
+				08894F2D1AEAA5D7007AAF90 /* metadata.c in Sources */,
+				08894F311AEAA5D7007AAF90 /* unpack3.c in Sources */,
+				083DB3F31B091C1100FB0661 /* WavEncoder.cpp in Sources */,
+				08B91D9B1AC73B8A00335131 /* AudioDecoder.cpp in Sources */,
+				081FFB191ADF803800673073 /* FlacDependencies.c in Sources */,
+				0804D13F1AE69F0100F4B1FD /* OpusDependencies.c in Sources */,
+				08B91DA01AC73B8A00335131 /* VorbisDecoder.cpp in Sources */,
 				08B91DA21AC73B8A00335131 /* WavDecoder.cpp in Sources */,
 				08B91D9A1AC73B8A00335131 /* CafDecoder.cpp in Sources */,
-				08894F2F1AEAA5D7007AAF90 /* tags.c in Sources */,
 				080A58581B0866F600302850 /* RiffUtils.cpp in Sources */,
 				08B91DA11AC73B8A00335131 /* OpusDecoder.cpp in Sources */,
-				08894F2D1AEAA5D7007AAF90 /* metadata.c in Sources */,
 				08B91D9E1AC73B8A00335131 /* FlacDecoder.cpp in Sources */,
 				08B91D9C1AC73B8A00335131 /* AudioDevice.cpp in Sources */,
-				08894F311AEAA5D7007AAF90 /* unpack3.c in Sources */,
 				086DADAD1AE029860031F793 /* VorbisDependencies.c in Sources */,
 				08B91DA31AC73B8A00335131 /* WavPackDecoder.cpp in Sources */,
 				08B91D9D1AC73B8A00335131 /* Common.cpp in Sources */,

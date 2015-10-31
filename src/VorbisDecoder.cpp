@@ -90,7 +90,8 @@ public:
         
         d->samples.resize(totalSamples * d->channelCount);
         
-        auto r = readInternal(totalSamples);
+        if (!readInternal(totalSamples))
+            throw std::runtime_error("could not read any data");
     }
     
     ~VorbisDecoderInternal()

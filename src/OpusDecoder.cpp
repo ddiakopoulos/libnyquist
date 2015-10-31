@@ -62,9 +62,9 @@ public:
             throw std::runtime_error("Could not open file");
         }
         
-        const OpusHead *header = op_head(fileHandle, 0);
+        const OpusHead * header = op_head(fileHandle, 0);
 
-        int originalSampleRate = header->input_sample_rate;
+        // int originalSampleRate = header->input_sample_rate;
 
         d->sampleRate = OPUS_SAMPLE_RATE;
         d->channelCount = (uint32_t) header->channel_count;
@@ -77,7 +77,8 @@ public:
         
         d->samples.resize(totalSamples * d->channelCount);
         
-        auto r = readInternal(totalSamples);
+        if (!readInternal(totalSamples))
+            throw std::runtime_error("could not read any data");
     }
     
     ~OpusDecoderInternal()
@@ -93,7 +94,7 @@ public:
         
         while(0 < framesRemaining)
         {
-            auto framesRead = size_t(op_read_float(fileHandle, buffer, (int)(framesRemaining * d->channelCount), nullptr));
+            int framesRead = op_read_float(fileHandle, buffer, (int)(framesRemaining * d->channelCount), nullptr);
             
             // EOF
             if(!framesRead)

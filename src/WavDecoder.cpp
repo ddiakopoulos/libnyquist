@@ -50,8 +50,8 @@ int WavDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & me
     memcpy(&riffHeader, memory.data(), 12);
     
     // Files should be 2-byte aligned
-    //@tofix: enforce this
-    bool usePaddingShort = ((riffHeader.file_size % sizeof(uint16_t)) == 1) ? true : false;
+    // @tofix: enforce this
+    // bool usePaddingShort = ((riffHeader.file_size % sizeof(uint16_t)) == 1) ? true : false;
     
     // Check RIFF
     if (riffHeader.id_riff != GenerateChunkCode('R', 'I', 'F', 'F'))
