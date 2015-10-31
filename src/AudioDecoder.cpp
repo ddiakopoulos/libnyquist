@@ -41,7 +41,7 @@ NyquistIO::NyquistIO()
 
 NyquistIO::~NyquistIO()
 {
-    
+
 }
 
 int NyquistIO::Load(AudioData * data, const std::string & path)
@@ -76,28 +76,27 @@ int NyquistIO::Load(AudioData * data, const std::string & path)
 
 int NyquistIO::Load(AudioData * data, std::string extension, const std::vector<uint8_t> & buffer)
 {
-	if (decoderTable.find(extension) == decoderTable.end())
+    if (decoderTable.find(extension) == decoderTable.end())
     {
          return IOError::ExtensionNotSupported;
     }
 
-	if (decoderTable.size() > 0)
-	{
-		auto decoder = GetDecoderForExtension(extension);
-            
-		try
-		{
-			return decoder->LoadFromBuffer(data, buffer);
-		}
-		catch (std::exception e)
-		{
-			std::cerr << "Caught fatal exception: " << e.what() << std::endl;
-		}
-	} 
-	else 
-	{
-		return IOError::NoDecodersLoaded;
-	}
+    if (decoderTable.size() > 0)
+    {
+        auto decoder = GetDecoderForExtension(extension);  
+        try
+        {
+            return decoder->LoadFromBuffer(data, buffer);
+        }
+        catch (std::exception e)
+        {
+            std::cerr << "Caught fatal exception: " << e.what() << std::endl;
+        }
+    } 
+    else 
+    {
+        return IOError::NoDecodersLoaded;
+    }
 
     // Should never be reached
     return IOError::UnknownError;

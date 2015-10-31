@@ -33,53 +33,53 @@ namespace nqr
     
 enum WaveFormatCode
 {
-	FORMAT_UNKNOWN = 0x0,	// Unknown Wave Format
-	FORMAT_PCM = 0x1, 		// PCM Format
-	FORMAT_IEEE = 0x3,		// IEEE float/double
-	FORMAT_ALAW = 0x6,		// 8-bit ITU-T G.711 A-law
-	FORMAT_MULAW = 0x7,		// 8-bit ITU-T G.711 µ-law
-	FORMAT_EXT = 0xFFFE		// Set via subformat
+    FORMAT_UNKNOWN = 0x0,   // Unknown Wave Format
+    FORMAT_PCM = 0x1,       // PCM Format
+    FORMAT_IEEE = 0x3,      // IEEE float/double
+    FORMAT_ALAW = 0x6,      // 8-bit ITU-T G.711 A-law
+    FORMAT_MULAW = 0x7,     // 8-bit ITU-T G.711 µ-law
+    FORMAT_EXT = 0xFFFE     // Set via subformat
 };
 
 struct RiffChunkHeader
 {
-	uint32_t id_riff;			// Chunk ID: 'RIFF'
-	uint32_t file_size;			// Entire file in bytes
-	uint32_t id_wave;			// Chunk ID: 'WAVE'
+    uint32_t id_riff;           // Chunk ID: 'RIFF'
+    uint32_t file_size;         // Entire file in bytes
+    uint32_t id_wave;           // Chunk ID: 'WAVE'
 };
 
 struct WaveChunkHeader
 {
-	uint32_t fmt_id;			// Chunk ID: 'fmt '
-	uint32_t chunk_size;		// Size in bytes
-	uint16_t format;			// Format code
-	uint16_t channel_count;		// Num interleaved channels
-	uint32_t sample_rate;		// SR
-	uint32_t data_rate;			// Data rate
-	uint16_t frame_size;		// 1 frame = channels * bits per sample (also known as block align)
-	uint16_t bit_depth;			// Bits per sample	
+    uint32_t fmt_id;            // Chunk ID: 'fmt '
+    uint32_t chunk_size;        // Size in bytes
+    uint16_t format;            // Format code
+    uint16_t channel_count;     // Num interleaved channels
+    uint32_t sample_rate;       // SR
+    uint32_t data_rate;         // Data rate
+    uint16_t frame_size;        // 1 frame = channels * bits per sample (also known as block align)
+    uint16_t bit_depth;         // Bits per sample  
 };
 
 struct BextChunk 
 {
-	uint32_t fmt_id;			// Chunk ID: 'bext'
-	uint32_t chunk_size;		// Size in bytes
-	uint8_t description[256];	// Description of the sound (ascii)
-	uint8_t origin[32];			// Name of the originator (ascii)
-	uint8_t origin_ref[32];		// Reference of the originator (ascii)
-	uint8_t orgin_date[10];		// yyyy-mm-dd (ascii)
-	uint8_t origin_time[8];		// hh-mm-ss (ascii)
-	uint64_t time_ref;          // First sample count since midnight
-	uint32_t version;			// Version of the BWF
-	uint8_t uimd[64];			// Byte 0 of SMPTE UMID
-	uint8_t reserved[188];		// 190 bytes, reserved for future use & set to NULL
+    uint32_t fmt_id;            // Chunk ID: 'bext'
+    uint32_t chunk_size;        // Size in bytes
+    uint8_t description[256];   // Description of the sound (ascii)
+    uint8_t origin[32];         // Name of the originator (ascii)
+    uint8_t origin_ref[32];     // Reference of the originator (ascii)
+    uint8_t orgin_date[10];     // yyyy-mm-dd (ascii)
+    uint8_t origin_time[8];     // hh-mm-ss (ascii)
+    uint64_t time_ref;          // First sample count since midnight
+    uint32_t version;           // Version of the BWF
+    uint8_t uimd[64];           // Byte 0 of SMPTE UMID
+    uint8_t reserved[188];      // 190 bytes, reserved for future use & set to NULL
 };
 
 struct FactChunk
 {
-	uint32_t fact_id;			// Chunk ID: 'fact'
-	uint32_t chunk_size;		// Size in bytes 
-	uint32_t sample_length;		// number of samples per channel
+    uint32_t fact_id;           // Chunk ID: 'fact'
+    uint32_t chunk_size;        // Size in bytes 
+    uint32_t sample_length;     // number of samples per channel
 };
 
 struct ExtensibleData
@@ -100,15 +100,15 @@ struct ExtensibleData
 template<class C, class R> 
 std::basic_ostream<C,R> & operator << (std::basic_ostream<C,R> & a, const WaveChunkHeader & b) 
 { 
-	return a <<
-		"Format ID:\t\t"        << b.fmt_id <<
-		"\nChunk Size:\t\t"     << b.chunk_size <<
-		"\nFormat Code:\t\t"    << b.format <<
-		"\nChannels:\t\t"       << b.channel_count <<
-		"\nSample Rate:\t\t"    << b.sample_rate <<
-		"\nData Rate:\t\t"      << b.data_rate <<
-		"\nFrame Size:\t\t"     << b.frame_size <<
-		"\nBit Depth:\t\t"      << b.bit_depth << std::endl;
+    return a <<
+        "Format ID:\t\t"        << b.fmt_id <<
+        "\nChunk Size:\t\t"     << b.chunk_size <<
+        "\nFormat Code:\t\t"    << b.format <<
+        "\nChannels:\t\t"       << b.channel_count <<
+        "\nSample Rate:\t\t"    << b.sample_rate <<
+        "\nData Rate:\t\t"      << b.data_rate <<
+        "\nFrame Size:\t\t"     << b.frame_size <<
+        "\nBit Depth:\t\t"      << b.bit_depth << std::endl;
 }
 
 //@todo expose speaker/channel/layout masks in the API: 
@@ -154,23 +154,16 @@ enum SpeakerLayoutMask
 //@todo verify mask values
 inline int ComputeChannelMask(const size_t channels)
 {
-	switch (channels)
-	{
-		case 1: 
-			return SPEAKER_MONO;
-		case 2: 
-			return SPEAKER_STEREO;
-		case 3: 
-			return SPEAKER_2POINT1;
-		case 4: 
-			return SPEAKER_QUAD;
-		case 5: 
-			return SPEAKER_4POINT1;
-		case 6: 
-			return SPEAKER_5POINT1;
-		default: 
-			return -1; 
-	}
+    switch (channels)
+    {
+    case 1: return SPEAKER_MONO;
+    case 2: return SPEAKER_STEREO;
+    case 3: return SPEAKER_2POINT1;
+    case 4: return SPEAKER_QUAD;
+    case 5: return SPEAKER_4POINT1;
+    case 6: return SPEAKER_5POINT1;
+    default: return -1; 
+    }
 }
 
 struct WavDecoder : public nqr::BaseDecoder

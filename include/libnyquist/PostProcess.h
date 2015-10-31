@@ -34,15 +34,15 @@ namespace nqr
 template <typename T>
 inline void DeinterleaveStereo(T * c1, T * c2, T const * src, size_t count)
 {
-	auto src_end = src + count;
-	while (src != src_end)
-	{
-		*c1 = src[0];
-		*c2 = src[1];
-		c1++;
-		c2++;
-		src += 2;
-	}
+    auto src_end = src + count;
+    while (src != src_end)
+    {
+        *c1 = src[0];
+        *c2 = src[1];
+        c1++;
+        c2++;
+        src += 2;
+    }
 }
 
 template<typename T>

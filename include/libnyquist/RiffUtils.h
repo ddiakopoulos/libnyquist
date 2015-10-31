@@ -46,8 +46,8 @@ struct EncoderParams
 
 struct ChunkHeaderInfo
 {
-    uint32_t offset;			// Byte offset into chunk
-    uint32_t size;				// Size of the chunk in bytes
+    uint32_t offset;            // Byte offset into chunk
+    uint32_t size;              // Size of the chunk in bytes
 };
 
 inline uint32_t GenerateChunkCode(uint8_t a, uint8_t b, uint8_t c, uint8_t d)

@@ -36,10 +36,6 @@ inline void toBytes(int value, char * arr)
     arr[3] = (value >> 24) & 0xFF;
 }
 
-WavEncoder::WavEncoder() {}
-
-WavEncoder::~WavEncoder() {}
-
 int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std::string & path)
 {
     // Cast away const because we know what we are doing (Hopefully?)

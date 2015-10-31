@@ -57,29 +57,29 @@ namespace nqr
 ///////////////////////
 
 #if defined(__x86_64__) || defined(_M_X64) || defined(__i386__) || defined(_M_IX86)
-	#define CPU_X86 1
+    #define CPU_X86 1
 #endif
 
 #if defined(__arm__) || defined(_M_ARM)
-	#define CPU_ARM 1
+    #define CPU_ARM 1
 #endif
 
 #if defined(CPU_X86) && defined(CPU_ARM)
-	#error CPU_X86 and CPU_ARM both defined.
+    #error CPU_X86 and CPU_ARM both defined.
 #endif
 
 #if !defined(ARCH_CPU_BIG_ENDIAN) && !defined(ARCH_CPU_LITTLE_ENDIAN)
-	#if CPU_X86 || CPU_ARM || (defined(__BYTE_ORDER__) && __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)
-		#define ARCH_CPU_LITTLE_ENDIAN
-	#elif defined(__BYTE_ORDER__) && __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
-		#define ARCH_CPU_BIG_ENDIAN
-	#else
-		#error ARCH_CPU_BIG_ENDIAN or ARCH_CPU_LITTLE_ENDIAN should be defined.
-	#endif
+    #if CPU_X86 || CPU_ARM || (defined(__BYTE_ORDER__) && __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)
+        #define ARCH_CPU_LITTLE_ENDIAN
+    #elif defined(__BYTE_ORDER__) && __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+        #define ARCH_CPU_BIG_ENDIAN
+    #else
+        #error ARCH_CPU_BIG_ENDIAN or ARCH_CPU_LITTLE_ENDIAN should be defined.
+    #endif
 #endif
 
 #if defined(ARCH_CPU_BIG_ENDIAN) && defined(ARCH_CPU_LITTLE_ENDIAN)
-	#error ARCH_CPU_BIG_ENDIAN and ARCH_CPU_LITTLE_ENDIAN both defined.
+    #error ARCH_CPU_BIG_ENDIAN and ARCH_CPU_LITTLE_ENDIAN both defined.
 #endif
 
 static inline uint16_t Swap16(uint16_t value)
@@ -114,7 +114,8 @@ static inline uint64_t Swap64(uint64_t value)
             ((value & 0xff00000000000000LL) >> 56));
 }
 
-inline bool isOdd(const uint32_t x)
+template<typename T>
+inline bool isOdd(const T x)
 {
     return (x & 0x1);
 }
@@ -224,14 +225,14 @@ static const float NQR_BYTE_2_FLT = 1.0f / 127.0f;
 //@todo add 12, 20 for flac
 enum PCMFormat
 {
-	PCM_U8,
-	PCM_S8,
-	PCM_16,
-	PCM_24,
-	PCM_32,
-	PCM_64,
-	PCM_FLT,
-	PCM_DBL,
+    PCM_U8,
+    PCM_S8,
+    PCM_16,
+    PCM_24,
+    PCM_32,
+    PCM_64,
+    PCM_FLT,
+    PCM_DBL,
     PCM_END
 };
 
@@ -250,11 +251,11 @@ void ConvertFromFloat32(uint8_t * dst, const float * src, const size_t N, PCMFor
 
 struct AudioData
 {
-	int channelCount;
-	int sampleRate;
-	double lengthSeconds;
-	size_t frameSize; // channels * bits per sample
-	std::vector<float> samples;
+    int channelCount;
+    int sampleRate;
+    double lengthSeconds;
+    size_t frameSize; // channels * bits per sample
+    std::vector<float> samples;
     PCMFormat sourceFormat;
     
     //@todo: add field: channel layout
@@ -272,8 +273,8 @@ struct StreamableAudioData : public AudioData
 
 struct NyquistFileBuffer
 {
-	std::vector<uint8_t> buffer;
-	size_t size;
+    std::vector<uint8_t> buffer;
+    size_t size;
 };
 
 NyquistFileBuffer ReadFile(std::string pathToFile);

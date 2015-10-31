@@ -26,15 +26,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // https://dxr.mozilla.org/mozilla-central/source/media/libopus
 
 #if (_MSC_VER)
-#pragma warning (push)
-#pragma warning (disable: 181 111 4267 4996 4244 4701 4702 4133 4100 4127 4206 4312 4505 4365 4005 4013 4334 4703)
+    #pragma warning (push)
+    #pragma warning (disable: 181 111 4267 4996 4244 4701 4702 4133 4100 4127 4206 4312 4505 4365 4005 4013 4334 4703)
 #endif
         
 #ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wconversion"
-#pragma clang diagnostic ignored "-Wshadow"
-#pragma clang diagnostic ignored "-Wdeprecated-register"
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wconversion"
+    #pragma clang diagnostic ignored "-Wshadow"
+    #pragma clang diagnostic ignored "-Wdeprecated-register"
 #endif
 
 #undef HAVE_CONFIG_H
@@ -97,10 +97,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //#include "opus/celt/celt_encoder.c"
 
 /*
- See celt/celt_decoder.c + celt/celt_encoder.c in the project browser.
- These files need to be in separate translation units due to name clashes,
- unfortunately.
- */
+    See celt/celt_decoder.c + celt/celt_encoder.c in the project browser.
+    These files need to be in separate translation units due to name clashes,
+    unfortunately.
+*/
 
 /////////////////
 // SILK Common //
@@ -273,9 +273,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "opus/opusfile/src/wincerts.c"
 
 #ifdef __clang__
-#pragma clang diagnostic pop
+    #pragma clang diagnostic pop
 #endif
 
 #if (_MSC_VER)
-#pragma warning (pop)
+    #pragma warning (pop)
 #endif

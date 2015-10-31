@@ -64,7 +64,7 @@ public:
     ~NyquistIO();
     
     int Load(AudioData * data, const std::string & path);
-	int Load(AudioData *data, std::string extension, const std::vector<uint8_t> & buffer);
+    int Load(AudioData *data, std::string extension, const std::vector<uint8_t> & buffer);
     
     bool IsFileSupported(const std::string path) const;
     

@@ -30,7 +30,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace nqr
 {
-    
+
 struct WavPackDecoder : public nqr::BaseDecoder
 {
     WavPackDecoder() {};
@@ -39,7 +39,7 @@ struct WavPackDecoder : public nqr::BaseDecoder
     virtual int LoadFromBuffer(nqr::AudioData * data, const std::vector<uint8_t> & memory) override;
     virtual std::vector<std::string> GetSupportedFileExtensions() override;
 };
-    
+
 } // end namespace nqr
 
 #endif

@@ -29,7 +29,7 @@ using namespace nqr;
 
 NyquistFileBuffer nqr::ReadFile(std::string pathToFile)
 {
-	//std::cout << "[Debug] Open: " << pathToFile << std::endl;
+    //std::cout << "[Debug] Open: " << pathToFile << std::endl;
     FILE * audioFile = fopen(pathToFile.c_str(), "rb");
     
     if (!audioFile)
@@ -51,12 +51,12 @@ NyquistFileBuffer nqr::ReadFile(std::string pathToFile)
         throw std::runtime_error("error reading file or file too small");
     }
    
-	NyquistFileBuffer data = {std::move(fileBuffer), elementsRead};
+    NyquistFileBuffer data = {std::move(fileBuffer), elementsRead};
 
-	fclose(audioFile);
+    fclose(audioFile);
 
-	// Copy out to user 
-	return data;
+    // Copy out to user 
+    return data;
 }
 
 // Src data is aligned to PCMFormat
@@ -218,17 +218,11 @@ PCMFormat nqr::MakeFormatForBits(int bits, bool floatingPt, bool isSigned)
 {
     switch(bits)
     {
-        case 8:
-            return (isSigned) ? PCM_S8 : PCM_U8;
-        case 16:
-            return PCM_16;
-        case 24:
-            return PCM_24;
-        case 32:
-            return (floatingPt) ? PCM_FLT : PCM_32;
-        case 64:
-            return (floatingPt) ? PCM_DBL : PCM_64;
-        default:
-            return PCM_END;
+        case 8: return (isSigned) ? PCM_S8 : PCM_U8;
+        case 16: return PCM_16;
+        case 24: return PCM_24;
+        case 32: return (floatingPt) ? PCM_FLT : PCM_32;
+        case 64: return (floatingPt) ? PCM_DBL : PCM_64;
+        default: return PCM_END;
     }
 }

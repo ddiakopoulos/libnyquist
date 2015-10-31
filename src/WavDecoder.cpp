@@ -167,9 +167,10 @@ int WavDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & me
     
     auto DataChunkInfo = ScanForChunk(memory, GenerateChunkCode('d', 'a', 't', 'a'));
     
-    if (DataChunkInfo.offset == 0) throw std::runtime_error("couldn't find data chunk");
+    if (DataChunkInfo.offset == 0) 
+        throw std::runtime_error("couldn't find data chunk");
     
-    DataChunkInfo.offset += 8; // ignore the header and size fields (2 uint32s)
+    DataChunkInfo.offset += 2 * sizeof(uint32_t); // ignore the header and size fields
     
     data->lengthSeconds = ((float) DataChunkInfo.size / (float) wavHeader.sample_rate) / wavHeader.frame_size;
     
@@ -178,26 +179,16 @@ int WavDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & me
     size_t totalSamples = (DataChunkInfo.size / wavHeader.frame_size) * wavHeader.channel_count;
     data->samples.resize(totalSamples);
 
-	switch (bit_depth)
-	{
-	case 8:
-		data->sourceFormat = PCMFormat::PCM_U8;
-		break;
-	case 16:
-		data->sourceFormat = PCMFormat::PCM_16;
-		break;
-	case 24:
-		data->sourceFormat = PCMFormat::PCM_24;
-		break;
-	case 32:
-		data->sourceFormat = (wavHeader.format == WaveFormatCode::FORMAT_IEEE) ? PCMFormat::PCM_FLT : PCMFormat::PCM_32;
-		break;
-	case 64:
-		data->sourceFormat = (wavHeader.format == WaveFormatCode::FORMAT_IEEE) ? PCMFormat::PCM_DBL : PCMFormat::PCM_64;
-		break;
-	}
+    switch (bit_depth)
+    {
+    case 8: data->sourceFormat = PCMFormat::PCM_U8; break;
+    case 16: data->sourceFormat = PCMFormat::PCM_16; break;
+    case 24: data->sourceFormat = PCMFormat::PCM_24; break;
+    case 32: data->sourceFormat = (wavHeader.format == WaveFormatCode::FORMAT_IEEE) ? PCMFormat::PCM_FLT : PCMFormat::PCM_32; break;
+    case 64: data->sourceFormat = (wavHeader.format == WaveFormatCode::FORMAT_IEEE) ? PCMFormat::PCM_DBL : PCMFormat::PCM_64; break;
+    }
 
-	ConvertToFloat32(data->samples.data(), memory.data() + DataChunkInfo.offset, totalSamples, data->sourceFormat);
+    ConvertToFloat32(data->samples.data(), memory.data() + DataChunkInfo.offset, totalSamples, data->sourceFormat);
     
     return IOError::NoError;
 }
