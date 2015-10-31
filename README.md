@@ -19,16 +19,15 @@ Regardless of input bit depth, the library hands over an interleaved float array
 * Musepack
 * Core Audio Format (Apple Lossless / AIFF) (WIP)
 
+## Encoding
+Simple but robust WAV format encoder now included. Extentions in the near future might include Ogg. 
+
 ## Supported Project Files
 * Visual Studio 2013
 * XCode 6
 
-## Known Issues
-* Ogg and Opus have conflicting mdct files. Their sources were modified such that they compile cleanly together in the same project.
-* Streaming is not supported for any file formats.
-
-## Encoding
-Simple but robust WAV format encoder now included. Extentions in the near future might include Ogg. 
+## Known Issues & Bugs
+* See the Github issue tracker. 
 
 ## License
 Libyquist is released under the 2-Clause BSD license. All dependencies and codecs are under similar open licenses.
