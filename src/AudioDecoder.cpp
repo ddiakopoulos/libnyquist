@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "VorbisDecoder.h"
 #include "OpusDecoder.h"
 #include "CafDecoder.h"
+#include "MusepackDecoder.h"
 
 using namespace nqr;
 
@@ -136,4 +137,5 @@ void NyquistIO::BuildDecoderTable()
     AddDecoderToTable(std::make_shared<VorbisDecoder>());
     AddDecoderToTable(std::make_shared<OpusDecoder>());
     AddDecoderToTable(std::make_shared<CAFDecoder>());
+    AddDecoderToTable(std::make_shared<MusepackDecoder>());
 }
