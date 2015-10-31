@@ -12,6 +12,12 @@
 		0804D1461AE6BA5100F4B1FD /* celt_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 0804D1441AE6BA5100F4B1FD /* celt_encoder.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		080A58581B0866F600302850 /* RiffUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 080A58571B0866F600302850 /* RiffUtils.cpp */; };
 		081FFB191ADF803800673073 /* FlacDependencies.c in Sources */ = {isa = PBXBuildFile; fileRef = 081FFB181ADF803800673073 /* FlacDependencies.c */; };
+		083730B91BE52B9600216BDC /* MusepackDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 083730B81BE52B9600216BDC /* MusepackDecoder.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
+		083730BC1BE5350C00216BDC /* MusepackDependencies.c in Sources */ = {isa = PBXBuildFile; fileRef = 083730BB1BE5350C00216BDC /* MusepackDependencies.c */; };
+		083730C21BE5372300216BDC /* mpc_bits_reader.c in Sources */ = {isa = PBXBuildFile; fileRef = 083730BE1BE5372300216BDC /* mpc_bits_reader.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		083730C31BE5372300216BDC /* mpc_decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 083730BF1BE5372300216BDC /* mpc_decoder.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		083730C41BE5372300216BDC /* mpc_demux.c in Sources */ = {isa = PBXBuildFile; fileRef = 083730C01BE5372300216BDC /* mpc_demux.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		083730C51BE5372300216BDC /* mpc_reader.c in Sources */ = {isa = PBXBuildFile; fileRef = 083730C11BE5372300216BDC /* mpc_reader.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		083DB3F31B091C1100FB0661 /* WavEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 083DB3F21B091C1100FB0661 /* WavEncoder.cpp */; };
 		086DADAD1AE029860031F793 /* VorbisDependencies.c in Sources */ = {isa = PBXBuildFile; fileRef = 086DADAB1ADF9DF30031F793 /* VorbisDependencies.c */; };
 		08894F291AEAA5D7007AAF90 /* bits.c in Sources */ = {isa = PBXBuildFile; fileRef = 08894F1E1AEAA5D7007AAF90 /* bits.c */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -55,6 +61,13 @@
 		080A58561B0866AA00302850 /* RiffUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RiffUtils.h; path = include/libnyquist/RiffUtils.h; sourceTree = SOURCE_ROOT; };
 		080A58571B0866F600302850 /* RiffUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RiffUtils.cpp; path = src/RiffUtils.cpp; sourceTree = SOURCE_ROOT; };
 		081FFB181ADF803800673073 /* FlacDependencies.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = FlacDependencies.c; path = src/FlacDependencies.c; sourceTree = SOURCE_ROOT; };
+		083730B81BE52B9600216BDC /* MusepackDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MusepackDecoder.cpp; path = src/MusepackDecoder.cpp; sourceTree = SOURCE_ROOT; };
+		083730BA1BE52BA900216BDC /* MusepackDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MusepackDecoder.h; path = include/libnyquist/MusepackDecoder.h; sourceTree = SOURCE_ROOT; };
+		083730BB1BE5350C00216BDC /* MusepackDependencies.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = MusepackDependencies.c; path = src/MusepackDependencies.c; sourceTree = SOURCE_ROOT; };
+		083730BE1BE5372300216BDC /* mpc_bits_reader.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mpc_bits_reader.c; path = third_party/musepack/libmpcdec/mpc_bits_reader.c; sourceTree = SOURCE_ROOT; };
+		083730BF1BE5372300216BDC /* mpc_decoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mpc_decoder.c; path = third_party/musepack/libmpcdec/mpc_decoder.c; sourceTree = SOURCE_ROOT; };
+		083730C01BE5372300216BDC /* mpc_demux.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mpc_demux.c; path = third_party/musepack/libmpcdec/mpc_demux.c; sourceTree = SOURCE_ROOT; };
+		083730C11BE5372300216BDC /* mpc_reader.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mpc_reader.c; path = third_party/musepack/libmpcdec/mpc_reader.c; sourceTree = SOURCE_ROOT; };
 		083DB3F21B091C1100FB0661 /* WavEncoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WavEncoder.cpp; path = src/WavEncoder.cpp; sourceTree = SOURCE_ROOT; };
 		083DB3F41B091C1E00FB0661 /* WavEncoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WavEncoder.h; path = include/libnyquist/WavEncoder.h; sourceTree = SOURCE_ROOT; };
 		086DADAB1ADF9DF30031F793 /* VorbisDependencies.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = VorbisDependencies.c; path = src/VorbisDependencies.c; sourceTree = SOURCE_ROOT; };
@@ -119,6 +132,7 @@
 				081FFB181ADF803800673073 /* FlacDependencies.c */,
 				086DADAB1ADF9DF30031F793 /* VorbisDependencies.c */,
 				0804D13E1AE69F0100F4B1FD /* OpusDependencies.c */,
+				083730BB1BE5350C00216BDC /* MusepackDependencies.c */,
 			);
 			name = deps;
 			sourceTree = "<group>";
@@ -132,6 +146,17 @@
 				08B91D8B1AC73B8000335131 /* PostProcess.h */,
 			);
 			name = util;
+			sourceTree = "<group>";
+		};
+		083730BD1BE5370400216BDC /* musepack */ = {
+			isa = PBXGroup;
+			children = (
+				083730BE1BE5372300216BDC /* mpc_bits_reader.c */,
+				083730BF1BE5372300216BDC /* mpc_decoder.c */,
+				083730C01BE5372300216BDC /* mpc_demux.c */,
+				083730C11BE5372300216BDC /* mpc_reader.c */,
+			);
+			name = musepack;
 			sourceTree = "<group>";
 		};
 		08894F1D1AEAA5B7007AAF90 /* wavpack */ = {
@@ -182,6 +207,7 @@
 		08B91D511AC270BB00335131 /* third_party */ = {
 			isa = PBXGroup;
 			children = (
+				083730BD1BE5370400216BDC /* musepack */,
 				08894F1D1AEAA5B7007AAF90 /* wavpack */,
 				0804D1421AE6BA2F00F4B1FD /* celt */,
 			);
@@ -204,6 +230,7 @@
 				08B91D851AC73B8000335131 /* AudioDevice.h */,
 				08B91D861AC73B8000335131 /* Common.h */,
 				08B91D831AC73B8000335131 /* CafDecoder.h */,
+				083730BA1BE52BA900216BDC /* MusepackDecoder.h */,
 				08B91D881AC73B8000335131 /* FlacDecoder.h */,
 				08B91D891AC73B8000335131 /* VorbisDecoder.h */,
 				08B91D8A1AC73B8000335131 /* OpusDecoder.h */,
@@ -219,6 +246,7 @@
 			children = (
 				080A58551B083D5100302850 /* deps */,
 				08B91D901AC73B8A00335131 /* CafDecoder.cpp */,
+				083730B81BE52B9600216BDC /* MusepackDecoder.cpp */,
 				08B91D911AC73B8A00335131 /* AudioDecoder.cpp */,
 				08B91D921AC73B8A00335131 /* AudioDevice.cpp */,
 				08B91D931AC73B8A00335131 /* Common.cpp */,
@@ -290,22 +318,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				08894F2C1AEAA5D7007AAF90 /* float.c in Sources */,
+				083730C51BE5372300216BDC /* mpc_reader.c in Sources */,
 				08894F2E1AEAA5D7007AAF90 /* pack.c in Sources */,
 				08894F2A1AEAA5D7007AAF90 /* extra1.c in Sources */,
 				08894F321AEAA5D7007AAF90 /* words.c in Sources */,
 				08894F291AEAA5D7007AAF90 /* bits.c in Sources */,
 				08894F2B1AEAA5D7007AAF90 /* extra2.c in Sources */,
 				08894F301AEAA5D7007AAF90 /* unpack.c in Sources */,
+				083730B91BE52B9600216BDC /* MusepackDecoder.cpp in Sources */,
 				0804D1451AE6BA5100F4B1FD /* celt_decoder.c in Sources */,
 				0804D1461AE6BA5100F4B1FD /* celt_encoder.c in Sources */,
 				08894F331AEAA5D7007AAF90 /* wputils.c in Sources */,
 				08894F2F1AEAA5D7007AAF90 /* tags.c in Sources */,
 				08894F2D1AEAA5D7007AAF90 /* metadata.c in Sources */,
 				08894F311AEAA5D7007AAF90 /* unpack3.c in Sources */,
-				083DB3F31B091C1100FB0661 /* WavEncoder.cpp in Sources */,
-				08B91D9B1AC73B8A00335131 /* AudioDecoder.cpp in Sources */,
+				083730C21BE5372300216BDC /* mpc_bits_reader.c in Sources */,
+				083730C41BE5372300216BDC /* mpc_demux.c in Sources */,
+				083730C31BE5372300216BDC /* mpc_decoder.c in Sources */,
+				083730BC1BE5350C00216BDC /* MusepackDependencies.c in Sources */,
 				081FFB191ADF803800673073 /* FlacDependencies.c in Sources */,
 				0804D13F1AE69F0100F4B1FD /* OpusDependencies.c in Sources */,
+				083DB3F31B091C1100FB0661 /* WavEncoder.cpp in Sources */,
+				08B91D9B1AC73B8A00335131 /* AudioDecoder.cpp in Sources */,
 				08B91DA01AC73B8A00335131 /* VorbisDecoder.cpp in Sources */,
 				08B91DA21AC73B8A00335131 /* WavDecoder.cpp in Sources */,
 				08B91D9A1AC73B8A00335131 /* CafDecoder.cpp in Sources */,
@@ -435,6 +469,8 @@
 					"$(SRCROOT)/third_party/opus/opusfile/include",
 					"$(SRCROOT)/third_party/wavpack/include",
 					"$(SRCROOT)/third_party/wavpack/src",
+					"$(SRCROOT)/third_party/musepack/include",
+					"$(SRCROOT)/third_party/musepack/libmpcdec",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
@@ -480,6 +516,8 @@
 					"$(SRCROOT)/third_party/opus/opusfile/include",
 					"$(SRCROOT)/third_party/wavpack/include",
 					"$(SRCROOT)/third_party/wavpack/src",
+					"$(SRCROOT)/third_party/musepack/include",
+					"$(SRCROOT)/third_party/musepack/libmpcdec",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
