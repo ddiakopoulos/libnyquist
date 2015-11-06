@@ -24,6 +24,7 @@ Simple but robust WAV format encoder now included. Extentions in the near future
 
 ## Supported Project Files
 * Visual Studio 2013
+* Visual Studio 2015
 * XCode 6
 
 ## Known Issues & Bugs
