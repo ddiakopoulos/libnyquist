@@ -48,6 +48,10 @@
     <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\wputils.c" />
     <ClCompile Include="..\..\src\MusepackDecoder.cpp" />
     <ClCompile Include="..\..\src\MusepackDependencies.c" />
+    <ClCompile Include="..\..\third_party\musepack\libmpcdec\mpc_bits_reader.c" />
+    <ClCompile Include="..\..\third_party\musepack\libmpcdec\mpc_decoder.c" />
+    <ClCompile Include="..\..\third_party\musepack\libmpcdec\mpc_demux.c" />
+    <ClCompile Include="..\..\third_party\musepack\libmpcdec\mpc_reader.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\AudioDecoder.h" />

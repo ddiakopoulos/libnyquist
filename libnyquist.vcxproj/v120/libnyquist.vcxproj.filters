@@ -88,6 +88,18 @@
     <ClCompile Include="..\..\src\MusepackDecoder.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\third_party\musepack\libmpcdec\mpc_reader.c">
+      <Filter>third_party\mpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\musepack\libmpcdec\mpc_bits_reader.c">
+      <Filter>third_party\mpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\musepack\libmpcdec\mpc_decoder.c">
+      <Filter>third_party\mpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\musepack\libmpcdec\mpc_demux.c">
+      <Filter>third_party\mpc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\OpusDecoder.h">
@@ -157,6 +169,9 @@
     </Filter>
     <Filter Include="src\deps">
       <UniqueIdentifier>{d839471f-71d1-471e-95e0-c33af9bb64bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\mpc">
+      <UniqueIdentifier>{cc5d22ad-1a3e-46cf-8f65-7d33f02629fb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

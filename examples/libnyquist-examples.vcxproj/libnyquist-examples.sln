@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libnyquist-examples", "libnyquist-examples.vcxproj", "{C0C0C270-FB9E-4EEB-8F22-180BB2FA800B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libnyquist", "..\..\libnyquist.vcxproj\libnyquist.vcxproj", "{0EEC3739-F60A-4B90-8B75-9E1AFF28106A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libnyquist", "..\..\libnyquist.vcxproj\v120\libnyquist.vcxproj", "{0EEC3739-F60A-4B90-8B75-9E1AFF28106A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
