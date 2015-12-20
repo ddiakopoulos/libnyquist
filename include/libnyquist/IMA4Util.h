@@ -33,13 +33,11 @@ namespace nqr
 
     struct ADPCMState
     {
-        int nBlockAlign;
+        int frame_size;
         int firstDataBlockByte;
         int dataSize;
         int currentByte;
-        const uint8_t * currentDatablock; // A buffer containing the current encoded datablock.
-        int predict = 0;
-        int stepIndex = 0;
+        const uint8_t * inBuffer;
     };
 
     static const int ima_index_table[16] =
@@ -101,7 +99,7 @@ namespace nqr
     
     void decode_ima_adpcm(ADPCMState & state, int16_t * outBuffer, uint32_t num_channels)
     {
-        const uint8_t * data = state.currentDatablock;
+        const uint8_t * data = state.inBuffer;
         
         // Loop over the interleaved words
         for (int32_t ch = 0; ch < num_channels; ch++)
@@ -120,7 +118,7 @@ namespace nqr
             int idx = ch;
             
             // Decode each nibble of the current data word, containing 8 encoded samples, for the current channel
-            while (byteIdx < state.nBlockAlign)
+            while (byteIdx < state.frame_size)
             {
                 for (int j = 0; j < 4; j++)
                 {
