@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(ProjectDir)..\..\src\AudioDecoder.cpp" />
+    <ClCompile Include="$(ProjectDir)..\..\src\Common.cpp" />
+    <ClCompile Include="$(ProjectDir)..\..\src\FlacDecoder.cpp" />
+    <ClCompile Include="$(ProjectDir)..\..\src\OpusDecoder.cpp" />
+    <ClCompile Include="$(ProjectDir)..\..\src\WavDecoder.cpp" />
+    <ClCompile Include="$(ProjectDir)..\..\src\AudioDevice.cpp" />
+    <ClCompile Include="$(ProjectDir)..\..\src\WavPackDecoder.cpp" />
+    <ClCompile Include="$(ProjectDir)..\..\src\CafDecoder.cpp" />
+    <ClCompile Include="$(ProjectDir)..\..\src\FlacDependencies.c" />
+    <ClCompile Include="$(ProjectDir)..\..\src\OpusDependencies.c" />
+    <ClCompile Include="$(ProjectDir)..\..\src\VorbisDecoder.cpp" />
+    <ClCompile Include="$(ProjectDir)..\..\src\VorbisDependencies.c" />
+    <ClCompile Include="$(ProjectDir)..\..\src\WavEncoder.cpp" />
+    <ClCompile Include="$(ProjectDir)..\..\src\RiffUtils.cpp" />
+    <ClCompile Include="$(ProjectDir)..\..\third_party\opus\celt\celt_decoder.c" />
+    <ClCompile Include="$(ProjectDir)..\..\third_party\opus\celt\celt_encoder.c" />
+    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\bits.c" />
+    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\extra1.c" />
+    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\extra2.c" />
+    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\float.c" />
+    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\metadata.c" />
+    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\pack.c" />
+    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\tags.c" />
+    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\unpack.c" />
+    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\unpack3.c" />
+    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\words.c" />
+    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\wputils.c" />
+    <ClCompile Include="..\..\src\MusepackDecoder.cpp" />
+    <ClCompile Include="..\..\src\MusepackDependencies.c" />
+    <ClCompile Include="..\..\third_party\musepack\libmpcdec\mpc_bits_reader.c" />
+    <ClCompile Include="..\..\third_party\musepack\libmpcdec\mpc_decoder.c" />
+    <ClCompile Include="..\..\third_party\musepack\libmpcdec\mpc_demux.c" />
+    <ClCompile Include="..\..\third_party\musepack\libmpcdec\mpc_reader.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\AudioDecoder.h" />
+    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\FlacDecoder.h" />
+    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\OpusDecoder.h" />
+    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\PostProcess.h" />
+    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\WavDecoder.h" />
+    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\AudioDevice.h" />
+    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\Common.h" />
+    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\Dither.h" />
+    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\RingBuffer.h" />
+    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\WavPackDecoder.h" />
+    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\CafDecoder.h" />
+    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\VorbisDecoder.h" />
+    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\WavEncoder.h" />
+    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\RiffUtils.h" />
+    <ClInclude Include="..\..\include\libnyquist\MusepackDecoder.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0EEC3739-F60A-4B90-8B75-9E1AFF28106A}</ProjectGuid>
+    <RootNamespace>libaudiodata</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;D_SCL_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNING;WIN32;_WIN32;USE_ALLOCA;OPUS_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\third_party\;$(ProjectDir)..\..\include\libnyquist\;$(ProjectDir)..\..\third_party\libvorbis\include;$(ProjectDir)..\..\third_party\libogg\include;$(ProjectDir)..\..\third_party\wavpack\include;$(ProjectDir)..\..\third_party\flac\src\include;$(ProjectDir)..\..\third_party\opus\celt;$(ProjectDir)..\..\third_party\opus\libopus\include;$(ProjectDir)..\..\third_party\opus\libopus\src;$(ProjectDir)..\..\third_party\opus\opusfile\include;$(ProjectDir)..\..\third_party\opus\opusfile\src;$(ProjectDir)..\..\third_party\opus\opusfile\src\include;$(ProjectDir)..\..\third_party\opus\silk;$(ProjectDir)..\..\third_party\opus\silk\float;$(ProjectDir)..\..\third_party\musepack\include;$(ProjectDir)..\..\third_party\musepack\libmpcenc;$(ProjectDir)..\..\third_party\musepack\libmpcdec;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;D_SCL_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNING;WIN32;_WIN32;USE_ALLOCA;OPUS_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\third_party\;$(ProjectDir)..\..\include\libnyquist\;$(ProjectDir)..\..\third_party\libvorbis\include;$(ProjectDir)..\..\third_party\libogg\include;$(ProjectDir)..\..\third_party\wavpack\include;$(ProjectDir)..\..\third_party\flac\src\include;$(ProjectDir)..\..\third_party\opus\celt;$(ProjectDir)..\..\third_party\opus\libopus\include;$(ProjectDir)..\..\third_party\opus\libopus\src;$(ProjectDir)..\..\third_party\opus\opusfile\include;$(ProjectDir)..\..\third_party\opus\opusfile\src;$(ProjectDir)..\..\third_party\opus\opusfile\src\include;$(ProjectDir)..\..\third_party\opus\silk;$(ProjectDir)..\..\third_party\opus\silk\float;$(ProjectDir)..\..\third_party\musepack\include;$(ProjectDir)..\..\third_party\musepack\libmpcenc;$(ProjectDir)..\..\third_party\musepack\libmpcdec;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;D_SCL_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNING;WIN32;_WIN32;USE_ALLOCA;OPUS_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\third_party\;$(ProjectDir)..\..\include\libnyquist\;$(ProjectDir)..\..\third_party\libvorbis\include;$(ProjectDir)..\..\third_party\libogg\include;$(ProjectDir)..\..\third_party\wavpack\include;$(ProjectDir)..\..\third_party\flac\src\include;$(ProjectDir)..\..\third_party\opus\celt;$(ProjectDir)..\..\third_party\opus\libopus\include;$(ProjectDir)..\..\third_party\opus\libopus\src;$(ProjectDir)..\..\third_party\opus\opusfile\include;$(ProjectDir)..\..\third_party\opus\opusfile\src;$(ProjectDir)..\..\third_party\opus\opusfile\src\include;$(ProjectDir)..\..\third_party\opus\silk;$(ProjectDir)..\..\third_party\opus\silk\float;$(ProjectDir)..\..\third_party\musepack\include;$(ProjectDir)..\..\third_party\musepack\libmpcenc;$(ProjectDir)..\..\third_party\musepack\libmpcdec;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;D_SCL_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNING;WIN32;_WIN32;USE_ALLOCA;OPUS_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\third_party\;$(ProjectDir)..\..\include\libnyquist\;$(ProjectDir)..\..\third_party\libvorbis\include;$(ProjectDir)..\..\third_party\libogg\include;$(ProjectDir)..\..\third_party\wavpack\include;$(ProjectDir)..\..\third_party\flac\src\include;$(ProjectDir)..\..\third_party\opus\celt;$(ProjectDir)..\..\third_party\opus\libopus\include;$(ProjectDir)..\..\third_party\opus\libopus\src;$(ProjectDir)..\..\third_party\opus\opusfile\include;$(ProjectDir)..\..\third_party\opus\opusfile\src;$(ProjectDir)..\..\third_party\opus\opusfile\src\include;$(ProjectDir)..\..\third_party\opus\silk;$(ProjectDir)..\..\third_party\opus\silk\float;$(ProjectDir)..\..\third_party\musepack\include;$(ProjectDir)..\..\third_party\musepack\libmpcenc;$(ProjectDir)..\..\third_party\musepack\libmpcdec;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
