@@ -25,6 +25,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "WavDecoder.h"
 #include "RiffUtils.h"
+#include "IMA4Util.h"
 
 using namespace nqr;
 
@@ -84,7 +85,7 @@ int WavDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & me
     
     if (WaveChunkInfo.offset == 0) throw std::runtime_error("couldn't find fmt chunk");
     
-    assert(WaveChunkInfo.size == 16 || WaveChunkInfo.size == 18 || WaveChunkInfo.size == 40);
+    assert(WaveChunkInfo.size == 16 || WaveChunkInfo.size == 18 || WaveChunkInfo.size == 20 || WaveChunkInfo.size == 40);
     
     WaveChunkHeader wavHeader = {};
     memcpy(&wavHeader, memory.data() + WaveChunkInfo.offset, sizeof(WaveChunkHeader));
@@ -98,18 +99,33 @@ int WavDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & me
     data->sampleRate = wavHeader.sample_rate;
     data->frameSize = wavHeader.frame_size;
     
-    //std::cout << wavHeader << std::endl;
+    auto bit_depth = wavHeader.bit_depth;
+    switch (bit_depth)
+    {
+        case 4: data->sourceFormat = PCMFormat::PCM_16; break; // for IMA ADPCM
+        case 8: data->sourceFormat = PCMFormat::PCM_U8; break;
+        case 16: data->sourceFormat = PCMFormat::PCM_16; break;
+        case 24: data->sourceFormat = PCMFormat::PCM_24; break;
+        case 32: data->sourceFormat = (wavHeader.format == WaveFormatCode::FORMAT_IEEE) ? PCMFormat::PCM_FLT : PCMFormat::PCM_32; break;
+        case 64: data->sourceFormat = (wavHeader.format == WaveFormatCode::FORMAT_IEEE) ? PCMFormat::PCM_DBL : PCMFormat::PCM_64; break;
+    }
+    
+    std::cout << wavHeader << std::endl;
     
     bool scanForFact = false;
     bool grabExtensibleData = false;
+    bool adpcmEncoded = false;
     
     if (wavHeader.format == WaveFormatCode::FORMAT_PCM)
     {
-        //std::cout << "[format id] pcm" << std::endl;
     }
     else if (wavHeader.format == WaveFormatCode::FORMAT_IEEE)
     {
-        //std::cout << "[format id] ieee" << std::endl;
+        scanForFact = true;
+    }
+    else if (wavHeader.format == WaveFormatCode::FORMAT_IMA_ADPCM)
+    {
+        adpcmEncoded = true;
         scanForFact = true;
     }
     else if (wavHeader.format == WaveFormatCode::FORMAT_EXT)
@@ -128,15 +144,12 @@ int WavDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & me
     // Read Additional Chunks //
     ////////////////////////////
     
+    FactChunk factChunk;
     if (scanForFact)
     {
         auto FactChunkInfo = ScanForChunk(memory, GenerateChunkCode('f', 'a', 'c', 't'));
-        FactChunk factChunk = {};
-        
         if (FactChunkInfo.size)
-        {
             memcpy(&factChunk, memory.data() + FactChunkInfo.offset, sizeof(FactChunk));
-        }
     }
     
     if (grabExtensibleData)
@@ -171,24 +184,42 @@ int WavDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & me
         throw std::runtime_error("couldn't find data chunk");
     
     DataChunkInfo.offset += 2 * sizeof(uint32_t); // ignore the header and size fields
-    
-    data->lengthSeconds = ((float) DataChunkInfo.size / (float) wavHeader.sample_rate) / wavHeader.frame_size;
-    
-    auto bit_depth = wavHeader.bit_depth;
-    
-    size_t totalSamples = (DataChunkInfo.size / wavHeader.frame_size) * wavHeader.channel_count;
-    data->samples.resize(totalSamples);
 
-    switch (bit_depth)
+    if (adpcmEncoded)
     {
-    case 8: data->sourceFormat = PCMFormat::PCM_U8; break;
-    case 16: data->sourceFormat = PCMFormat::PCM_16; break;
-    case 24: data->sourceFormat = PCMFormat::PCM_24; break;
-    case 32: data->sourceFormat = (wavHeader.format == WaveFormatCode::FORMAT_IEEE) ? PCMFormat::PCM_FLT : PCMFormat::PCM_32; break;
-    case 64: data->sourceFormat = (wavHeader.format == WaveFormatCode::FORMAT_IEEE) ? PCMFormat::PCM_DBL : PCMFormat::PCM_64; break;
+        ADPCMState s;
+        s.nBlockAlign = wavHeader.frame_size;
+        s.firstDataBlockByte = 0;
+        s.dataSize = DataChunkInfo.size;
+        s.currentByte = 0;
+        s.currentDatablock = const_cast<uint8_t*>(memory.data() + DataChunkInfo.offset);
+        
+        // An encoded sample is 4 bits that expands to 16
+        size_t totalSamples = factChunk.sample_length * 4;
+        std::vector<int16_t> adpcm_pcm16(totalSamples, 0);
+        
+        uint32_t frameOffset = 0;
+        
+        unsigned numFrames = DataChunkInfo.size / s.nBlockAlign;
+        
+        for (int i = 0; i < numFrames; ++i)
+        {
+            decode_ima_adpcm(s, adpcm_pcm16.data() + frameOffset, wavHeader.channel_count);
+            s.currentDatablock += s.nBlockAlign;
+            frameOffset += (wavHeader.channel_count * s.nBlockAlign);
+        }
+        
+        data->lengthSeconds = ((float) totalSamples / (float) wavHeader.sample_rate) / wavHeader.channel_count;
+        data->samples.resize(totalSamples);
+        ConvertToFloat32(data->samples.data(), adpcm_pcm16.data(), totalSamples, data->sourceFormat);
     }
-
-    ConvertToFloat32(data->samples.data(), memory.data() + DataChunkInfo.offset, totalSamples, data->sourceFormat);
+    else
+    {
+        data->lengthSeconds = ((float) DataChunkInfo.size / (float) wavHeader.sample_rate) / wavHeader.frame_size;
+        size_t totalSamples = (DataChunkInfo.size / wavHeader.frame_size) * wavHeader.channel_count;
+        data->samples.resize(totalSamples);
+        ConvertToFloat32(data->samples.data(), memory.data() + DataChunkInfo.offset, totalSamples, data->sourceFormat);
+    }
     
     return IOError::NoError;
 }
