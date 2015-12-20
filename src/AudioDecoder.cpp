@@ -40,16 +40,13 @@ NyquistIO::NyquistIO()
     BuildDecoderTable();
 }
 
-NyquistIO::~NyquistIO()
-{
-
-}
+NyquistIO::~NyquistIO() { }
 
 int NyquistIO::Load(AudioData * data, const std::string & path)
 {
     if (IsFileSupported(path))
     {
-        if (decoderTable.size() > 0)
+        if (decoderTable.size())
         {
             auto fileExtension = ParsePathForExtension(path);
             auto decoder = GetDecoderForExtension(fileExtension);
@@ -82,7 +79,7 @@ int NyquistIO::Load(AudioData * data, std::string extension, const std::vector<u
          return IOError::ExtensionNotSupported;
     }
 
-    if (decoderTable.size() > 0)
+    if (decoderTable.size())
     {
         auto decoder = GetDecoderForExtension(extension);  
         try

@@ -104,6 +104,7 @@
 		08B91D971AC73B8A00335131 /* OpusDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpusDecoder.cpp; path = src/OpusDecoder.cpp; sourceTree = SOURCE_ROOT; };
 		08B91D981AC73B8A00335131 /* WavDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WavDecoder.cpp; path = src/WavDecoder.cpp; sourceTree = SOURCE_ROOT; };
 		08B91D991AC73B8A00335131 /* WavPackDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WavPackDecoder.cpp; path = src/WavPackDecoder.cpp; sourceTree = SOURCE_ROOT; };
+		08C83B7C1C25D7780071EED6 /* IMA4Util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IMA4Util.h; path = include/libnyquist/IMA4Util.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,6 +238,7 @@
 				083DB3F41B091C1E00FB0661 /* WavEncoder.h */,
 				08B91D8E1AC73B8000335131 /* WavDecoder.h */,
 				08B91D8F1AC73B8000335131 /* WavPackDecoder.h */,
+				08C83B7C1C25D7780071EED6 /* IMA4Util.h */,
 			);
 			name = include;
 			sourceTree = "<group>";

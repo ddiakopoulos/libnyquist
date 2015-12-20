@@ -204,7 +204,7 @@ inline std::array<uint8_t, 3> Unpack(uint32_t a)
 //////////////////////////
 
 // Signed maxes, defined for readabilty/convenience
-#define NQR_INT16_MAX 32768.f
+#define NQR_INT16_MAX 32767.f
 #define NQR_INT24_MAX 8388608.f
 #define NQR_INT32_MAX 2147483648.f
 
@@ -236,6 +236,8 @@ enum PCMFormat
     PCM_END
 };
 
+template<class T> T clamp(T a, T mn, T mx) { return std::max(std::min(a, mx), mn); }
+    
 // Src data is aligned to PCMFormat
 // @todo normalize?
 void ConvertToFloat32(float * dst, const uint8_t * src, const size_t N, PCMFormat f);
@@ -243,6 +245,9 @@ void ConvertToFloat32(float * dst, const uint8_t * src, const size_t N, PCMForma
 // Src data is always aligned to 4 bytes (WavPack, primarily)
 void ConvertToFloat32(float * dst, const int32_t * src, const size_t N, PCMFormat f);
 
+// Src data is always aligned to 2 bytes (IMA ADPCM, primarily)
+void ConvertToFloat32(float * dst, const int16_t * src, const size_t N, PCMFormat f);
+    
 void ConvertFromFloat32(uint8_t * dst, const float * src, const size_t N, PCMFormat f, DitherType t = DITHER_NONE);
 
 //////////////////////////

@@ -29,7 +29,7 @@ using namespace nqr;
 
 NyquistFileBuffer nqr::ReadFile(std::string pathToFile)
 {
-    //std::cout << "[Debug] Open: " << pathToFile << std::endl;
+    std::cout << "[Debug] Open: " << pathToFile << std::endl;
     FILE * audioFile = fopen(pathToFile.c_str(), "rb");
     
     if (!audioFile)
@@ -145,9 +145,18 @@ void nqr::ConvertToFloat32(float * dst, const int32_t * src, const size_t N, PCM
     }
 }
 
+void nqr::ConvertToFloat32(float * dst, const int16_t * src, const size_t N, PCMFormat f)
+{
+    assert(f != PCM_END);
+    if (f == PCM_16)
+    {
+        for (size_t i = 0; i < N; ++i)
+            dst[i] = int16_to_float32(Read16(src[i]));
+    }
+}
+
 void nqr::ConvertFromFloat32(uint8_t * dst, const float * src, const size_t N, PCMFormat f, DitherType t)
 {
-    
     assert(f != PCM_END);
 
     Dither dither(t);

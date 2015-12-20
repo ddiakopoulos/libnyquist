@@ -65,7 +65,9 @@ int main()
 		//auto result = loader.Load(fileData, "test_data/ad_hoc/TestBeat_Int24_Mono.wv");
 		
         //auto result = loader.Load(fileData, "test_data/ad_hoc/44_16_stereo.mpc");
-        auto result = loader.Load(fileData, "test_data/ad_hoc/44_16_mono.mpc");
+        //auto result = loader.Load(fileData, "test_data/ad_hoc/44_16_mono.mpc");
+        
+        auto result = loader.Load(fileData, "test_data/ad_hoc/TestBeat_44_16_stereo-ima4.wav");
         
 		std::cout << "[Debug] Loader Status: " << result << std::endl;
 	}
