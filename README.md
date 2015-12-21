@@ -11,13 +11,12 @@ While untested, there are no technical conditions that preclude compilation on o
 
 Regardless of input bit depth, the library hands over an interleaved float array, normalized between [-1.0,+1.0]. At present, the library does not provide resampling functionality. 
 
-* Wave
+* Wave (+ IMA-ADPCM encoding)
 * Ogg Vorbis
 * Ogg Opus
 * FLAC
 * WavPack
 * Musepack
-* Core Audio Format (Apple Lossless / AIFF) (WIP)
 
 ## Encoding
 Simple but robust WAV format encoder now included. Extentions in the near future might include Ogg. 
