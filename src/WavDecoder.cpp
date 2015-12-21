@@ -194,19 +194,17 @@ int WavDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & me
         s.currentByte = 0;
         s.inBuffer = const_cast<uint8_t*>(memory.data() + DataChunkInfo.offset);
         
-        // An encoded sample is 4 bits that expands to 16
-        size_t totalSamples = factChunk.sample_length * 4;
-        std::vector<int16_t> adpcm_pcm16(totalSamples, 0);
+        size_t totalSamples = (factChunk.sample_length * wavHeader.channel_count); // Samples per channel times channel count
+        std::vector<int16_t> adpcm_pcm16(totalSamples * 2, 0); // Each frame decodes into twice as many pcm samples
         
         uint32_t frameOffset = 0;
-        
-        unsigned numFrames = DataChunkInfo.size / s.frame_size;
-        
-        for (int i = 0; i < numFrames; ++i)
+        uint32_t frameCount = DataChunkInfo.size / s.frame_size;
+
+        for (int i = 0; i < frameCount; ++i)
         {
             decode_ima_adpcm(s, adpcm_pcm16.data() + frameOffset, wavHeader.channel_count);
             s.inBuffer += s.frame_size;
-            frameOffset += (wavHeader.channel_count * s.frame_size);
+            frameOffset += (s.frame_size * 2) - (8 * wavHeader.channel_count);
         }
         
         data->lengthSeconds = ((float) totalSamples / (float) wavHeader.sample_rate) / wavHeader.channel_count;

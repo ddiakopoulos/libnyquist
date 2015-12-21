@@ -67,7 +67,9 @@ int main()
         //auto result = loader.Load(fileData, "test_data/ad_hoc/44_16_stereo.mpc");
         //auto result = loader.Load(fileData, "test_data/ad_hoc/44_16_mono.mpc");
         
-        auto result = loader.Load(fileData, "test_data/ad_hoc/TestBeat_44_16_stereo-ima4.wav");
+        //Block-split-stereo-ima4-reaper.wav
+        //auto result = loader.Load(fileData, "test_data/ad_hoc/TestBeat_44_16_mono-ima4-reaper.wav");
+        auto result = loader.Load(fileData, "test_data/ad_hoc/TestBeat_44_16_stereo-ima4-reaper.wav");
         
 		std::cout << "[Debug] Loader Status: " << result << std::endl;
 	}
@@ -86,6 +88,7 @@ int main()
 	// Convert mono to stereo for testing playback
 	if (fileData->channelCount == 1)
 	{
+        std::cout << "Playing MONO for: " << fileData->lengthSeconds << " seconds..." << std::endl;
 		std::vector<float> stereoCopy(fileData->samples.size() * 2);
         MonoToStereo(fileData->samples.data(), stereoCopy.data(), fileData->samples.size());
 		myDevice.Play(stereoCopy);
