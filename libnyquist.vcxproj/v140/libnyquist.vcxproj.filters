@@ -147,6 +147,9 @@
     <ClInclude Include="..\..\include\libnyquist\MusepackDecoder.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\libnyquist\IMA4Util.h">
+      <Filter>include\util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">
