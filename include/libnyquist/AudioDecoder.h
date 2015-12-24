@@ -35,11 +35,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace nqr
 {
 
-    struct UnsupportedExtensionException : public std::runtime_error
-    {
-        UnsupportedExtensionException() : std::runtime_error("Unsupported file extension") {}
-    };
-    
+struct UnsupportedExtensionException : public std::runtime_error
+{
+    UnsupportedExtensionException() : std::runtime_error("Unsupported file extension") {}
+};
+  
+// Tofix:
 // Individual decoder classes will throw std::exceptions for bad things,
 // but NyquistIO implements this enum for high-level error notifications.
 enum IOError

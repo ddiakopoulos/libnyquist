@@ -69,11 +69,13 @@ int main()
         
         //Block-split-stereo-ima4-reaper.wav
         //auto result = loader.Load(fileData, "test_data/ad_hoc/TestBeat_44_16_mono-ima4-reaper.wav");
-        auto result = loader.Load(fileData, "test_data/ad_hoc/TestBeat_44_16_stereo-ima4-reaper.wav");
-        
-		std::cout << "[Debug] Loader Status: " << result << std::endl;
+         loader.Load(fileData, "test_data/ad_hoc/TestBeat_44_16_stereo-ima4-reaper.wavp");
 	}
-	catch (std::exception e)
+    catch(const UnsupportedExtensionException & e)
+    {
+        std::cerr << "Caught: " << e.what() << std::endl;
+    }
+	catch (const std::exception & e)
 	{
 		std::cerr << "Caught: " << e.what() << std::endl;
 		std::exit(1);
