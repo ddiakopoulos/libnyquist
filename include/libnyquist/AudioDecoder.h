@@ -55,10 +55,19 @@ struct BaseDecoder
     virtual void LoadFromPath(nqr::AudioData * data, const std::string & path) = 0;
     virtual void LoadFromBuffer(nqr::AudioData * data, const std::vector<uint8_t> & memory) = 0;
     virtual std::vector<std::string> GetSupportedFileExtensions() = 0;
-    //@todo implement streaming helper methods here
 };
 
-    typedef std::pair<std::string, std::shared_ptr<nqr::BaseDecoder>> DecoderPair;
+struct StreamBuffer
+{
+        
+};
+
+struct StreamingDecoder
+{
+
+};
+
+typedef std::pair<std::string, std::shared_ptr<nqr::BaseDecoder>> DecoderPair;
 
 class NyquistIO
 {

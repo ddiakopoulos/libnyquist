@@ -100,7 +100,7 @@ public:
     
     void processMetadata(const FLAC__StreamMetadata_StreamInfo & info)
     {
-        // N.B.: "Currently the reference encoder and decoders only support up to 24 bits per sample."
+        // Currently the reference encoder and decoders only support up to 24 bits per sample.
         d->sampleRate = info.sample_rate;
         d->channelCount = info.channels; // Assert 1 to 8
         d->sourceFormat = MakeFormatForBits(info.bits_per_sample, false, true);
@@ -115,7 +115,7 @@ public:
     }
 
     ///////////////////////
-    // libflab callbacks //
+    // libflac callbacks //
     ///////////////////////
     
     static FLAC__StreamDecoderWriteStatus s_writeCallback(const FLAC__StreamDecoder *, const FLAC__Frame* frame, const FLAC__int32 * const buffer[], void * userPtr)

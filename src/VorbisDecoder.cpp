@@ -64,7 +64,8 @@ public:
             std::cerr << errorAsString(r) << std::endl;
             throw std::runtime_error("ov_test_open failed");
         }
-        // N.B.: Don't need to fclose() after an open -- vorbis does this internally
+        
+        // Don't need to fclose() after an open -- vorbis does this internally
         
         vorbis_info *ovInfo = ov_info(fileHandle, -1);
         
