@@ -35,26 +35,25 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace nqr
 {
 
-struct UnsupportedExtensionException : public std::runtime_error
+struct UnsupportedExtensionEx : public std::runtime_error
 {
-    UnsupportedExtensionException() : std::runtime_error("Unsupported file extension") {}
+    UnsupportedExtensionEx() : std::runtime_error("Unsupported file extension") {}
 };
-  
-// Tofix:
-// Individual decoder classes will throw std::exceptions for bad things,
-// but NyquistIO implements this enum for high-level error notifications.
-enum IOError
+    
+struct LoadPathNotImplEx : public std::runtime_error
 {
-    NoError,
-    LoadPathNotImplemented,
-    LoadBufferNotImplemented,
-    UnknownError
+    LoadPathNotImplEx() : std::runtime_error("Loading from path not implemented") {}
+};
+
+struct LoadBufferNotImplEx : public std::runtime_error
+{
+    LoadBufferNotImplEx() : std::runtime_error("Loading from buffer not implemented") {}
 };
 
 struct BaseDecoder
 {
-    virtual int LoadFromPath(nqr::AudioData * data, const std::string & path) = 0;
-    virtual int LoadFromBuffer(nqr::AudioData * data, const std::vector<uint8_t> & memory) = 0;
+    virtual void LoadFromPath(nqr::AudioData * data, const std::string & path) = 0;
+    virtual void LoadFromBuffer(nqr::AudioData * data, const std::vector<uint8_t> & memory) = 0;
     virtual std::vector<std::string> GetSupportedFileExtensions() = 0;
     //@todo implement streaming helper methods here
 };

@@ -33,13 +33,13 @@ using namespace nqr;
 // Public Interface //
 //////////////////////
 
-int WavDecoder::LoadFromPath(AudioData * data, const std::string & path)
+void WavDecoder::LoadFromPath(AudioData * data, const std::string & path)
 {
     auto fileBuffer = nqr::ReadFile(path);
     return LoadFromBuffer(data, fileBuffer.buffer);
 }
 
-int WavDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
+void WavDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
 {
     //////////////////////
     // Read RIFF Header //
@@ -218,8 +218,6 @@ int WavDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & me
         data->samples.resize(totalSamples);
         ConvertToFloat32(data->samples.data(), memory.data() + DataChunkInfo.offset, totalSamples, data->sourceFormat);
     }
-    
-    return IOError::NoError;
 }
 
 std::vector<std::string> WavDecoder::GetSupportedFileExtensions()

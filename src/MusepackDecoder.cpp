@@ -178,17 +178,15 @@ private:
 // Public Interface //
 //////////////////////
 
-int MusepackDecoder::LoadFromPath(AudioData * data, const std::string & path)
+void MusepackDecoder::LoadFromPath(AudioData * data, const std::string & path)
 {
     auto fileBuffer = nqr::ReadFile(path);
     MusepackInternal decoder(data, fileBuffer.buffer);
-    return IOError::NoError;
 }
 
-int MusepackDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
+void MusepackDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
 {
     MusepackInternal decoder(data, memory);
-    return IOError::NoError;
 }
 
 std::vector<std::string> MusepackDecoder::GetSupportedFileExtensions()

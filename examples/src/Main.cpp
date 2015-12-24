@@ -71,7 +71,15 @@ int main()
         //auto result = loader.Load(fileData, "test_data/ad_hoc/TestBeat_44_16_mono-ima4-reaper.wav");
          loader.Load(fileData, "test_data/ad_hoc/TestBeat_44_16_stereo-ima4-reaper.wavp");
 	}
-    catch(const UnsupportedExtensionException & e)
+    catch(const UnsupportedExtensionEx & e)
+    {
+        std::cerr << "Caught: " << e.what() << std::endl;
+    }
+    catch(const LoadPathNotImplEx & e)
+    {
+       std::cerr << "Caught: " << e.what() << std::endl;
+    }
+    catch(const LoadBufferNotImplEx & e)
     {
         std::cerr << "Caught: " << e.what() << std::endl;
     }

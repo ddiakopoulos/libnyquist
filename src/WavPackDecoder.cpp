@@ -142,15 +142,14 @@ private:
 // Public Interface //
 //////////////////////
 
-int WavPackDecoder::LoadFromPath(AudioData * data, const std::string & path)
+void WavPackDecoder::LoadFromPath(AudioData * data, const std::string & path)
 {
     WavPackInternal decoder(data, path);
-    return IOError::NoError;
 }
 
-int WavPackDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
+void WavPackDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
 {
-    return IOError::LoadBufferNotImplemented;
+    throw LoadBufferNotImplEx();
 }
 
 std::vector<std::string> WavPackDecoder::GetSupportedFileExtensions()

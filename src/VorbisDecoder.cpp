@@ -182,15 +182,14 @@ private:
 // Public Interface //
 //////////////////////
 
-int VorbisDecoder::LoadFromPath(AudioData * data, const std::string & path)
+void VorbisDecoder::LoadFromPath(AudioData * data, const std::string & path)
 {
     VorbisDecoderInternal decoder(data, path);
-    return IOError::NoError;
 }
 
-int VorbisDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
+void VorbisDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
 {
-    return IOError::LoadBufferNotImplemented;
+    throw LoadBufferNotImplEx();
 }
 
 std::vector<std::string> VorbisDecoder::GetSupportedFileExtensions()

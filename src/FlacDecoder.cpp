@@ -166,15 +166,14 @@ private:
 // Public Interface //
 //////////////////////
 
-int FlacDecoder::LoadFromPath(AudioData * data, const std::string & path)
+void FlacDecoder::LoadFromPath(AudioData * data, const std::string & path)
 {
     FlacDecoderInternal decoder(data, path);
-    return IOError::NoError;
 }
 
-int FlacDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
+void FlacDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
 {
-    return IOError::LoadBufferNotImplemented;
+    throw LoadBufferNotImplEx();
 }
 
 std::vector<std::string> FlacDecoder::GetSupportedFileExtensions()

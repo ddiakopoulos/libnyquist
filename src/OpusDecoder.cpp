@@ -160,17 +160,15 @@ private:
 // Public Interface //
 //////////////////////
 
-int nqr::OpusDecoder::LoadFromPath(AudioData * data, const std::string & path)
+void nqr::OpusDecoder::LoadFromPath(AudioData * data, const std::string & path)
 {
     auto fileBuffer = nqr::ReadFile(path);
     OpusDecoderInternal decoder(data, fileBuffer.buffer);
-    return IOError::NoError;
 }
 
-int nqr::OpusDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
+void nqr::OpusDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
 {
     OpusDecoderInternal decoder(data, memory);
-    return IOError::NoError;
 }
 
 std::vector<std::string> nqr::OpusDecoder::GetSupportedFileExtensions()

@@ -65,7 +65,7 @@ void NyquistIO::Load(AudioData * data, const std::string & path)
     }
     else
     {
-        throw UnsupportedExtensionException();
+        throw UnsupportedExtensionEx();
     }
 }
 
@@ -73,7 +73,7 @@ void NyquistIO::Load(AudioData * data, std::string extension, const std::vector<
 {
     if (decoderTable.find(extension) == decoderTable.end())
     {
-        throw UnsupportedExtensionException();
+        throw UnsupportedExtensionEx();
     }
 
     if (decoderTable.size())

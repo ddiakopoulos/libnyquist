@@ -31,14 +31,14 @@ using namespace nqr;
 // Public Interface //
 //////////////////////
 
-int CAFDecoder::LoadFromPath(AudioData * data, const std::string & path)
+void CAFDecoder::LoadFromPath(AudioData * data, const std::string & path)
 {
-    return IOError::LoadPathNotImplemented;
+    throw LoadPathNotImplEx();
 }
 
-int CAFDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
+void CAFDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
 {
-    return IOError::LoadBufferNotImplemented;
+    throw LoadBufferNotImplEx();
 }
 
 std::vector<std::string> CAFDecoder::GetSupportedFileExtensions()
