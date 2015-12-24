@@ -69,7 +69,7 @@ int main()
         
         //Block-split-stereo-ima4-reaper.wav
         //auto result = loader.Load(fileData, "test_data/ad_hoc/TestBeat_44_16_mono-ima4-reaper.wav");
-         loader.Load(fileData, "test_data/ad_hoc/TestBeat_44_16_stereo-ima4-reaper.wavp");
+         loader.Load(fileData, "test_data/ad_hoc/TestBeat_44_16_stereo-ima4-reaper.wav");
 	}
     catch(const UnsupportedExtensionEx & e)
     {

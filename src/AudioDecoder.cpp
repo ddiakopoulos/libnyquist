@@ -61,7 +61,7 @@ void NyquistIO::Load(AudioData * data, const std::string & path)
             }
             
         }
-        throw std::runtime_error("No available decoders.");
+        else throw std::runtime_error("No available decoders.");
     }
     else
     {
