@@ -42,7 +42,7 @@ NyquistIO::NyquistIO()
 
 NyquistIO::~NyquistIO() { }
 
-int NyquistIO::Load(AudioData * data, const std::string & path)
+void NyquistIO::Load(AudioData * data, const std::string & path)
 {
     if (IsFileSupported(path))
     {
@@ -53,30 +53,27 @@ int NyquistIO::Load(AudioData * data, const std::string & path)
             
             try
             {
-                return decoder->LoadFromPath(data, path);
+                decoder->LoadFromPath(data, path);
             }
-            catch (std::exception e)
+            catch (const std::exception & e)
             {
-                std::cerr << "Caught fatal exception: " << e.what() << std::endl;
+                std::cerr << "Caught internal exception: " << e.what() << std::endl;
             }
             
         }
-        return IOError::NoDecodersLoaded;
+        throw std::runtime_error("No available decoders.");
     }
     else
     {
-        return IOError::ExtensionNotSupported;
+        throw UnsupportedExtensionException();
     }
-
-    // Should never be reached
-    return IOError::UnknownError;
 }
 
-int NyquistIO::Load(AudioData * data, std::string extension, const std::vector<uint8_t> & buffer)
+void NyquistIO::Load(AudioData * data, std::string extension, const std::vector<uint8_t> & buffer)
 {
     if (decoderTable.find(extension) == decoderTable.end())
     {
-         return IOError::ExtensionNotSupported;
+        throw UnsupportedExtensionException();
     }
 
     if (decoderTable.size())
@@ -84,20 +81,18 @@ int NyquistIO::Load(AudioData * data, std::string extension, const std::vector<u
         auto decoder = GetDecoderForExtension(extension);  
         try
         {
-            return decoder->LoadFromBuffer(data, buffer);
+            decoder->LoadFromBuffer(data, buffer);
         }
-        catch (std::exception e)
+        catch (const std::exception & e)
         {
-            std::cerr << "Caught fatal exception: " << e.what() << std::endl;
+            std::cerr << "Caught internal exception: " << e.what() << std::endl;
         }
     } 
     else 
     {
-        return IOError::NoDecodersLoaded;
+        throw std::runtime_error("No available decoders.");
     }
 
-    // Should never be reached
-    return IOError::UnknownError;
 }
 
 bool NyquistIO::IsFileSupported(const std::string path) const

@@ -30,17 +30,21 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <utility>
 #include <map>
 #include <memory>
+#include <exception>
 
 namespace nqr
 {
+
+    struct UnsupportedExtensionException : public std::runtime_error
+    {
+        UnsupportedExtensionException() : std::runtime_error("Unsupported file extension") {}
+    };
     
 // Individual decoder classes will throw std::exceptions for bad things,
 // but NyquistIO implements this enum for high-level error notifications.
 enum IOError
 {
     NoError,
-    NoDecodersLoaded,
-    ExtensionNotSupported,
     LoadPathNotImplemented,
     LoadBufferNotImplemented,
     UnknownError
@@ -63,8 +67,8 @@ public:
     NyquistIO();
     ~NyquistIO();
     
-    int Load(AudioData * data, const std::string & path);
-    int Load(AudioData *data, std::string extension, const std::vector<uint8_t> & buffer);
+    void Load(AudioData * data, const std::string & path);
+    void Load(AudioData *data, std::string extension, const std::vector<uint8_t> & buffer);
     
     bool IsFileSupported(const std::string path) const;
     
