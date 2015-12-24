@@ -59,7 +59,7 @@ WaveChunkHeader nqr::MakeWaveHeader(const EncoderParams param, const int sampleR
     header.channel_count = param.channelCount;
     header.sample_rate = sampleRate;
     header.data_rate = sampleRate * param.channelCount * (bitdepth / 8);
-    header.frame_size = param.channelCount * (bitdepth/ 8);
+    header.frame_size = param.channelCount * (bitdepth / 8);
     header.bit_depth = bitdepth;
     
     return header;

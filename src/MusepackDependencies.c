@@ -36,12 +36,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 #include "musepack/libmpcdec/huffman.c"
-
-//#include "musepack/libmpcdec/mpc_decoder.c"
-//#include "musepack/libmpcdec/mpc_reader.c"
-//#include "musepack/libmpcdec/mpc_bits_reader.c"
-//#include "musepack/libmpcdec/mpc_demux.c"
-
 #include "musepack/libmpcdec/requant.c"
 #include "musepack/libmpcdec/streaminfo.c"
 #include "musepack/libmpcdec/synth_filter.c"

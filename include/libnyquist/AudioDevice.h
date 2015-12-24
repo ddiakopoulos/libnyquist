@@ -39,9 +39,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace nqr
 {
     
-const unsigned int FRAME_SIZE = 512;
-const int CHANNELS = 2;
-const int BUFFER_LENGTH = FRAME_SIZE * CHANNELS;
+const uint32_t FRAME_SIZE = 512;
+const int32_t CHANNELS = 2;
+const int32_t BUFFER_LENGTH = FRAME_SIZE * CHANNELS;
 
 struct DeviceInfo
 {

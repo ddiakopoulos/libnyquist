@@ -39,12 +39,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #undef HAVE_CONFIG_H
 
-#define USE_ALLOCA            1
-#define OPUS_BUILD            1
+#define USE_ALLOCA 1
+#define OPUS_BUILD 1
 
 /* Enable SSE functions, if compiled with SSE/SSE2 (note that AMD64 implies SSE2) */
 #if defined(_M_X64) || (defined(_M_IX86_FP) && (_M_IX86_FP >= 1))
-#define __SSE__               1
+#define __SSE__ 1
 #endif
 
 //////////

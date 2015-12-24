@@ -33,7 +33,7 @@ using namespace nqr;
 
 static RingBufferT<float> buffer(BUFFER_LENGTH);
 
-static int rt_callback(void * output_buffer, void * input_buffer, unsigned int num_bufferframes, double stream_time, RtAudioStreamStatus status, void * user_data)
+static int rt_callback(void * output_buffer, void * input_buffer, uint32_t num_bufferframes, double stream_time, RtAudioStreamStatus status, void * user_data)
 {
     if (status) std::cerr << "[rtaudio] Buffer over or underflow" << std::endl;
 
@@ -73,11 +73,11 @@ void AudioDevice::ListAudioDevices()
     std::unique_ptr<RtAudio> tempDevice(new RtAudio);
 
     RtAudio::DeviceInfo info;
-    unsigned int devices = tempDevice->getDeviceCount();
+    uint32_t devices = tempDevice->getDeviceCount();
 
     std::cout << "[rtaudio] Found: " << devices << " device(s)\n";
 
-    for (unsigned int i = 0; i < devices; ++i)
+    for (uint32_t i = 0; i < devices; ++i)
     {
         info = tempDevice->getDeviceInfo(i);
         std::cout << "\tDevice: " << i << " - " << info.name << std::endl;

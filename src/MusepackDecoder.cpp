@@ -134,7 +134,7 @@ public:
         
         size_t totalSamplesRead = 0;
         
-        while(MPC_TRUE)
+        while (true)
         {
             mpc_frame_info frame;
             

@@ -36,7 +36,7 @@ class FlacDecoderInternal
     
 public:
     
-    // N.B.: FLAC is a big-endian format. All values are unsigned.
+    // FLAC is a big-endian format. All values are unsigned.
     FlacDecoderInternal(AudioData * d, std::string filepath) : d(d)
     {
         
@@ -118,7 +118,7 @@ public:
     // libflab callbacks //
     ///////////////////////
     
-    static FLAC__StreamDecoderWriteStatus s_writeCallback(const FLAC__StreamDecoder*, const FLAC__Frame* frame, const FLAC__int32* const buffer[], void* userPtr)
+    static FLAC__StreamDecoderWriteStatus s_writeCallback(const FLAC__StreamDecoder *, const FLAC__Frame* frame, const FLAC__int32 * const buffer[], void * userPtr)
     {
         FlacDecoderInternal * decoder = reinterpret_cast<FlacDecoderInternal *>(userPtr);
         
@@ -126,7 +126,7 @@ public:
         
         auto dataPtr = decoder->internalBuffer.data();
         
-        for(unsigned int i = 0;  i < frame->header.blocksize; i++)
+        for (uint32_t i = 0;  i < frame->header.blocksize; i++)
         {
             for(int j = 0; j < decoder->d->channelCount; j++)
             {
@@ -138,12 +138,12 @@ public:
         return FLAC__STREAM_DECODER_WRITE_STATUS_CONTINUE;
     }
     
-    static void s_metadataCallback (const FLAC__StreamDecoder*, const FLAC__StreamMetadata* metadata, void* userPtr)
+    static void s_metadataCallback (const FLAC__StreamDecoder *, const FLAC__StreamMetadata * metadata, void * userPtr)
     {
         static_cast<FlacDecoderInternal*>(userPtr)->processMetadata(metadata->data.stream_info);
     }
     
-    static void s_errorCallback (const FLAC__StreamDecoder *, FLAC__StreamDecoderErrorStatus status, void*)
+    static void s_errorCallback (const FLAC__StreamDecoder *, FLAC__StreamDecoderErrorStatus status, void *)
     {
         std::cerr << "FLAC Decoder Error: " << FLAC__StreamDecoderErrorStatusString[status] << std::endl;
     }
