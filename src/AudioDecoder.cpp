@@ -118,7 +118,12 @@ std::string NyquistIO::ParsePathForExtension(const std::string & path) const
 
 std::shared_ptr<BaseDecoder> NyquistIO::GetDecoderForExtension(const std::string ext)
 {
-    return decoderTable[ext];
+    if (decoderTable.size())
+    {
+        return decoderTable[ext];
+    }
+    else throw std::runtime_error("No available decoders.");
+    return nullptr;
 }
 
 void NyquistIO::BuildDecoderTable()
