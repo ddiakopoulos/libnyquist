@@ -57,16 +57,6 @@ struct BaseDecoder
     virtual std::vector<std::string> GetSupportedFileExtensions() = 0;
 };
 
-struct StreamBuffer
-{
-        
-};
-
-struct StreamingDecoder
-{
-
-};
-
 typedef std::pair<std::string, std::shared_ptr<nqr::BaseDecoder>> DecoderPair;
 
 class NyquistIO
@@ -89,8 +79,7 @@ private:
     
     void BuildDecoderTable();
     
-    template<typename T>
-    void AddDecoderToTable(std::shared_ptr<T> decoder)
+    void AddDecoderToTable(std::shared_ptr<nqr::BaseDecoder> decoder)
     {
         auto supportedExtensions = decoder->GetSupportedFileExtensions();
         
