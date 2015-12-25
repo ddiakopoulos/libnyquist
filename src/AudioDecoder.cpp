@@ -126,6 +126,17 @@ std::shared_ptr<BaseDecoder> NyquistIO::GetDecoderForExtension(const std::string
     return nullptr;
 }
 
+void NyquistIO::AddDecoderToTable(std::shared_ptr<nqr::BaseDecoder> decoder)
+{
+    auto supportedExtensions = decoder->GetSupportedFileExtensions();
+    
+    for (const auto ext : supportedExtensions)
+    {
+        if (decoderTable.count(ext) >= 1) throw std::runtime_error("decoder already exists for extension.");
+        decoderTable.insert(DecoderPair(ext, decoder));
+    }
+}
+
 void NyquistIO::BuildDecoderTable()
 {
     AddDecoderToTable(std::make_shared<WavDecoder>());

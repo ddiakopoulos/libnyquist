@@ -79,16 +79,7 @@ private:
     
     void BuildDecoderTable();
     
-    void AddDecoderToTable(std::shared_ptr<nqr::BaseDecoder> decoder)
-    {
-        auto supportedExtensions = decoder->GetSupportedFileExtensions();
-        
-        //@todo: basic sanity checking that the extension isn't already supported
-        for (const auto ext : supportedExtensions)
-        {
-            decoderTable.insert(DecoderPair(ext, decoder));
-        }
-    }
+    void AddDecoderToTable(std::shared_ptr<nqr::BaseDecoder> decoder);
     
     std::map<std::string, std::shared_ptr<BaseDecoder>> decoderTable;
     
