@@ -68,6 +68,7 @@
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\VorbisDecoder.h" />
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\WavEncoder.h" />
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\RiffUtils.h" />
+    <ClInclude Include="..\..\include\libnyquist\IMA4Util.h" />
     <ClInclude Include="..\..\include\libnyquist\MusepackDecoder.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
