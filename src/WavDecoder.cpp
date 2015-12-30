@@ -110,7 +110,7 @@ void WavDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & m
         case 64: data->sourceFormat = (wavHeader.format == WaveFormatCode::FORMAT_IEEE) ? PCMFormat::PCM_DBL : PCMFormat::PCM_64; break;
     }
     
-    std::cout << wavHeader << std::endl;
+    //std::cout << wavHeader << std::endl;
     
     bool scanForFact = false;
     bool grabExtensibleData = false;
