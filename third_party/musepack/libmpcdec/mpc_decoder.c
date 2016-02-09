@@ -45,19 +45,19 @@
 #include "mpc_bits_reader.h"
 
 //SV7 tables
-extern const mpc_lut_data   mpc_HuffQ [7] [2];
-extern const mpc_lut_data   mpc_HuffHdr;
+extern /*const*/ mpc_lut_data   mpc_HuffQ [7] [2];
+extern /*const*/ mpc_lut_data   mpc_HuffHdr;
 extern const mpc_huffman    mpc_table_HuffSCFI [ 4];
-extern const mpc_lut_data   mpc_HuffDSCF;
+extern /*const*/ mpc_lut_data   mpc_HuffDSCF;
 
 //SV8 tables
-extern const mpc_can_data mpc_can_Bands;
-extern const mpc_can_data mpc_can_SCFI[2];
-extern const mpc_can_data mpc_can_DSCF[2];
-extern const mpc_can_data mpc_can_Res [2];
-extern const mpc_can_data mpc_can_Q [8][2];
-extern const mpc_can_data mpc_can_Q1;
-extern const mpc_can_data mpc_can_Q9up;
+extern /*const*/ mpc_can_data mpc_can_Bands;
+extern /*const*/ mpc_can_data mpc_can_SCFI[2];
+extern /*const*/ mpc_can_data mpc_can_DSCF[2];
+extern /*const*/ mpc_can_data mpc_can_Res [2];
+extern /*const*/ mpc_can_data mpc_can_Q [6/*8*/][2];
+extern /*const*/ mpc_can_data mpc_can_Q1;
+extern /*const*/ mpc_can_data mpc_can_Q9up;
 
 //------------------------------------------------------------------------------
 // types

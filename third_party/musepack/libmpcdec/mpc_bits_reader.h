@@ -32,6 +32,7 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#pragma once
 #define MAX_ENUM 32
 
 MPC_API int mpc_bits_get_block(mpc_bits_reader * r, mpc_block * p_block);
