@@ -11,7 +11,7 @@
 
 using namespace nqr;
 
-int main()
+int main( int argc, const char **argv ) try
 {
 	AudioDevice::ListAudioDevices();
 
@@ -69,7 +69,7 @@ int main()
         
         //Block-split-stereo-ima4-reaper.wav
         //auto result = loader.Load(fileData, "test_data/ad_hoc/TestBeat_44_16_mono-ima4-reaper.wav");
-         loader.Load(fileData, "test_data/ad_hoc/TestBeat_44_16_stereo-ima4-reaper.wav");
+         loader.Load(fileData, argc > 1 ? argv[1] : "test_data/ad_hoc/TestBeat_44_16_stereo-ima4-reaper.wav");
 	}
     catch(const UnsupportedExtensionEx & e)
     {
@@ -114,4 +114,21 @@ int main()
     std::cout << "Encoder Status: " << encoderStatus << std::endl;
     
 	return 0;
+}
+catch(const UnsupportedExtensionEx & e)
+{
+    std::cerr << "Caught: " << e.what() << std::endl;
+}
+catch(const LoadPathNotImplEx & e)
+{
+   std::cerr << "Caught: " << e.what() << std::endl;
+}
+catch(const LoadBufferNotImplEx & e)
+{
+    std::cerr << "Caught: " << e.what() << std::endl;
+}
+catch (const std::exception & e)
+{
+	std::cerr << "Caught: " << e.what() << std::endl;
+	std::exit(1);
 }
