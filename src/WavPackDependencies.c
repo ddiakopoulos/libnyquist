@@ -25,9 +25,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #if (_MSC_VER)
     #pragma warning (push)
-    #pragma warning (disable: 181 111 4267 4996 4244 4701 4702 4133 4100 4127 4206 4312 4505 4365 4005 4013 4334)
+    #pragma warning (disable: 181 111 4267 4996 4244 4701 4702 4133 4100 4127 4206 4312 4505 4365 4005 4013 4334 4703)
 #endif
-
+        
 #ifdef __clang__
     #pragma clang diagnostic push
     #pragma clang diagnostic ignored "-Wconversion"
@@ -35,15 +35,29 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     #pragma clang diagnostic ignored "-Wdeprecated-register"
 #endif
 
-#include "musepack/libmpcdec/huffman.c"
-#include "musepack/libmpcdec/requant.c"
-#include "musepack/libmpcdec/streaminfo.c"
-#include "musepack/libmpcdec/synth_filter.c"
-#include "musepack/libmpcdec/crc32.c"
-#include "musepack/libmpcdec/mpc_reader.c"
-#include "musepack/libmpcdec/mpc_decoder.c"
-#include "musepack/libmpcdec/mpc_demux.c"
-#include "musepack/libmpcdec/mpc_bits_reader.c"
+#ifdef _WIN32
+#ifndef WIN32
+#define WIN32
+#endif
+#endif
+
+#include "wavpack/src/bits.c"
+#include "wavpack/src/extra1.c"
+#define WavpackExtraInfo WavpackExtraInfo_alt
+#define log2overhead log2overhead_alt
+#define xtable xtable_alt
+#include "wavpack/src/extra2.c"
+#include "wavpack/src/float.c"
+#include "wavpack/src/metadata.c"
+#define decorr_stereo_pass decorr_stereo_pass_alt
+#include "wavpack/src/pack.c"
+#include "wavpack/src/tags.c"
+#undef  decorr_stereo_pass
+#define decorr_stereo_pass decorr_stereo_pass_alt_2
+#include "wavpack/src/unpack.c"
+#include "wavpack/src/unpack3.c"
+#include "wavpack/src/words.c"
+#include "wavpack/src/wputils.c"
 
 #ifdef __clang__
     #pragma clang diagnostic pop
