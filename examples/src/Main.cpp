@@ -38,7 +38,7 @@ int main(int argc, const char **argv) try
         //loader.Load(fileData, "encoded.wav");
 
         // 1-channel wave
-        //loader.Load(fileData, "test_data/1ch/44100/8/test.wav");
+        loader.Load(fileData, "test_data/1ch/44100/8/test.wav");
         //loader.Load(fileData, "test_data/1ch/44100/16/test.wav");
         //loader.Load(fileData, "test_data/1ch/44100/24/test.wav");
         //loader.Load(fileData, "test_data/1ch/44100/32/test.wav");
@@ -82,7 +82,7 @@ int main(int argc, const char **argv) try
         //loader.Load(fileData, "test_data/ad_hoc/TestBeat_Int24_Mono.wv");
     
         // 1 + 2 channel musepack
-        loader.Load(fileData, "test_data/ad_hoc/44_16_stereo.mpc");
+        //loader.Load(fileData, "test_data/ad_hoc/44_16_stereo.mpc");
         //loader.Load(fileData, "test_data/ad_hoc/44_16_mono.mpc");
     }
 
@@ -106,12 +106,9 @@ int main(int argc, const char **argv) try
 		myDevice.Play(fileData->samples);
 	}
 
-    {
-        WavEncoder enc;
-	    int encoderStatus = enc.WriteFile({2, PCM_16, DITHER_NONE }, fileData, "encoded.wav");
-	    std::cout << "Encoder Status: " << encoderStatus << std::endl;
-    }
-
+	int encoderStatus = WavEncoder::WriteFile({2, PCM_16, DITHER_NONE }, fileData, "encoded.wav");
+    std::cout << "Encoder Status: " << encoderStatus << std::endl;
+ 
 	return EXIT_SUCCESS;
 }
 catch (const UnsupportedExtensionEx & e)

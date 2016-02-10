@@ -38,6 +38,8 @@ inline void toBytes(int value, char * arr)
 
 int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std::string & path)
 {
+    assert(d->samples.size() > 0);
+
     // Cast away const because we know what we are doing (Hopefully?)
     float * sampleData = const_cast<float *>(d->samples.data());
     size_t sampleDataSize = d->samples.size();
