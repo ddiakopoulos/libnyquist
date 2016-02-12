@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="$(ProjectDir)..\..\third_party\opus\celt\celt_encoder.c">
-      <Filter>third_party\celt</Filter>
-    </ClCompile>
-    <ClCompile Include="$(ProjectDir)..\..\third_party\opus\celt\celt_decoder.c">
-      <Filter>third_party\celt</Filter>
-    </ClCompile>
     <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\bits.c">
       <Filter>third_party\wavpack</Filter>
     </ClCompile>
@@ -88,18 +82,6 @@
     <ClCompile Include="..\..\src\MusepackDecoder.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\third_party\musepack\libmpcdec\mpc_bits_reader.c">
-      <Filter>third_party\mpc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\third_party\musepack\libmpcdec\mpc_decoder.c">
-      <Filter>third_party\mpc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\third_party\musepack\libmpcdec\mpc_demux.c">
-      <Filter>third_party\mpc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\third_party\musepack\libmpcdec\mpc_reader.c">
-      <Filter>third_party\mpc</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\OpusDecoder.h">
@@ -164,17 +146,11 @@
     <Filter Include="third_party\wavpack">
       <UniqueIdentifier>{d40a1038-d11f-45dc-820b-e32743336269}</UniqueIdentifier>
     </Filter>
-    <Filter Include="third_party\celt">
-      <UniqueIdentifier>{d38860a7-b4e5-4a1e-99a5-c4eac7e1c013}</UniqueIdentifier>
-    </Filter>
     <Filter Include="include\util">
       <UniqueIdentifier>{f27e7823-c56c-4e03-af63-2ef0b1e83cbd}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\deps">
       <UniqueIdentifier>{d839471f-71d1-471e-95e0-c33af9bb64bc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="third_party\mpc">
-      <UniqueIdentifier>{5e7b9ab1-a3bf-4934-96d8-38ad1c4b08d7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

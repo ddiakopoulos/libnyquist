@@ -42,4 +42,6 @@ DerivedData
 
 *.reapeaks
 
+*.opendb
+
 encoded.wav

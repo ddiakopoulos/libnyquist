@@ -33,8 +33,6 @@
     <ClCompile Include="$(ProjectDir)..\..\src\VorbisDependencies.c" />
     <ClCompile Include="$(ProjectDir)..\..\src\WavEncoder.cpp" />
     <ClCompile Include="$(ProjectDir)..\..\src\RiffUtils.cpp" />
-    <ClCompile Include="$(ProjectDir)..\..\third_party\opus\celt\celt_decoder.c" />
-    <ClCompile Include="$(ProjectDir)..\..\third_party\opus\celt\celt_encoder.c" />
     <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\bits.c" />
     <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\extra1.c" />
     <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\extra2.c" />
@@ -48,10 +46,6 @@
     <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\wputils.c" />
     <ClCompile Include="..\..\src\MusepackDecoder.cpp" />
     <ClCompile Include="..\..\src\MusepackDependencies.c" />
-    <ClCompile Include="..\..\third_party\musepack\libmpcdec\mpc_bits_reader.c" />
-    <ClCompile Include="..\..\third_party\musepack\libmpcdec\mpc_decoder.c" />
-    <ClCompile Include="..\..\third_party\musepack\libmpcdec\mpc_demux.c" />
-    <ClCompile Include="..\..\third_party\musepack\libmpcdec\mpc_reader.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\AudioDecoder.h" />

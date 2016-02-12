@@ -92,16 +92,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "opus/celt/rate.c"
 #include "opus/celt/vq.c"
 
-// Disabled inline because of name clash of opus_custom_encoder_get_size.
 #include "opus/celt/celt_decoder.c"
 #define opus_custom_encoder_get_size opus_custom_encoder_get_size_alt
 #include "opus/celt/celt_encoder.c"
-
-/*
-    See celt/celt_decoder.c + celt/celt_encoder.c in the project browser.
-    These files need to be in separate translation units due to name clashes,
-    unfortunately.
-*/
 
 /////////////////
 // SILK Common //
