@@ -139,12 +139,8 @@ int celt_decode_with_ec(OpusCustomDecoder * OPUS_RESTRICT st, const unsigned cha
 #define celt_encoder_ctl opus_custom_encoder_ctl
 #define celt_decoder_ctl opus_custom_decoder_ctl
 
-
-#ifdef CUSTOM_MODES
+// libnyquist changed
 #define OPUS_CUSTOM_NOSTATIC
-#else
-#define OPUS_CUSTOM_NOSTATIC static OPUS_INLINE
-#endif
 
 static const unsigned char trim_icdf[11] = {126, 124, 119, 109, 87, 41, 19, 9, 4, 2, 0};
 /* Probs: NONE: 21.875%, LIGHT: 6.25%, NORMAL: 65.625%, AGGRESSIVE: 6.25% */

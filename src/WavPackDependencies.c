@@ -36,9 +36,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 #ifdef _WIN32
-#ifndef WIN32
-#define WIN32
-#endif
+    #ifndef WIN32
+        #define WIN32
+    #endif
 #endif
 
 #include "wavpack/src/bits.c"
