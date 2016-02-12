@@ -50,7 +50,7 @@ class MusepackInternal
     {
         mpc_reader_state *p_mem = (mpc_reader_state*) p_reader->data;
         if (p_mem->magic != STDIO_MAGIC) return MPC_STATUS_FAIL;
-        mpc_int32_t max = (p_mem->p_end - p_mem->p_file);
+        mpc_int32_t max = mpc_int32_t(p_mem->p_end - p_mem->p_file);
         if (size >= max) size = max;
         memcpy((unsigned char *)ptr, p_mem->p_file, size);
         p_mem->p_file += size;
@@ -72,14 +72,14 @@ class MusepackInternal
     {
         mpc_reader_state *p_mem = (mpc_reader_state*) p_reader->data;
         if(p_mem->magic != STDIO_MAGIC) return MPC_STATUS_FAIL;
-        return p_mem->p_file - p_mem->p_begin;
+        return mpc_int32_t(p_mem->p_file - p_mem->p_begin);
     }
     
     static mpc_int32_t get_size_mem(mpc_reader *p_reader)
     {
         mpc_reader_state *p_mem = (mpc_reader_state*) p_reader->data;
         if (p_mem->magic != STDIO_MAGIC) return MPC_STATUS_FAIL;
-        return p_mem->p_end - p_mem->p_begin;
+        return mpc_int32_t(p_mem->p_end - p_mem->p_begin);
     }
     
     static mpc_bool_t canseek_mem(mpc_reader *p_reader)
@@ -94,7 +94,7 @@ public:
     // Musepack is a purely variable bitrate format and does not work at a constant bitrate.
     MusepackInternal(AudioData * d, const std::vector<uint8_t> & fileData) : d(d)
     {
-        decoderMemory= new mpc_reader_state();
+        decoderMemory = std::make_shared<mpc_reader_state>();
         
         decoderMemory->magic  = STDIO_MAGIC;
         decoderMemory->p_file = (unsigned char *) fileData.data();
@@ -102,7 +102,7 @@ public:
         decoderMemory->p_end = (unsigned char *) fileData.data() + fileData.size();
         decoderMemory->is_seekable = MPC_TRUE;
         
-        reader.data = decoderMemory;
+        reader.data = decoderMemory.get();
         reader.canseek = canseek_mem;
         reader.get_size = get_size_mem;
         reader.read = read_mem;
@@ -116,42 +116,37 @@ public:
         
         mpc_demux_get_info(mpcDemux, &streamInfo);
         
-        d->sampleRate = (float) streamInfo.sample_freq;
+        d->sampleRate = (int) streamInfo.sample_freq;
         d->channelCount = streamInfo.channels;
         d->sourceFormat = MakeFormatForBits(32, true, false);
         d->lengthSeconds = (double) mpc_streaminfo_get_length(&streamInfo);
         
         auto totalSamples = size_t(mpc_streaminfo_get_length_samples(&streamInfo));
+        d->samples.reserve(totalSamples * d->channelCount + (MPC_DECODER_BUFFER_LENGTH / sizeof(MPC_SAMPLE_FORMAT))); // demux writes in chunks
         d->samples.resize(totalSamples * d->channelCount);
         
-        if (!readInternal(totalSamples))
+        if (!readInternal())
             throw std::runtime_error("could not read any data");
     }
     
-    size_t readInternal(size_t samplesToRead)
+    size_t readInternal()
     {
-        mpc_status err;
+        mpc_status err = MPC_STATUS_OK;
         size_t totalSamplesRead = 0;
-        MPC_SAMPLE_FORMAT buffer[MPC_DECODER_BUFFER_LENGTH];
    
-        while (samplesToRead > 0)
+        while (true)
         {
-            std::memset(buffer, 0, MPC_DECODER_BUFFER_LENGTH);
-
             mpc_frame_info frame;
-            frame.buffer = buffer;
+            frame.buffer = d->samples.data() + totalSamplesRead;
 
             err = mpc_demux_decode(mpcDemux, &frame);
-            if (frame.bits == -1) break;
-
-            memcpy(d->samples.data() + totalSamplesRead, buffer, frame.samples * streamInfo.channels * sizeof(MPC_SAMPLE_FORMAT));
+            if (frame.bits == -1 || err != MPC_STATUS_OK) break;
 
             totalSamplesRead += (frame.samples * streamInfo.channels);
-            samplesToRead -= frame.samples;
         }
-        
+
         if (err != MPC_STATUS_OK)
-            std::cerr << "Something went wrong... " << err << std::endl;
+            std::cerr << "An internal error occured in mpc_demux_decode" << std::endl;
 
         return totalSamplesRead;
     }
@@ -169,7 +164,7 @@ private:
     mpc_decoder decoder;
     mpc_demux * mpcDemux;
     
-    mpc_reader_state * decoderMemory;
+    std::shared_ptr<mpc_reader_state> decoderMemory;
     
     NO_MOVE(MusepackInternal);
     
