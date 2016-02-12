@@ -33,19 +33,9 @@
     <ClCompile Include="$(ProjectDir)..\..\src\VorbisDependencies.c" />
     <ClCompile Include="$(ProjectDir)..\..\src\WavEncoder.cpp" />
     <ClCompile Include="$(ProjectDir)..\..\src\RiffUtils.cpp" />
-    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\bits.c" />
-    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\extra1.c" />
-    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\extra2.c" />
-    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\float.c" />
-    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\metadata.c" />
-    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\pack.c" />
-    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\tags.c" />
-    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\unpack.c" />
-    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\unpack3.c" />
-    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\words.c" />
-    <ClCompile Include="$(ProjectDir)..\..\third_party\wavpack\src\wputils.c" />
     <ClCompile Include="..\..\src\MusepackDecoder.cpp" />
     <ClCompile Include="..\..\src\MusepackDependencies.c" />
+    <ClCompile Include="..\..\src\WavPackDependencies.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\AudioDecoder.h" />
