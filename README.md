@@ -20,6 +20,8 @@ Regardless of input bit depth, the library hands over an interleaved float array
 * FLAC
 * WavPack
 * Musepack
+* Multichannel modules (669, amf, ams, dbm, dmf, dsm, far, it, j2b, mdl, med, mod, mt2, mtm, okt, pat, psm, ptm, s3m, stm, ult, umx, xm)
+* MIDI files [(*)](#about-midi-files)
 
 ## Encoding
 Simple but robust WAV format encoder now included. Extentions in the near future might include Ogg. 
@@ -34,3 +36,8 @@ Simple but robust WAV format encoder now included. Extentions in the near future
 
 ## License
 Libyquist is released under the 2-Clause BSD license. All dependencies and codecs are under similar open licenses.
+
+## About MIDI files
+* [SoundFonts](https://en.wikipedia.org/wiki/SoundFont) are required to decode MIDI files.
+* Libnyquist supports `.pat` soundfonts only. Use [unsf tool](http://alsa.opensrc.org/Unsf) to convert from `.sf2` to `.pat` soundfonts.
+* Also, [sfark tool](http://www.melodymachine.com/sfark.htm) may be needed to unpack legacy compressed soundfonts.
