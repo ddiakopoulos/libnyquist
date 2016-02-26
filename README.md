@@ -39,5 +39,6 @@ Libyquist is released under the 2-Clause BSD license. All dependencies and codec
 
 ## About MIDI files
 * [SoundFonts](https://en.wikipedia.org/wiki/SoundFont) are required to decode MIDI files.
-* Libnyquist supports `.pat` soundfonts only. Use [unsf tool](http://alsa.opensrc.org/Unsf) to convert from `.sf2` to `.pat` soundfonts.
-* Also, [sfark tool](http://www.melodymachine.com/sfark.htm) may be needed to unpack legacy compressed soundfonts.
+* Libnyquist supports `.pat` (GUS) soundfonts only. Use [unsf tool](http://alsa.opensrc.org/Unsf) to convert from `.sf2` to `.pat` soundfonts, and [sfark tool](http://www.melodymachine.com/sfark.htm) to unpack compressed soundfonts (`.sf2ark`).
+* The compiler directive `PAT_CONFIG_FILE` tells libnyquist what soundfont file is set by default (defaults to `pat/timidity.cfg`; valid options are `FluidR3_GM2/FluidR3_GM2-2.cfg`, etc).
+* Additionally, there is runtime check for the environment variable `MMPAT_PATH_TO_CFG`, which contains the path to the config file. For more info please check [this source file](third_party\libmodplug\src\load_pat.cpp)

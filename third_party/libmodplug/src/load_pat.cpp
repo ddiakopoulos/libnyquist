@@ -28,6 +28,7 @@
 	All systems - all compilers (hopefully)
 */
 
+#include <string>
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
@@ -47,11 +48,21 @@
 #include "load_pat.h"
 
 #define DIRDELIM		'/'
-//#define TIMIDITYCFG	"pat/TimGM6mb.cfg"
-#define TIMIDITYCFG	"pat/timidity.cfg"
-#define PATHFORPAT	"pat"
 
-#define PAT_ENV_PATH2CFG			"MMPAT_PATH_TO_CFG"
+#ifndef PAT_CONFIG_FILE
+//#define PAT_CONFIG_FILE "FluidR3_GM2/FluidR3_GM2-2.cfg"
+#define PAT_CONFIG_FILE "pat/timidity.cfg"
+#endif
+
+#ifndef PAT_CONFIG_DRUM_OFFSET
+#define PAT_CONFIG_DRUM_OFFSET 25 // timidity.cfg drum patches start at 25
+#endif
+
+#ifndef PAT_ENV_PATH2CFG
+#define PAT_ENV_PATH2CFG "MMPAT_PATH_TO_CFG"
+#endif
+
+
 
 // 128 gm and 63 drum
 #define MAXSMP				191
@@ -221,7 +232,7 @@ int pat_gm_drumnr(int n)
 {
 	if( n < 25 ) return 129;
 	if( n+129-25 < MAXSMP )
-		return 129+n-25; // timidity.cfg drum patches start at 25
+		return 129+n-PAT_CONFIG_DRUM_OFFSET;
 	return MAXSMP;
 }
 
@@ -356,15 +367,20 @@ void pat_init_patnames(void)
 	char line[PATH_MAX];
 	char cfgsources[5][PATH_MAX] = {{0}, {0}, {0}, {0}, {0}};
 	MMSTREAM *mmcfg;
-	strncpy(pathforpat, PATHFORPAT, PATH_MAX);
-	strncpy(timiditycfg, TIMIDITYCFG, PATH_MAX);
+
+	strncpy(timiditycfg, PAT_CONFIG_FILE, PATH_MAX);
 	p = getenv(PAT_ENV_PATH2CFG);
 	if( p ) {
-		strncpy(timiditycfg, p, PATH_MAX - 14);
-		strncpy(pathforpat, p, PATH_MAX - 13);
-		strcat(timiditycfg, "/timidity.cfg");
-		strcat(pathforpat, "/instruments");
+		strncpy(timiditycfg, p, PATH_MAX);
 	}
+	{
+		std::string normalized(timiditycfg);
+		for( size_t i = 0; i < normalized.size(); ++i ) {
+			if( normalized[i] == '\\' ) normalized[i] = '/';
+		}
+		strcat(pathforpat, normalized.substr(0, normalized.find_last_of('/') + 1).c_str() );
+	}
+
 	strncpy(cfgsources[0], timiditycfg, PATH_MAX - 1);
 	nsources = 1;
 
