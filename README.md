@@ -20,8 +20,8 @@ Regardless of input bit depth, the library hands over an interleaved float array
 * FLAC
 * WavPack
 * Musepack
-* libmodplug formats (669, amf, ams, dbm, dmf, dsm, far, it, j2b, mdl, med, mod, mt2, mtm, okt, pat, psm, ptm, s3m, stm, ult, umx, xm)
 * [MIDI files (with soundfonts)](midi-playback.md)
+* libmodplug formats (669, amf, ams, dbm, dmf, dsm, far, it, j2b, mdl, med, mod, mt2, mtm, okt, pat, psm, ptm, s3m, stm, ult, umx, xm)
 
 ## Encoding
 Simple but robust WAV format encoder now included. Extentions in the near future might include Ogg. 
