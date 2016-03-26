@@ -24,6 +24,8 @@
 		08B91DA21AC73B8A00335131 /* WavDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D981AC73B8A00335131 /* WavDecoder.cpp */; };
 		08B91DA31AC73B8A00335131 /* WavPackDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D991AC73B8A00335131 /* WavPackDecoder.cpp */; };
 		08D0EC751C6DA41300FCDA23 /* WavPackDependencies.c in Sources */ = {isa = PBXBuildFile; fileRef = 08D0EC741C6DA41300FCDA23 /* WavPackDependencies.c */; };
+		08FFC72D1CA702EC005812D6 /* ModplugDependencies.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08FFC72C1CA702EC005812D6 /* ModplugDependencies.cpp */; };
+		08FFC72F1CA7038D005812D6 /* ModplugDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08FFC72E1CA7038D005812D6 /* ModplugDecoder.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -73,6 +75,8 @@
 		08B91D991AC73B8A00335131 /* WavPackDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WavPackDecoder.cpp; path = src/WavPackDecoder.cpp; sourceTree = SOURCE_ROOT; };
 		08C83B7C1C25D7780071EED6 /* IMA4Util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IMA4Util.h; path = include/libnyquist/IMA4Util.h; sourceTree = SOURCE_ROOT; };
 		08D0EC741C6DA41300FCDA23 /* WavPackDependencies.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = WavPackDependencies.c; path = src/WavPackDependencies.c; sourceTree = SOURCE_ROOT; };
+		08FFC72C1CA702EC005812D6 /* ModplugDependencies.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ModplugDependencies.cpp; path = src/ModplugDependencies.cpp; sourceTree = SOURCE_ROOT; };
+		08FFC72E1CA7038D005812D6 /* ModplugDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ModplugDecoder.cpp; path = src/ModplugDecoder.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,7 @@
 		080A58551B083D5100302850 /* deps */ = {
 			isa = PBXGroup;
 			children = (
+				08FFC72C1CA702EC005812D6 /* ModplugDependencies.cpp */,
 				08D0EC741C6DA41300FCDA23 /* WavPackDependencies.c */,
 				081FFB181ADF803800673073 /* FlacDependencies.c */,
 				086DADAB1ADF9DF30031F793 /* VorbisDependencies.c */,
@@ -181,6 +186,7 @@
 				08B91D921AC73B8A00335131 /* AudioDevice.cpp */,
 				08B91D931AC73B8A00335131 /* Common.cpp */,
 				080A58571B0866F600302850 /* RiffUtils.cpp */,
+				08FFC72E1CA7038D005812D6 /* ModplugDecoder.cpp */,
 				08B91D941AC73B8A00335131 /* FlacDecoder.cpp */,
 				08B91D961AC73B8A00335131 /* VorbisDecoder.cpp */,
 				08B91D971AC73B8A00335131 /* OpusDecoder.cpp */,
@@ -217,7 +223,7 @@
 		08B91D1E1AC26FC100335131 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Dimitri Diakopoulos";
 				TargetAttributes = {
 					08B91D251AC26FC100335131 = {
@@ -258,7 +264,9 @@
 				08B91D9A1AC73B8A00335131 /* CafDecoder.cpp in Sources */,
 				080A58581B0866F600302850 /* RiffUtils.cpp in Sources */,
 				08B91DA11AC73B8A00335131 /* OpusDecoder.cpp in Sources */,
+				08FFC72D1CA702EC005812D6 /* ModplugDependencies.cpp in Sources */,
 				08B91D9E1AC73B8A00335131 /* FlacDecoder.cpp in Sources */,
+				08FFC72F1CA7038D005812D6 /* ModplugDecoder.cpp in Sources */,
 				08D0EC751C6DA41300FCDA23 /* WavPackDependencies.c in Sources */,
 				08B91D9C1AC73B8A00335131 /* AudioDevice.cpp in Sources */,
 				086DADAD1AE029860031F793 /* VorbisDependencies.c in Sources */,
@@ -289,6 +297,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -351,6 +360,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_EXTENSION = a;
 				EXECUTABLE_PREFIX = "";
 				GCC_CHAR_IS_UNSIGNED_CHAR = NO;
@@ -369,6 +379,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/include/libnyquist",
 					"$(SRCROOT)/third_party",
 					"$(SRCROOT)/third_party/rtaudio",
 					"$(SRCROOT)/third_party/flac/src/include",
@@ -385,6 +396,7 @@
 					"$(SRCROOT)/third_party/wavpack/src",
 					"$(SRCROOT)/third_party/musepack/include",
 					"$(SRCROOT)/third_party/musepack/libmpcdec",
+					"$(SRCROOT)/third_party/libmodplug/src",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
@@ -398,6 +410,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_EXTENSION = a;
 				EXECUTABLE_PREFIX = "";
 				GCC_CHAR_IS_UNSIGNED_CHAR = NO;
@@ -416,6 +429,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/include/libnyquist",
 					"$(SRCROOT)/third_party",
 					"$(SRCROOT)/third_party/rtaudio",
 					"$(SRCROOT)/third_party/flac/src/include",
@@ -432,6 +446,7 @@
 					"$(SRCROOT)/third_party/wavpack/src",
 					"$(SRCROOT)/third_party/musepack/include",
 					"$(SRCROOT)/third_party/musepack/libmpcdec",
+					"$(SRCROOT)/third_party/libmodplug/src",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
