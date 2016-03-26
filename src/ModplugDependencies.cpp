@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2015, Dimitri Diakopoulos All rights reserved.
+Copyright (c) 2016, Dimitri Diakopoulos All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -39,6 +39,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define MODPLUG_STATIC
 #endif
 
+#define HAVE_SINF
+#define HAVE_SETENV
+
 #include "libmodplug/src/load_669.cpp"
 #include "libmodplug/src/load_abc.cpp"
 #include "libmodplug/src/load_amf.cpp"
@@ -51,6 +54,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "libmodplug/src/load_j2b.cpp"
 #include "libmodplug/src/load_mdl.cpp"
 #include "libmodplug/src/load_med.cpp"
+
 #define none none_alt
 #define MMFILE MMFILE_alt
 #define mmfseek mmfseek_alt
@@ -61,6 +65,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "libmodplug/src/load_mt2.cpp"
 #include "libmodplug/src/load_mtm.cpp"
 #include "libmodplug/src/load_okt.cpp"
+#undef MMFILE
+#undef mmfseek
+#undef mmftell
+#undef mmreadUBYTES
+
 #define MMFILE MMFILE_alt2
 #define mmfseek mmfseek_alt2
 #define mmftell mmftell_alt2
@@ -74,6 +83,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "libmodplug/src/load_umx.cpp"
 #include "libmodplug/src/load_wav.cpp"
 #include "libmodplug/src/load_xm.cpp"
+
 #include "libmodplug/src/mmcmp.cpp"
 #include "libmodplug/src/modplug.cpp"
 #include "libmodplug/src/sndfile.cpp"
