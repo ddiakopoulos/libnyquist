@@ -1,0 +1,43 @@
+                             QUEST STUDIOS
+                       SOFTWARE SOUNDTRACK SERIES
+          ====================================================
+                      THE SECRET OF MONKEY ISLAND   
+
+
+                      "INTRODUCTION/OPENING THEMES"
+                            Michael Z. Land
+          ====================================================
+              Copyright (c)1989 LucasArts Entertainment Co.
+          ====================================================
+
+                G E N E R A L   M I D I   V E R S I O N
+
+
+
+System Requirements:
+
+- MIDI Playback Software capable of reading Type 1 Standard
+    MIDI File format
+- General MIDI sound device  (Wave Table recommended.)
+
+
+This Standard MIDI File was recorded directly from LucasFilm Game's
+"The Secret of Monkey Island" adventure game.  It has been converted
+from the MT-32 version for playback on General MIDI sound cards.  A
+Wave Table sound card is highly recommended for optimal playback.
+
+Recorded/Converted to Standard MIDI File format by Tom Lewandowski.
+Address questions or comments to:
+
+     QUEST STUDIOS
+     Tom Lewandowski
+     tom+di@netnet.net
+
+
+
+     THE ROLAND MT-32 SOUND MODULE RESOURCE CENTER
+     THE SIERRA SOUNDTRACK SERIES/SOFTWARE SOUNDTRACK SERIES
+     http://bayland.net/~tom+di/sierra/roland.html
+
+
+                           
