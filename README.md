@@ -35,4 +35,4 @@ Simple but robust WAV format encoder now included. Extentions in the near future
 * See the Github issue tracker. 
 
 ## License
-Libyquist is released under the 2-Clause BSD license. All dependencies and codecs are under similar open licenses.
+This library is released under the simplied 2 clause BSD license. All included dependencies have been released under identical or similarly permissive licenses.
