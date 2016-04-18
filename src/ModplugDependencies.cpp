@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     #pragma clang diagnostic ignored "-Wconversion"
     #pragma clang diagnostic ignored "-Wshadow"
     #pragma clang diagnostic ignored "-Wdeprecated-register"
+    #define HAVE_SETENV
 #endif
 
 #ifndef MODPLUG_STATIC
@@ -40,7 +41,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 #define HAVE_SINF
-#define HAVE_SETENV
 
 #include "libmodplug/src/load_669.cpp"
 #include "libmodplug/src/load_abc.cpp"

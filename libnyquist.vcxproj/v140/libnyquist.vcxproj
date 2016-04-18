@@ -33,6 +33,8 @@
     <ClCompile Include="$(ProjectDir)..\..\src\VorbisDependencies.c" />
     <ClCompile Include="$(ProjectDir)..\..\src\WavEncoder.cpp" />
     <ClCompile Include="$(ProjectDir)..\..\src\RiffUtils.cpp" />
+    <ClCompile Include="..\..\src\ModplugDecoder.cpp" />
+    <ClCompile Include="..\..\src\ModplugDependencies.cpp" />
     <ClCompile Include="..\..\src\MusepackDecoder.cpp" />
     <ClCompile Include="..\..\src\MusepackDependencies.c" />
     <ClCompile Include="..\..\src\WavPackDependencies.c" />

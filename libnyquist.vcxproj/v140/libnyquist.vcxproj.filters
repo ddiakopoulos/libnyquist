@@ -52,6 +52,12 @@
     <ClCompile Include="..\..\src\WavPackDependencies.c">
       <Filter>src\deps</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\ModplugDependencies.cpp">
+      <Filter>src\deps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ModplugDecoder.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\OpusDecoder.h">
