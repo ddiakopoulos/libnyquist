@@ -23,8 +23,8 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "WavEncoder.h"
 #include <fstream>
+#include "WavEncoder.h"
 
 using namespace nqr;
 
@@ -198,14 +198,24 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
 //   Opus File Encoding   //
 ////////////////////////////
 
-int OpusEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std::string & path)
+#include "opus/opusfile/include/opusfile.h"
+
+// Opus only supports a 48k samplerate...
+int OggOpusEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std::string & path)
 {
 	assert(d->samples.size() > 0);
 
+	OpusEncoder * enc;
+	enc = opus_encoder_create(48000, 1, OPUS_APPLICATION_AUDIO, nullptr);
+
+	// How big should this be? 
+	std::vector<uint8_t> encodedBuffer(1024);
+
+	auto encoded_size = opus_encode_float(enc, d->samples.data(), d->frameSize, encodedBuffer.data(), encodedBuffer.size());
+
     // Cast away const because we know what we are doing (Hopefully?)
     float * sampleData = const_cast<float *>(d->samples.data());
-    size_t sampleDataSize = d->samples.size();
+    const size_t sampleDataSize = d->samples.size();
 
     return EncoderError::NoError;
 }
-

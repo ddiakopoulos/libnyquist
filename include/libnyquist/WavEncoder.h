@@ -55,7 +55,7 @@ struct WavEncoder
     static int WriteFile(const EncoderParams p, const AudioData * d, const std::string & path);
 };
 
-struct OpusEncoder
+struct OggOpusEncoder
 {
     static int WriteFile(const EncoderParams p, const AudioData * d, const std::string & path);
 };
