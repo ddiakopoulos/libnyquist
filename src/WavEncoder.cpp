@@ -36,6 +36,10 @@ inline void toBytes(int value, char * arr)
     arr[3] = (value >> 24) & 0xFF;
 }
 
+////////////////////////////
+//   Wave File Encoding   //
+////////////////////////////
+
 int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std::string & path)
 {
     assert(d->samples.size() > 0);
@@ -189,3 +193,19 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
     
     return EncoderError::NoError;
 }
+
+////////////////////////////
+//   Opus File Encoding   //
+////////////////////////////
+
+int OpusEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std::string & path)
+{
+	assert(d->samples.size() > 0);
+
+    // Cast away const because we know what we are doing (Hopefully?)
+    float * sampleData = const_cast<float *>(d->samples.data());
+    size_t sampleDataSize = d->samples.size();
+
+    return EncoderError::NoError;
+}
+

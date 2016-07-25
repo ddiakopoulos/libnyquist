@@ -33,28 +33,31 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace nqr
 {
 
+enum EncoderError
+{
+    NoError,
+    InsufficientSampleData,
+    FileIOError,
+    UnsupportedSamplerate,
+    UnsupportedChannelConfiguration,
+    UnsupportedBitdepth,
+    UnsupportedChannelMix,
+    BufferTooBig,
+};
+    
+
 // A simplistic encoder that takes a blob of data, conforms it to the user's
 // EncoderParams preference, and writes to disk. Be warned, does not support resampling!
 // @todo support dithering, samplerate conversion, etc.
-class WavEncoder
+struct WavEncoder
 {
-    enum EncoderError
-    {
-        NoError,
-        InsufficientSampleData,
-        FileIOError,
-        UnsupportedSamplerate,
-        UnsupportedChannelConfiguration,
-        UnsupportedBitdepth,
-        UnsupportedChannelMix,
-        BufferTooBig,
-    };
-    
-public:
-    
     // Assume data adheres to EncoderParams, except for bit depth and fmt
     static int WriteFile(const EncoderParams p, const AudioData * d, const std::string & path);
-    
+};
+
+struct OpusEncoder
+{
+    static int WriteFile(const EncoderParams p, const AudioData * d, const std::string & path);
 };
 
 } // end namespace nqr
