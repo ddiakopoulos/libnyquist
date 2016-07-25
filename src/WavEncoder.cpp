@@ -388,7 +388,28 @@ public:
         ogg_stream_clear(&oss);
     }
 
-    bool write(char * data, std::streamsize length, size_t sample_count, bool end);
+    bool write(char * data, std::streamsize length, size_t sampleCount, bool end)
+	{
+		int err;
+		ogg_packet packet;
+
+		granule += sampleCount;
+
+		packet.packet     = reinterpret_cast<unsigned char*>(data);
+		packet.bytes      = static_cast<long>(length);
+		packet.b_o_s      = 0;
+		packet.e_o_s      = end ? 1 : 0;
+		packet.granulepos = granule;
+		packet.packetno   = packet_number++;
+
+		err = ogg_stream_packetin(&oss, &packet);
+
+		if (err) throw std::runtime_error("could not write packet to stream");
+
+		write_to_ostream(false);
+
+		return true;
+	}
 
 };
 
