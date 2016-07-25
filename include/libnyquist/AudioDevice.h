@@ -43,32 +43,27 @@ const uint32_t FRAME_SIZE = 512;
 const int32_t CHANNELS = 2;
 const int32_t BUFFER_LENGTH = FRAME_SIZE * CHANNELS;
 
-struct DeviceInfo
+struct AudioDeviceInfo
 {
-    int id;
-    int numChannels;
-    int sampleRate;
-    unsigned int frameSize;
+    uint32_t id;
+    uint32_t numChannels;
+    uint32_t sampleRate;
+    uint32_t frameSize;
     bool isPlaying = false;
 };
 
 class AudioDevice
 {
-    
     NO_MOVE(AudioDevice);
-    
     std::unique_ptr<RtAudio> rtaudio;
-    
 public:
     
-    DeviceInfo info;
-    
-    static void ListAudioDevices();
+    AudioDeviceInfo info;
     
     AudioDevice(int numChannels, int sampleRate, int deviceId = -1)
     {
         rtaudio = std::unique_ptr<RtAudio>(new RtAudio);
-        info.id = deviceId != -1 ? deviceId : rtaudio->getDefaultOutputDevice();
+        info.id = (deviceId != -1) ? deviceId : rtaudio->getDefaultOutputDevice();
         info.numChannels = numChannels;
         info.sampleRate = sampleRate;
         info.frameSize = FRAME_SIZE;
@@ -80,14 +75,17 @@ public:
         {
             rtaudio->stopStream();
             if (rtaudio->isStreamOpen())
+			{
                 rtaudio->closeStream();
+			}
         }
     }
     
     bool Open(const int deviceId);
     
     bool Play(const std::vector<float> & data);
-    
+        
+    static void ListAudioDevices();
 };
     
 } // end namespace nqr

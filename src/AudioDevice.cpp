@@ -53,12 +53,17 @@ bool AudioDevice::Open(const int deviceId)
 {
     if (!rtaudio) throw std::runtime_error("rtaudio not created yet");
 
-    RtAudio::StreamParameters parameters;
-    parameters.deviceId = info.id;
-    parameters.nChannels = info.numChannels;
-    parameters.firstChannel = 0;
+    RtAudio::StreamParameters outputParams;
+    outputParams.deviceId = info.id;
+    outputParams.nChannels = info.numChannels;
+    outputParams.firstChannel = 0;
 
-    rtaudio->openStream(&parameters, NULL, RTAUDIO_FLOAT32, info.sampleRate, &info.frameSize, &rt_callback, (void*) & buffer);
+	RtAudio::StreamParameters inputParams;
+    inputParams.deviceId = info.id;
+    inputParams.nChannels = info.numChannels;
+    inputParams.firstChannel = 0;
+
+    rtaudio->openStream(&outputParams, &inputParams, RTAUDIO_FLOAT32, info.sampleRate, &info.frameSize, &rt_callback, (void*) & buffer);
 
     if (rtaudio->isStreamOpen()) 
     {
