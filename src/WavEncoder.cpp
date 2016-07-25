@@ -327,13 +327,13 @@ class OggWriter
 
 public:
 
-    OggWriter(int channel_count, long sample_rate, int bits_per_sample, std::ofstream & stream, const std::vector<metadata_type> & metadata)
+    OggWriter(int channel_count, long sample_rate, int bits_per_sample, std::ofstream & stream, const std::vector<metadata_type> & md)
     {
         channel_count   = channel_count;
         sample_rate     = sample_rate;
         bits_per_sample = bits_per_sample;
         ostream         = &stream;
-        metadata        = metadata;
+        metadata        = md;
 
         int          oss_init_error;
         int          packet_write_error;
@@ -347,15 +347,14 @@ public:
         granule       = 0;
 
         // Validate parameters  
-        if (channel_count < 1 && channel_count > 255)
-            throw std::runtime_error("Channel count must be between 1 and 255.");
+        if (channel_count < 1 && channel_count > 255) throw std::runtime_error("Channel count must be between 1 and 255.");
 
         // Initialize the Ogg stream.
         oss_init_error = ogg_stream_init(&oss, 12345);
         if (oss_init_error) throw std::runtime_error("Could not initialize the Ogg stream state.");
 
         // Initialize the header packet.
-        header_vector = make_header(channel_count, 3840, sample_rate, 0);
+        header_vector			 = make_header(channel_count, 3840, sample_rate, 0);
         header_packet.packet     = reinterpret_cast<unsigned char*>(header_vector.data());
         header_packet.bytes      = header_vector.size();
         header_packet.b_o_s      = 1;
@@ -364,7 +363,7 @@ public:
         header_packet.packetno   = packet_number++;
 
         // Initialize tags
-        tags_vector = make_tags("libnyquist", metadata);
+        tags_vector			   = make_tags("libnyquist", metadata);
         tags_packet.packet     = reinterpret_cast<unsigned char*>(tags_vector.data());
         tags_packet.bytes      = tags_vector.size();
         tags_packet.b_o_s      = 0;
