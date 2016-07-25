@@ -413,18 +413,65 @@ public:
 
 };
 
+#define OPUS_MAX_PACKET_SIZE 1048576
+#define OPUS_FRAME_SIZE 960
+
+std::vector<char> make_opus_extended_packet(char * packet, opus_int32 length)
+{
+    int padLength = 8192;
+    std::vector<char> return_value;
+    std::vector<char> padding_length;
+    std::vector<char> padding;
+    
+    for (int index = 0; index < padLength; index++) padding.push_back(rand() % 255);
+    
+    for (int p = padding.size(); p > 254; p -= 254) padding_length.push_back(255);
+    
+    padding_length.push_back(padding.size() - 254 * padding_length.size());
+    
+    return_value.push_back(0xff);
+    return_value.push_back(0x41);
+    return_value.insert(return_value.end(), padding_length.cbegin(), padding_length.cend());
+    return_value.insert(return_value.end(), packet + 1, packet + length);
+    return_value.insert(return_value.end(), padding.cbegin(), padding.cend());
+    
+    return return_value;
+}
+
 // Opus only supports a 48k samplerate...
 int OggOpusEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std::string & path)
 {
     assert(d->samples.size() > 0);
+	assert(d->sampleRate == 48000);
+	    
+	int opus_error;
+	opus_int32 opus_status;
 
     OpusEncoder * enc;
-    enc = opus_encoder_create(48000, 1, OPUS_APPLICATION_AUDIO, nullptr);
+    enc = opus_encoder_create(48000, 1, OPUS_APPLICATION_AUDIO, &opus_error);
+	if (!enc) throw std::runtime_error("opus_encoder_create caused an error!");
 
-    // How big should this be? 
-    std::vector<uint8_t> encodedBuffer(1024);
+	std::ofstream fout(path.c_str(), std::ios::out | std::ios::binary);
+	std::vector<metadata_type> oggMetadata;
+	OggWriter writer(d->channelCount, d->sampleRate, GetFormatBitsPerSample(d->sourceFormat), fout, oggMetadata);
 
-    auto encoded_size = opus_encode_float(enc, d->samples.data(), d->frameSize, encodedBuffer.data(), encodedBuffer.size());
+    std::vector<uint8_t> outBuffer(OPUS_MAX_PACKET_SIZE);
+	
+	while (true)
+	{	
+		auto encoded_size = opus_encode_float(enc, d->samples.data(), OPUS_FRAME_SIZE, outBuffer.data(), OPUS_MAX_PACKET_SIZE);
+		
+		if (encoded_size < 0)
+		{
+			std::cerr << "Bad Opus Status: " << encoded_size << std::endl;
+			return 1;
+		}
+		
+		std::vector<char> packet_to_use = make_opus_extended_packet(reinterpret_cast<char*>(outBuffer.data()), encoded_size);
+		
+		writer.write(packet_to_use.data(), packet_to_use.size(), OPUS_FRAME_SIZE, false);
+	}
+
 
     // Cast away const because we know what we are doing (Hopefully?)
     float * sampleData = const_cast<float *>(d->samples.data());
@@ -432,3 +479,5 @@ int OggOpusEncoder::WriteFile(const EncoderParams p, const AudioData * d, const 
 
     return EncoderError::NoError;
 }
+
+#undef OPUS_MAX_PACKET_SIZE
