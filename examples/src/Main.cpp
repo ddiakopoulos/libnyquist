@@ -71,7 +71,7 @@ int main(int argc, const char **argv) try
         //loader.Load(fileData.get(), "test_data/ad_hoc/KittyPurr24_Stereo.flac");
 
         // 2-channel opus
-        //loader.Load(fileData.get(), "test_data/ad_hoc/detodos.opus"); // "Firefox: From All, To All"
+        loader.Load(fileData.get(), "test_data/ad_hoc/detodos.opus"); // "Firefox: From All, To All"
 
         // 1 + 2 channel wavepack
         //loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_Float32.wv");
@@ -87,6 +87,7 @@ int main(int argc, const char **argv) try
     }
 
 	// Test Recording Capabilities of AudioDevice
+	/*
 	fileData->samples.reserve(44100 * 2);
 	fileData->channelCount = 1;
 	fileData->frameSize = 32;
@@ -95,6 +96,7 @@ int main(int argc, const char **argv) try
 
 	std::cout << "Starting recording for two seconds..." << std::endl;
 	myDevice.Record(fileData->sampleRate * fileData->lengthSeconds, fileData->samples);
+	*/
 
 	// Libnyquist does not (currently) perform sample rate conversion
 	if (fileData->sampleRate != desiredSampleRate)
@@ -116,8 +118,8 @@ int main(int argc, const char **argv) try
 		myDevice.Play(fileData->samples);
 	}
 
-	//int encoderStatus = WavEncoder::WriteFile({2, PCM_16, DITHER_NONE }, fileData.get(), "encoded.wav");
-    //std::cout << "Encoder Status: " << encoderStatus << std::endl;
+	int encoderStatus = OggOpusEncoder::WriteFile({1, PCM_FLT, DITHER_NONE}, fileData.get(), "encoded.opus");
+    std::cout << "Encoder Status: " << encoderStatus << std::endl;
  
 	return EXIT_SUCCESS;
 }

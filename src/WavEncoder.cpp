@@ -255,9 +255,9 @@ class OggWriter
         std::array<char, 1> _channel_family = {{ 0x1 }};
 
         to_bytes(uint8_t(channel_count), _channel_count.data());
-        to_bytes(uint16_t(preskip), _channel_count.data());
-        to_bytes(uint32_t(sample_rate), _channel_count.data());
-        to_bytes(uint16_t(gain), _channel_count.data());
+        to_bytes(uint16_t(preskip), _preskip.data());
+        to_bytes(uint32_t(sample_rate), _sample_rate.data());
+        to_bytes(uint16_t(gain), _gain.data());
 
         header.insert(header.end(), _preamble.cbegin(), _preamble.cend());
         header.insert(header.end(), _channel_count.cbegin(), _channel_count.cend());
@@ -444,6 +444,10 @@ int OggOpusEncoder::WriteFile(const EncoderParams p, const AudioData * d, const 
     assert(d->samples.size() > 0);
 	assert(d->sampleRate == 48000);
 	    
+	// Cast away const because we know what we are doing (Hopefully?)
+	float * sampleData = const_cast<float *>(d->samples.data());
+	const size_t sampleDataSize = d->samples.size();
+
 	int opus_error;
 	opus_int32 opus_status;
 
@@ -452,12 +456,15 @@ int OggOpusEncoder::WriteFile(const EncoderParams p, const AudioData * d, const 
 	if (!enc) throw std::runtime_error("opus_encoder_create caused an error!");
 
 	std::ofstream fout(path.c_str(), std::ios::out | std::ios::binary);
+
 	std::vector<metadata_type> oggMetadata;
 	OggWriter writer(d->channelCount, d->sampleRate, GetFormatBitsPerSample(d->sourceFormat), fout, oggMetadata);
 
     std::vector<uint8_t> outBuffer(OPUS_MAX_PACKET_SIZE);
 	
-	while (true)
+	int totalToEncode = d->samples.size() / OPUS_FRAME_SIZE;
+
+	while (totalToEncode > 0)
 	{	
 		auto encoded_size = opus_encode_float(enc, d->samples.data(), OPUS_FRAME_SIZE, outBuffer.data(), OPUS_MAX_PACKET_SIZE);
 		
@@ -466,16 +473,15 @@ int OggOpusEncoder::WriteFile(const EncoderParams p, const AudioData * d, const 
 			std::cerr << "Bad Opus Status: " << encoded_size << std::endl;
 			return 1;
 		}
-		
+
 		std::vector<char> packet_to_use = make_opus_extended_packet(reinterpret_cast<char*>(outBuffer.data()), encoded_size);
 		
 		writer.write(packet_to_use.data(), packet_to_use.size(), OPUS_FRAME_SIZE, false);
+
+		totalToEncode -= OPUS_FRAME_SIZE;
 	}
 
-
-    // Cast away const because we know what we are doing (Hopefully?)
-    float * sampleData = const_cast<float *>(d->samples.data());
-    const size_t sampleDataSize = d->samples.size();
+	fout.close();
 
     return EncoderError::NoError;
 }
