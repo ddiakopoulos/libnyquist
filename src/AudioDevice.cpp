@@ -83,8 +83,6 @@ bool AudioDevice::Open(const int deviceId)
     inputParams.nChannels = 1;
     inputParams.firstChannel = 0;
 
-	std::cout << "Input Device Id: " << inputParams.deviceId << std::endl;
-
     rtaudio->openStream(&outputParams, &inputParams, RTAUDIO_FLOAT32, info.sampleRate, &info.frameSize, &rt_callback, (void*) & buffer);
 
     if (rtaudio->isStreamOpen()) 
@@ -132,7 +130,7 @@ bool AudioDevice::Play(const std::vector<float> & data)
 
 bool AudioDevice::Record(const uint32_t lengthInSamples, std::vector<float> & recordingBuffer)
 {
-	uint32_t recordedSamples = 0;
+	uint64_t recordedSamples = 0;
 
 	// Allocate memory upfront (revisit this later...)
 	recordingBuffer.resize(lengthInSamples + (BUFFER_LENGTH)); // + a little padding
@@ -141,12 +139,10 @@ bool AudioDevice::Record(const uint32_t lengthInSamples, std::vector<float> & re
 	{
 		if (record_buffer.getAvailableRead())
 		{
-			if(record_buffer.read(recordingBuffer.data() + recordedSamples, BUFFER_LENGTH / 2))
+			if (record_buffer.read(recordingBuffer.data() + recordedSamples, BUFFER_LENGTH / 2))
 			{
 				recordedSamples += (BUFFER_LENGTH / 2);
 			}
-
-			std::cout << recordedSamples << std::endl;
 		}
 	}
 

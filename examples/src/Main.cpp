@@ -86,16 +86,15 @@ int main(int argc, const char **argv) try
         //loader.Load(fileData.get(), "test_data/ad_hoc/44_16_mono.mpc");
     }
 
+	// Test Recording Capabilities of AudioDevice
 	fileData->samples.reserve(44100 * 2);
 	fileData->channelCount = 1;
 	fileData->frameSize = 32;
 	fileData->lengthSeconds = 2.0;
 	fileData->sampleRate = 44100;
- 
-	// Test Recording Capabilities of Audio Device
+
 	std::cout << "Starting recording for two seconds..." << std::endl;
-	std::vector<float> recordingBuffer;
-	myDevice.Record(44100 * 2, 	fileData->samples);
+	myDevice.Record(fileData->sampleRate * fileData->lengthSeconds, fileData->samples);
 
 	// Libnyquist does not (currently) perform sample rate conversion
 	if (fileData->sampleRate != desiredSampleRate)
