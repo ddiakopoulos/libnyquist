@@ -43,18 +43,12 @@ class RingBufferT
   public:
 
     // Constructs a RingBufferT with size = 0
-    RingBufferT() : mData(nullptr), mAllocatedSize(0), mWriteIndex(0), mReadIndex(0) {
-
-    }
+	RingBufferT() : mData(nullptr), mAllocatedSize(0), mWriteIndex(0), mReadIndex(0) {}
 
     // Constructs a RingBufferT with \a count maximum elements.
-    RingBufferT(size_t count) : mAllocatedSize(0)
-    {
-        resize(count);
-    }
+    RingBufferT(size_t count) : mAllocatedSize(0) { resize(count); }
 
-    RingBufferT(RingBufferT &&other)
-    : mData(other.mData), mAllocatedSize(other.mAllocatedSize), mWriteIndex(0), mReadIndex(0)
+    RingBufferT(RingBufferT &&other) : mData(other.mData), mAllocatedSize(other.mAllocatedSize), mWriteIndex(0), mReadIndex(0)
     {
         other.mData = nullptr;
         other.mAllocatedSize = 0;
@@ -81,7 +75,7 @@ class RingBufferT
         clear();
     }
 
-    // Invalidates the internal buffer and resets read / write indices to 0. \note Must be synchronized with both read and write threads.
+    // Invalidates the internal buffer and resets read / write indices to 0. Must be synchronized with both read and write threads.
     void clear()
     {
         mWriteIndex = 0;
@@ -91,16 +85,16 @@ class RingBufferT
     // Returns the maximum number of elements.
     size_t getSize() const
     {
-       
         return mAllocatedSize - 1;
     }
-    // Returns the number of elements available for wrtiing. \note Only safe to call from the write thread.
+
+    // Returns the number of elements available for writing. Only safe to call from the write thread.
     size_t getAvailableWrite() const
     {
         return getAvailableWrite(mWriteIndex, mReadIndex);
     }
 
-    // Returns the number of elements available for wrtiing. \note Only safe to call from the read thread.
+    // Returns the number of elements available for reading. Only safe to call from the read thread.
     size_t getAvailableRead() const
     {
         return getAvailableRead(mWriteIndex, mReadIndex);
@@ -188,7 +182,7 @@ class RingBufferT
         return writeIndex + mAllocatedSize - readIndex;
     }
     
-    T *mData;
+    T * mData;
     size_t mAllocatedSize;
     std::atomic<size_t> mWriteIndex, mReadIndex;
 };
@@ -196,4 +190,3 @@ class RingBufferT
 typedef RingBufferT<float> RingBuffer;
 
 #endif
-

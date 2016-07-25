@@ -23,70 +23,49 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+// This file implements a simple sound file player based on RtAudio for testing / example purposes.
+
 #ifndef AUDIO_DEVICE_H
 #define AUDIO_DEVICE_H
 
-// This file implements a simple sound file player based on RtAudio for testing / example purposes.
-
 #include "Common.h"
 #include "RingBuffer.h"
-
 #include "rtaudio/RtAudio.h"
-
-#include <iostream>
-#include <memory>
 
 namespace nqr
 {
 
-const uint32_t FRAME_SIZE = 512;
-const int32_t CHANNELS = 2;
-const int32_t BUFFER_LENGTH = FRAME_SIZE * CHANNELS;
+	const uint32_t FRAME_SIZE = 512;
+	const int32_t CHANNELS = 2;
+	const int32_t BUFFER_LENGTH = FRAME_SIZE * CHANNELS;
 
-struct AudioDeviceInfo
-{
-    uint32_t id;
-    uint32_t numChannels;
-    uint32_t sampleRate;
-    uint32_t frameSize;
-    bool isPlaying = false;
-};
+	struct AudioDeviceInfo
+	{
+		uint32_t id;
+		uint32_t numChannels;
+		uint32_t sampleRate;
+		uint32_t frameSize;
+		bool isPlaying = false;
+	};
 
-class AudioDevice
-{
-    NO_MOVE(AudioDevice);
-    std::unique_ptr<RtAudio> rtaudio;
-public:
+	class AudioDevice
+	{
+		NO_MOVE(AudioDevice);
+		std::unique_ptr<RtAudio> rtaudio;
+	public:
     
-    AudioDeviceInfo info;
+		AudioDeviceInfo info;
     
-    AudioDevice(int numChannels, int sampleRate, int deviceId = -1)
-    {
-        rtaudio = std::unique_ptr<RtAudio>(new RtAudio);
-        info.id = (deviceId != -1) ? deviceId : rtaudio->getDefaultOutputDevice();
-        info.numChannels = numChannels;
-        info.sampleRate = sampleRate;
-        info.frameSize = FRAME_SIZE;
-    }
+		AudioDevice(int numChannels, int sampleRate, int deviceId = -1);
+		~AudioDevice();
     
-    ~AudioDevice()
-    {
-        if (rtaudio) 
-        {
-            rtaudio->stopStream();
-            if (rtaudio->isStreamOpen())
-			{
-                rtaudio->closeStream();
-			}
-        }
-    }
-    
-    bool Open(const int deviceId);
-    
-    bool Play(const std::vector<float> & data);
+		bool Open(const int deviceId);
+		bool Play(const std::vector<float> & data);
+
+		bool Record(const uint32_t lengthInSamples, std::vector<float> & recordingBuffer);
         
-    static void ListAudioDevices();
-};
+		static void ListAudioDevices();
+	};
     
 } // end namespace nqr
 

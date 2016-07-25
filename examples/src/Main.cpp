@@ -83,8 +83,19 @@ int main(int argc, const char **argv) try
     
         // 1 + 2 channel musepack
         //loader.Load(fileData.get(), "test_data/ad_hoc/44_16_stereo.mpc");
-        loader.Load(fileData.get(), "test_data/ad_hoc/44_16_mono.mpc");
+        //loader.Load(fileData.get(), "test_data/ad_hoc/44_16_mono.mpc");
     }
+
+	fileData->samples.reserve(44100 * 2);
+	fileData->channelCount = 1;
+	fileData->frameSize = 32;
+	fileData->lengthSeconds = 2.0;
+	fileData->sampleRate = 44100;
+ 
+	// Test Recording Capabilities of Audio Device
+	std::cout << "Starting recording for two seconds..." << std::endl;
+	std::vector<float> recordingBuffer;
+	myDevice.Record(44100 * 2, 	fileData->samples);
 
 	// Libnyquist does not (currently) perform sample rate conversion
 	if (fileData->sampleRate != desiredSampleRate)
@@ -106,8 +117,8 @@ int main(int argc, const char **argv) try
 		myDevice.Play(fileData->samples);
 	}
 
-	int encoderStatus = WavEncoder::WriteFile({2, PCM_16, DITHER_NONE }, fileData.get(), "encoded.wav");
-    std::cout << "Encoder Status: " << encoderStatus << std::endl;
+	//int encoderStatus = WavEncoder::WriteFile({2, PCM_16, DITHER_NONE }, fileData.get(), "encoded.wav");
+    //std::cout << "Encoder Status: " << encoderStatus << std::endl;
  
 	return EXIT_SUCCESS;
 }

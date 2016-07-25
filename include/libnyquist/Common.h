@@ -26,6 +26,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef LIBNYQUIST_COMMON_H
 #define LIBNYQUIST_COMMON_H
 
+#include <memory>
 #include <vector>
 #include <algorithm>
 #include <cmath>
@@ -36,6 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <type_traits>
 #include <numeric>
 #include <array>
+
 #include "PostProcess.h"
 #include "Dither.h"
 
