@@ -33,6 +33,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace nqr
 {
 
+	// This is a naieve implementation of a resampling filter where a lerp is used as a bad low-pass.
+	// It very far from the ideal case and should be used with caution (or not at all) on signals that matter.
+	// It is included here to upsample 44.1k to 48k for the purposes of microphone input => Opus, where the the 
+	// nominal frequencies of speech are particularly far from Nyquist.
 	static inline void linear_resample(const double rate, const std::vector<float> & input, std::vector<float> & output, size_t samplesToProcess)
 	{
 		double virtualReadIndex = 0;
