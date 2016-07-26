@@ -41,7 +41,7 @@ int main(int argc, const char **argv) try
 		//loader.Load(fileData.get(), "test_data/1ch/44100/8/test.wav");
 		//loader.Load(fileData.get(), "test_data/1ch/44100/16/test.wav");
 		//loader.Load(fileData.get(), "test_data/1ch/44100/24/test.wav");
-		//loader.Load(fileData.get(), "test_data/1ch/44100/32/test.wav");
+		loader.Load(fileData.get(), "test_data/1ch/44100/32/test.wav");
 		//loader.Load(fileData.get(), "test_data/1ch/44100/64/test.wav");
 
 		// 2-channel wave
@@ -86,14 +86,16 @@ int main(int argc, const char **argv) try
 		//loader.Load(fileData.get(), "test_data/ad_hoc/44_16_mono.mpc");
 	}
 
+	/*
 	// Test Recording Capabilities of AudioDevice
-	fileData->samples.reserve(44100 * 2);
+	fileData->samples.reserve(44100 * 5);
 	fileData->channelCount = 1;
 	fileData->frameSize = 32;
-	fileData->lengthSeconds = 2.0;
+	fileData->lengthSeconds = 5.0;
 	fileData->sampleRate = 44100;
-	std::cout << "Starting recording for two seconds..." << std::endl;
+	std::cout << "Starting recording ..." << std::endl;
 	myDevice.Record(fileData->sampleRate * fileData->lengthSeconds, fileData->samples);
+	*/
 
 	// Libnyquist does not (currently) perform sample rate conversion - not exactly true, anymore. See below.
 	if (fileData->sampleRate != desiredSampleRate)
