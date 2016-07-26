@@ -35,24 +35,17 @@ namespace nqr
 
 	static inline void linear_resample(const double rate, const std::vector<float> & input, std::vector<float> & output, size_t samplesToProcess)
 	{
-		float * source = const_cast<float *>(input.data());
-
 		double virtualReadIndex = 0;
-
-		// Linear Interpolate
-		int n = samplesToProcess - 1;
+		double a, b, i, sample;
+		uint32_t n = samplesToProcess - 1;
 		while (n--)
 		{
-			unsigned readIndex = static_cast<unsigned>(virtualReadIndex);
-			double interpolationFactor = virtualReadIndex - readIndex;
-
-			double sample1 = source[readIndex];
-			double sample2 = source[readIndex + 1];
-
-			double sample = (1.0 - interpolationFactor) * sample1 + interpolationFactor * sample2;
-
+			uint32_t readIndex = static_cast<uint32_t>(virtualReadIndex);
+			i = virtualReadIndex - readIndex;
+			a = input[readIndex + 0];
+			b = input[readIndex + 1];
+			sample = (1.0 - i) * a + i * b; // linear interpolate
 			output.push_back(sample);
-
 			virtualReadIndex += rate;
 		}
 	}
