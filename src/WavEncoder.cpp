@@ -212,7 +212,7 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
 #include "opus/opusfile/include/opusfile.h"
 #include "ogg/ogg.h"
 
-typedef std::pair<std::string, std::string> metadata_type;
+typedef std::pair<std::string, std::string> metadata_t;
 
 class OggWriter
 {
@@ -223,7 +223,6 @@ class OggWriter
             ostream->write(reinterpret_cast<char*>(page.header), static_cast<std::streamsize>(page.header_len));
             ostream->write(reinterpret_cast<char*>(page.body), static_cast<std::streamsize>(page.body_len));
         }
-
         if (flush && ogg_stream_flush(&oss, &page))
         {
             ostream->write(reinterpret_cast<char*>(page.header), static_cast<std::streamsize>(page.header_len));
@@ -240,12 +239,6 @@ class OggWriter
     
         std::array<char, 1> chan_map_1 = {{ 0x0 }};
         std::array<char, 2> chan_map_2 = {{ 0x0, 0x1 }};
-        std::array<char, 3> chan_map_3 = {{ 0x0, 0x2, 0x1 }};
-        std::array<char, 4> chan_map_4 = {{ 0x0, 0x1, 0x2, 0x3 }};
-        std::array<char, 5> chan_map_5 = {{ 0x0, 0x4, 0x1, 0x2, 0x3 }};
-        std::array<char, 6> chan_map_6 = {{ 0x0, 0x4, 0x1, 0x2, 0x3, 0x5 }};
-        std::array<char, 7> chan_map_7 = {{ 0x0, 0x4, 0x1, 0x2, 0x3, 0x5, 0x6 }};
-        std::array<char, 8> chan_map_8 = {{ 0x0, 0x6, 0x1, 0x2, 0x3, 0x4, 0x5, 0x7 }};
 
         std::array<char, 9> _preamble = {{ 'O', 'p', 'u', 's', 'H', 'e', 'a', 'd', 0x1 }};
         std::array<char, 1> _channel_count;
@@ -272,19 +265,13 @@ class OggWriter
         {
             case 1: header.insert(header.end(), chan_map_1.cbegin(), chan_map_1.cend()); break;
             case 2: header.insert(header.end(), chan_map_2.cbegin(), chan_map_2.cend()); break;
-            case 3: header.insert(header.end(), chan_map_3.cbegin(), chan_map_3.cend()); break;
-            case 4: header.insert(header.end(), chan_map_4.cbegin(), chan_map_4.cend()); break;
-            case 5: header.insert(header.end(), chan_map_5.cbegin(), chan_map_5.cend()); break;
-            case 6: header.insert(header.end(), chan_map_6.cbegin(), chan_map_6.cend()); break;
-            case 7: header.insert(header.end(), chan_map_7.cbegin(), chan_map_7.cend()); break;
-            case 8: header.insert(header.end(), chan_map_8.cbegin(), chan_map_8.cend()); break;
             default: throw std::runtime_error("couldn't map channel data");
         }
     
         return header;
     }
                         
-    std::vector<char> make_tags(const std::string & vendor, const std::vector<metadata_type> & metadata)
+    std::vector<char> make_tags(const std::string & vendor, const std::vector<metadata_t> & metadata)
     {
         std::vector<char> tags;
 
@@ -313,72 +300,72 @@ class OggWriter
         return tags;
     }
 
-    ogg_int64_t        packet_number;
-    ogg_int64_t        granule;
-    ogg_page           page;
-    ogg_stream_state   oss;
+    ogg_int64_t packet_number;
+    ogg_int64_t granule;
+    ogg_page page;
+    ogg_stream_state oss;
 
-    int                        channel_count;
-    long                       sample_rate;
-    int                        bits_per_sample;
-    std::ofstream *            ostream;
-    std::string                description;
-    std::vector<metadata_type> metadata;
+    int channel_count;
+    long sample_rate;
+    int bits_per_sample;
+    std::ofstream * ostream;
+    std::string description;
+    std::vector<metadata_t> metadata;
 
 public:
 
-    OggWriter(int channel_count, long sample_rate, int bits_per_sample, std::ofstream & stream, const std::vector<metadata_type> & md)
+    OggWriter(int channel_count, long sample_rate, int bits_per_sample, std::ofstream & stream, const std::vector<metadata_t> & md)
     {
-        channel_count   = channel_count;
-        sample_rate     = sample_rate;
-        bits_per_sample = bits_per_sample;
-        ostream         = &stream;
-        metadata        = md;
+        this->channel_count = channel_count;
+        this->sample_rate = sample_rate;
+        this->bits_per_sample = bits_per_sample;
+        this-> ostream = &stream;
+        this->metadata = md;
 
-        int          oss_init_error;
-        int          packet_write_error;
-        ogg_packet   header_packet;
-        ogg_packet   tags_packet;
+        int oggInitErr, packetErr;
+
+        ogg_packet header_packet;
+        ogg_packet tags_packet;
         std::vector<char> header_vector;
         std::vector<char> tags_vector;
     
-        description   = "Ogg";
+        description = "Ogg";
         packet_number = 0;
-        granule       = 0;
+        granule = 0;
 
         // Validate parameters  
         if (channel_count < 1 && channel_count > 255) throw std::runtime_error("Channel count must be between 1 and 255.");
 
         // Initialize the Ogg stream.
-        oss_init_error = ogg_stream_init(&oss, 12345);
-        if (oss_init_error) throw std::runtime_error("Could not initialize the Ogg stream state.");
+		oggInitErr = ogg_stream_init(&oss, 12345);
+        if (oggInitErr) throw std::runtime_error("Could not initialize the Ogg stream state.");
 
         // Initialize the header packet.
-        header_vector			 = make_header(channel_count, 3840, sample_rate, 0);
-        header_packet.packet     = reinterpret_cast<unsigned char*>(header_vector.data());
-        header_packet.bytes      = header_vector.size();
-        header_packet.b_o_s      = 1;
-        header_packet.e_o_s      = 0;
+        header_vector = make_header(channel_count, 3840, sample_rate, 0);
+        header_packet.packet = reinterpret_cast<unsigned char*>(header_vector.data());
+        header_packet.bytes = header_vector.size();
+        header_packet.b_o_s = 1;
+        header_packet.e_o_s = 0;
         header_packet.granulepos = 0;
-        header_packet.packetno   = packet_number++;
+        header_packet.packetno = packet_number++;
 
         // Initialize tags
-        tags_vector			   = make_tags("libnyquist", metadata);
-        tags_packet.packet     = reinterpret_cast<unsigned char*>(tags_vector.data());
-        tags_packet.bytes      = tags_vector.size();
-        tags_packet.b_o_s      = 0;
-        tags_packet.e_o_s      = 0;
+        tags_vector = make_tags("libnyquist", metadata);
+        tags_packet.packet = reinterpret_cast<unsigned char*>(tags_vector.data());
+        tags_packet.bytes = tags_vector.size();
+        tags_packet.b_o_s = 0;
+        tags_packet.e_o_s = 0;
         tags_packet.granulepos = 0;
-        tags_packet.packetno   = packet_number++;
+        tags_packet.packetno = packet_number++;
     
         // Write header page
-        packet_write_error = ogg_stream_packetin(&oss, &header_packet);
-        if (packet_write_error) throw std::runtime_error("Could not write header packet to the Ogg stream.");
+		packetErr = ogg_stream_packetin(&oss, &header_packet);
+        if (packetErr) throw std::runtime_error("Could not write header packet to the Ogg stream.");
         write_to_ostream(true);
     
         // Write tags page
-        packet_write_error = ogg_stream_packetin(&oss, &tags_packet);
-        if (packet_write_error) throw std::runtime_error("Could not write tags packet to the Ogg stream.");
+		packetErr = ogg_stream_packetin(&oss, &tags_packet);
+        if (packetErr) throw std::runtime_error("Could not write tags packet to the Ogg stream.");
         write_to_ostream(true);
     }
 
@@ -433,7 +420,7 @@ int OggOpusEncoder::WriteFile(const EncoderParams p, const AudioData * d, const 
 
 	std::ofstream fout(path.c_str(), std::ios::out | std::ios::binary);
 
-	std::vector<metadata_type> oggMetadata = {{"artist", "dimitri"}};
+	std::vector<metadata_t> oggMetadata = {{"artist", "dimitri"}};
 	OggWriter writer(d->channelCount, d->sampleRate, GetFormatBitsPerSample(d->sourceFormat), fout, oggMetadata);
 
     std::vector<uint8_t> outBuffer(OPUS_MAX_PACKET_SIZE);
