@@ -40,8 +40,8 @@ int main(int argc, const char **argv) try
         // 1-channel wave
         //loader.Load(fileData.get(), "test_data/1ch/44100/8/test.wav");
         //loader.Load(fileData.get(), "test_data/1ch/44100/16/test.wav");
-        //loader.Load(fileData.get(), "test_data/1ch/44100/24/test.wav");
-        loader.Load(fileData.get(), "test_data/1ch/44100/32/test.wav");
+        loader.Load(fileData.get(), "test_data/1ch/44100/24/test.wav");
+        //loader.Load(fileData.get(), "test_data/1ch/44100/32/test.wav");
         //loader.Load(fileData.get(), "test_data/1ch/44100/64/test.wav");
 
         // 2-channel wave
@@ -104,6 +104,13 @@ int main(int argc, const char **argv) try
 		std::cout << "[Warning - Sample Rate Mismatch] - file is sampled at " << fileData->sampleRate << " and output is " << desiredSampleRate << std::endl;
 	}
 
+	std::vector<float> outputBuffer;
+	outputBuffer.reserve(fileData->samples.size());
+	linear_resample(44100.0 / 48000.0, fileData->samples, outputBuffer, fileData->samples.size());
+
+	std::cout << "Input Samples: " << fileData->samples.size() << std::endl;
+	std::cout << "Output Samples: " << outputBuffer.size() << std::endl;
+
 	// Convert mono to stereo for testing playback
 	if (fileData->channelCount == 1)
 	{
@@ -118,6 +125,7 @@ int main(int argc, const char **argv) try
 		myDevice.Play(fileData->samples);
 	}
 
+	fileData->samples = outputBuffer;
 	int encoderStatus = OggOpusEncoder::WriteFile({1, PCM_FLT, DITHER_NONE}, fileData.get(), "encoded.opus");
     std::cout << "Encoder Status: " << encoderStatus << std::endl;
  

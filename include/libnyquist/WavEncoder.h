@@ -33,32 +33,55 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace nqr
 {
 
-enum EncoderError
-{
-    NoError,
-    InsufficientSampleData,
-    FileIOError,
-    UnsupportedSamplerate,
-    UnsupportedChannelConfiguration,
-    UnsupportedBitdepth,
-    UnsupportedChannelMix,
-    BufferTooBig,
-};
+	static inline void linear_resample(const double rate, const std::vector<float> & input, std::vector<float> & output, size_t samplesToProcess)
+	{
+		float * source = const_cast<float *>(input.data());
+
+		double virtualReadIndex = 0;
+
+		// Linear Interpolate
+		int n = samplesToProcess - 1;
+		while (n--)
+		{
+			unsigned readIndex = static_cast<unsigned>(virtualReadIndex);
+			double interpolationFactor = virtualReadIndex - readIndex;
+
+			double sample1 = source[readIndex];
+			double sample2 = source[readIndex + 1];
+
+			double sample = (1.0 - interpolationFactor) * sample1 + interpolationFactor * sample2;
+
+			output.push_back(sample);
+
+			virtualReadIndex += rate;
+		}
+	}
+
+	enum EncoderError
+	{
+		NoError,
+		InsufficientSampleData,
+		FileIOError,
+		UnsupportedSamplerate,
+		UnsupportedChannelConfiguration,
+		UnsupportedBitdepth,
+		UnsupportedChannelMix,
+		BufferTooBig,
+	};
     
+	// A simplistic encoder that takes a blob of data, conforms it to the user's
+	// EncoderParams preference, and writes to disk. Be warned, does not support resampling!
+	// @todo support dithering, samplerate conversion, etc.
+	struct WavEncoder
+	{
+		// Assume data adheres to EncoderParams, except for bit depth and fmt
+		static int WriteFile(const EncoderParams p, const AudioData * d, const std::string & path);
+	};
 
-// A simplistic encoder that takes a blob of data, conforms it to the user's
-// EncoderParams preference, and writes to disk. Be warned, does not support resampling!
-// @todo support dithering, samplerate conversion, etc.
-struct WavEncoder
-{
-    // Assume data adheres to EncoderParams, except for bit depth and fmt
-    static int WriteFile(const EncoderParams p, const AudioData * d, const std::string & path);
-};
-
-struct OggOpusEncoder
-{
-    static int WriteFile(const EncoderParams p, const AudioData * d, const std::string & path);
-};
+	struct OggOpusEncoder
+	{
+		static int WriteFile(const EncoderParams p, const AudioData * d, const std::string & path);
+	};
 
 } // end namespace nqr
 
