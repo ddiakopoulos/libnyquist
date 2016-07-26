@@ -1,31 +1,3 @@
-
-Skip to content
-This repository
-
-Pull requests
-Issues
-Gist
-
-@ddiakopoulos
-
-5
-22
-
-3
-
-ddiakopoulos / libnyquist
-Code
-Issues 6
-Pull requests 0
-Pulse
-Graphs
-Settings
-libnyquist / examples / src / Main.cpp
-ce56c94 2 minutes ago
-@ddiakopoulos ddiakopoulos the most basic, generally not- correct linear interpolating resampling…
-@ddiakopoulos
-@r-lyeh
-150 lines(123 sloc) 5.71 KB
 // Note to Visual Studio / Windows users: you must set the working directory manually on the project file
 // to $(ProjectDir)../../../ since these settings are not saved directly in project. The loader
 // will be unable to find the example assets unless the proper working directory is set.
@@ -68,7 +40,7 @@ int main(int argc, const char **argv) try
 		// 1-channel wave
 		//loader.Load(fileData.get(), "test_data/1ch/44100/8/test.wav");
 		//loader.Load(fileData.get(), "test_data/1ch/44100/16/test.wav");
-		loader.Load(fileData.get(), "test_data/1ch/44100/24/test.wav");
+		//loader.Load(fileData.get(), "test_data/1ch/44100/24/test.wav");
 		//loader.Load(fileData.get(), "test_data/1ch/44100/32/test.wav");
 		//loader.Load(fileData.get(), "test_data/1ch/44100/64/test.wav");
 
@@ -115,7 +87,6 @@ int main(int argc, const char **argv) try
 	}
 
 	// Test Recording Capabilities of AudioDevice
-	/*
 	fileData->samples.reserve(44100 * 2);
 	fileData->channelCount = 1;
 	fileData->frameSize = 32;
@@ -123,14 +94,14 @@ int main(int argc, const char **argv) try
 	fileData->sampleRate = 44100;
 	std::cout << "Starting recording for two seconds..." << std::endl;
 	myDevice.Record(fileData->sampleRate * fileData->lengthSeconds, fileData->samples);
-	*/
 
-	// Libnyquist does not (currently) perform sample rate conversion
+	// Libnyquist does not (currently) perform sample rate conversion - not exactly true, anymore. See below.
 	if (fileData->sampleRate != desiredSampleRate)
 	{
 		std::cout << "[Warning - Sample Rate Mismatch] - file is sampled at " << fileData->sampleRate << " and output is " << desiredSampleRate << std::endl;
 	}
 
+	// Resample
 	std::vector<float> outputBuffer;
 	outputBuffer.reserve(fileData->samples.size());
 	linear_resample(44100.0 / 48000.0, fileData->samples, outputBuffer, fileData->samples.size());
@@ -174,8 +145,3 @@ catch (const std::exception & e)
 {
 	std::cerr << "Caught: " << e.what() << std::endl;
 }
-
-Contact GitHub API Training Shop Blog About
-
-© 2016 GitHub, Inc.Terms Privacy Security Status Help
-
