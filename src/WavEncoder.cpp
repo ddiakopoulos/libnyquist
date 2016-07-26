@@ -235,7 +235,7 @@ class OggWriter
     {
         std::vector<char> header;
  
-        std::array<char, 9> streacount = {{ 0x0, 0x1, 0x1, 0x2, 0x2, 0x3, 0x4, 0x5, 0x5 }};
+        std::array<char, 9> steam_count = {{ 0x0, 0x1, 0x1, 0x2, 0x2, 0x3, 0x4, 0x5, 0x5 }};
         std::array<char, 9> coupled_streacount = {{ 0x0, 0x0, 0x1, 0x1, 0x2, 0x2, 0x2, 0x2, 0x3 }};
     
         std::array<char, 1> chan_map_1 = {{ 0x0 }};
@@ -265,7 +265,7 @@ class OggWriter
         header.insert(header.end(), _sample_rate.cbegin(), _sample_rate.cend());
         header.insert(header.end(), _gain.cbegin(), _gain.cend());
         header.insert(header.end(), _channel_family.cbegin(), _channel_family.cend());
-        header.push_back(streacount[channel_count]);
+        header.push_back(steam_count[channel_count]);
         header.push_back(coupled_streacount[channel_count]);
 
         switch (channel_count)
@@ -413,75 +413,52 @@ public:
 
 };
 
-#define OPUS_MAX_PACKET_SIZE 1048576
+#define OPUS_MAX_PACKET_SIZE (1024 * 8)
 #define OPUS_FRAME_SIZE 960
 
-std::vector<char> make_opus_extended_packet(char * packet, opus_int32 length)
-{
-    int padLength = 8192;
-    std::vector<char> return_value;
-    std::vector<char> padding_length;
-    std::vector<char> padding;
-    
-    for (int index = 0; index < padLength; index++) padding.push_back(rand() % 255);
-    
-    for (int p = padding.size(); p > 254; p -= 254) padding_length.push_back(255);
-    
-    padding_length.push_back(padding.size() - 254 * padding_length.size());
-    
-    return_value.push_back(0xff);
-    return_value.push_back(0x41);
-    return_value.insert(return_value.end(), padding_length.cbegin(), padding_length.cend());
-    return_value.insert(return_value.end(), packet + 1, packet + length);
-    return_value.insert(return_value.end(), padding.cbegin(), padding.cend());
-    
-    return return_value;
-}
-
-// Opus only supports a 48k samplerate...
+// Opus only supports a 48k samplerate... M
+// This encoder only supports mono for the time being
 int OggOpusEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std::string & path)
 {
     assert(d->samples.size() > 0);
-	assert(d->sampleRate == 48000);
-	    
-	// Cast away const because we know what we are doing (Hopefully?)
+	//assert(d->sampleRate == 48000);
+	
 	float * sampleData = const_cast<float *>(d->samples.data());
 	const size_t sampleDataSize = d->samples.size();
 
 	int opus_error;
-	opus_int32 opus_status;
-
     OpusEncoder * enc;
     enc = opus_encoder_create(48000, 1, OPUS_APPLICATION_AUDIO, &opus_error);
 	if (!enc) throw std::runtime_error("opus_encoder_create caused an error!");
 
 	std::ofstream fout(path.c_str(), std::ios::out | std::ios::binary);
 
-	std::vector<metadata_type> oggMetadata;
+	std::vector<metadata_type> oggMetadata = {{"artist", "dimitri"}};
 	OggWriter writer(d->channelCount, d->sampleRate, GetFormatBitsPerSample(d->sourceFormat), fout, oggMetadata);
 
     std::vector<uint8_t> outBuffer(OPUS_MAX_PACKET_SIZE);
 	
-	int totalToEncode = d->samples.size() / OPUS_FRAME_SIZE;
+	int framesToEncode = (sampleDataSize / OPUS_FRAME_SIZE) - 1; // fixme
 
-	while (totalToEncode > 0)
+	while (framesToEncode >= 0)
 	{	
-		auto encoded_size = opus_encode_float(enc, d->samples.data(), OPUS_FRAME_SIZE, outBuffer.data(), OPUS_MAX_PACKET_SIZE);
+		auto encoded_size = opus_encode_float(enc, sampleData, OPUS_FRAME_SIZE, outBuffer.data(), OPUS_MAX_PACKET_SIZE);
 		
 		if (encoded_size < 0)
 		{
 			std::cerr << "Bad Opus Status: " << encoded_size << std::endl;
-			return 1;
+			return EncoderError::FileIOError;
 		}
 
-		std::vector<char> packet_to_use = make_opus_extended_packet(reinterpret_cast<char*>(outBuffer.data()), encoded_size);
-		
-		writer.write(packet_to_use.data(), packet_to_use.size(), OPUS_FRAME_SIZE, false);
+		writer.write((char*)outBuffer.data(), encoded_size, OPUS_FRAME_SIZE, (framesToEncode == 0) ? true : false);
 
-		totalToEncode -= OPUS_FRAME_SIZE;
+		framesToEncode--;
+		sampleData += OPUS_FRAME_SIZE;
 	}
 
 	fout.close();
+
+	opus_encoder_destroy(enc);
 
     return EncoderError::NoError;
 }

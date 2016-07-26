@@ -35,13 +35,13 @@ int main(int argc, const char **argv) try
     else
     {
         // Circular libnyquist testing
-        //loader.Load(fileData.get(), "encoded.wav");
+        //loader.Load(fileData.get(), "encoded.opus");
 
         // 1-channel wave
         //loader.Load(fileData.get(), "test_data/1ch/44100/8/test.wav");
         //loader.Load(fileData.get(), "test_data/1ch/44100/16/test.wav");
         //loader.Load(fileData.get(), "test_data/1ch/44100/24/test.wav");
-        //loader.Load(fileData.get(), "test_data/1ch/44100/32/test.wav");
+        loader.Load(fileData.get(), "test_data/1ch/44100/32/test.wav");
         //loader.Load(fileData.get(), "test_data/1ch/44100/64/test.wav");
 
         // 2-channel wave
@@ -70,8 +70,8 @@ int main(int argc, const char **argv) try
         //loader.Load(fileData.get(), "test_data/ad_hoc/KittyPurr16_Mono.flac");
         //loader.Load(fileData.get(), "test_data/ad_hoc/KittyPurr24_Stereo.flac");
 
-        // 2-channel opus
-        loader.Load(fileData.get(), "test_data/ad_hoc/detodos.opus"); // "Firefox: From All, To All"
+        // Single-channel opus
+        //loader.Load(fileData.get(), "test_data/ad_hoc/detodos.opus"); // "Firefox: From All, To All"
 
         // 1 + 2 channel wavepack
         //loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_Float32.wv");
