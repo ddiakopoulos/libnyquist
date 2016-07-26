@@ -1,3 +1,31 @@
+
+Skip to content
+This repository
+
+Pull requests
+Issues
+Gist
+
+@ddiakopoulos
+
+5
+22
+
+3
+
+ddiakopoulos / libnyquist
+Code
+Issues 6
+Pull requests 0
+Pulse
+Graphs
+Settings
+libnyquist / examples / src / Main.cpp
+ce56c94 2 minutes ago
+@ddiakopoulos ddiakopoulos the most basic, generally not- correct linear interpolating resampling…
+@ddiakopoulos
+@r-lyeh
+150 lines(123 sloc) 5.71 KB
 // Note to Visual Studio / Windows users: you must set the working directory manually on the project file
 // to $(ProjectDir)../../../ since these settings are not saved directly in project. The loader
 // will be unable to find the example assets unless the proper working directory is set.
@@ -27,64 +55,64 @@ int main(int argc, const char **argv) try
 
 	NyquistIO loader;
 
-    if (argc > 1)
-    {
-        std::string cli_arg = std::string(argv[1]);
-        loader.Load(fileData.get(), cli_arg);
-    }
-    else
-    {
-        // Circular libnyquist testing
-        //loader.Load(fileData.get(), "encoded.opus");
+	if (argc > 1)
+	{
+		std::string cli_arg = std::string(argv[1]);
+		loader.Load(fileData.get(), cli_arg);
+	}
+	else
+	{
+		// Circular libnyquist testing
+		//loader.Load(fileData.get(), "encoded.opus");
 
-        // 1-channel wave
-        //loader.Load(fileData.get(), "test_data/1ch/44100/8/test.wav");
-        //loader.Load(fileData.get(), "test_data/1ch/44100/16/test.wav");
-        loader.Load(fileData.get(), "test_data/1ch/44100/24/test.wav");
-        //loader.Load(fileData.get(), "test_data/1ch/44100/32/test.wav");
-        //loader.Load(fileData.get(), "test_data/1ch/44100/64/test.wav");
+		// 1-channel wave
+		//loader.Load(fileData.get(), "test_data/1ch/44100/8/test.wav");
+		//loader.Load(fileData.get(), "test_data/1ch/44100/16/test.wav");
+		loader.Load(fileData.get(), "test_data/1ch/44100/24/test.wav");
+		//loader.Load(fileData.get(), "test_data/1ch/44100/32/test.wav");
+		//loader.Load(fileData.get(), "test_data/1ch/44100/64/test.wav");
 
-        // 2-channel wave
-        //loader.Load(fileData.get(), "test_data/2ch/44100/8/test.wav");
-        //loader.Load(fileData.get(), "test_data/2ch/44100/16/test.wav");
-        //loader.Load(fileData.get(), "test_data/2ch/44100/24/test.wav");
-        //loader.Load(fileData.get(), "test_data/2ch/44100/32/test.wav");
-        //loader.Load(fileData.get(), "test_data/2ch/44100/64/test.wav");
+		// 2-channel wave
+		//loader.Load(fileData.get(), "test_data/2ch/44100/8/test.wav");
+		//loader.Load(fileData.get(), "test_data/2ch/44100/16/test.wav");
+		//loader.Load(fileData.get(), "test_data/2ch/44100/24/test.wav");
+		//loader.Load(fileData.get(), "test_data/2ch/44100/32/test.wav");
+		//loader.Load(fileData.get(), "test_data/2ch/44100/64/test.wav");
 
-        //loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_44_16_mono-ima4-reaper.wav");
-        //loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_44_16_stereo-ima4-reaper.wav");
+		//loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_44_16_mono-ima4-reaper.wav");
+		//loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_44_16_stereo-ima4-reaper.wav");
 
-        // Multi-channel wave
-        //loader.Load(fileData.get(), "test_data/ad_hoc/6_channel_44k_16b.wav");
+		// Multi-channel wave
+		//loader.Load(fileData.get(), "test_data/ad_hoc/6_channel_44k_16b.wav");
 
-        // 1 + 2 channel ogg
-        //loader.Load(fileData.get(), "test_data/ad_hoc/LR_Stereo.ogg");
-        //loader.Load(fileData.get(), "test_data/ad_hoc/TestLaugh_44k.ogg");
-        //loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat.ogg");
-        //loader.Load(fileData.get(), "test_data/ad_hoc/TestBeatMono.ogg");
-        //loader.Load(fileData.get(), "test_data/ad_hoc/BlockWoosh_Stereo.ogg");
+		// 1 + 2 channel ogg
+		//loader.Load(fileData.get(), "test_data/ad_hoc/LR_Stereo.ogg");
+		//loader.Load(fileData.get(), "test_data/ad_hoc/TestLaugh_44k.ogg");
+		//loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat.ogg");
+		//loader.Load(fileData.get(), "test_data/ad_hoc/TestBeatMono.ogg");
+		//loader.Load(fileData.get(), "test_data/ad_hoc/BlockWoosh_Stereo.ogg");
 
-        // 1 + 2 channel flac
-        //loader.Load(fileData.get(), "test_data/ad_hoc/KittyPurr8_Stereo_Dithered.flac");
-        //loader.Load(fileData.get(), "test_data/ad_hoc/KittyPurr16_Stereo.flac");
-        //loader.Load(fileData.get(), "test_data/ad_hoc/KittyPurr16_Mono.flac");
-        //loader.Load(fileData.get(), "test_data/ad_hoc/KittyPurr24_Stereo.flac");
+		// 1 + 2 channel flac
+		//loader.Load(fileData.get(), "test_data/ad_hoc/KittyPurr8_Stereo_Dithered.flac");
+		//loader.Load(fileData.get(), "test_data/ad_hoc/KittyPurr16_Stereo.flac");
+		//loader.Load(fileData.get(), "test_data/ad_hoc/KittyPurr16_Mono.flac");
+		//loader.Load(fileData.get(), "test_data/ad_hoc/KittyPurr24_Stereo.flac");
 
-        // Single-channel opus
-        //loader.Load(fileData.get(), "test_data/ad_hoc/detodos.opus"); // "Firefox: From All, To All"
+		// Single-channel opus
+		//loader.Load(fileData.get(), "test_data/ad_hoc/detodos.opus"); // "Firefox: From All, To All"
 
-        // 1 + 2 channel wavepack
-        //loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_Float32.wv");
-        //loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_Float32_Mono.wv");
-        //loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_Int16.wv");
-        //loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_Int24.wv");
-        //loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_Int32.wv");
-        //loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_Int24_Mono.wv");
-    
-        // 1 + 2 channel musepack
-        //loader.Load(fileData.get(), "test_data/ad_hoc/44_16_stereo.mpc");
-        //loader.Load(fileData.get(), "test_data/ad_hoc/44_16_mono.mpc");
-    }
+		// 1 + 2 channel wavepack
+		//loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_Float32.wv");
+		//loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_Float32_Mono.wv");
+		//loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_Int16.wv");
+		//loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_Int24.wv");
+		//loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_Int32.wv");
+		//loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_Int24_Mono.wv");
+
+		// 1 + 2 channel musepack
+		//loader.Load(fileData.get(), "test_data/ad_hoc/44_16_stereo.mpc");
+		//loader.Load(fileData.get(), "test_data/ad_hoc/44_16_mono.mpc");
+	}
 
 	// Test Recording Capabilities of AudioDevice
 	/*
@@ -93,7 +121,6 @@ int main(int argc, const char **argv) try
 	fileData->frameSize = 32;
 	fileData->lengthSeconds = 2.0;
 	fileData->sampleRate = 44100;
-
 	std::cout << "Starting recording for two seconds..." << std::endl;
 	myDevice.Record(fileData->sampleRate * fileData->lengthSeconds, fileData->samples);
 	*/
@@ -126,9 +153,9 @@ int main(int argc, const char **argv) try
 	}
 
 	fileData->samples = outputBuffer;
-	int encoderStatus = OggOpusEncoder::WriteFile({1, PCM_FLT, DITHER_NONE}, fileData.get(), "encoded.opus");
-    std::cout << "Encoder Status: " << encoderStatus << std::endl;
- 
+	int encoderStatus = OggOpusEncoder::WriteFile({ 1, PCM_FLT, DITHER_NONE }, fileData.get(), "encoded.opus");
+	std::cout << "Encoder Status: " << encoderStatus << std::endl;
+
 	return EXIT_SUCCESS;
 }
 catch (const UnsupportedExtensionEx & e)
@@ -147,3 +174,8 @@ catch (const std::exception & e)
 {
 	std::cerr << "Caught: " << e.what() << std::endl;
 }
+
+Contact GitHub API Training Shop Blog About
+
+© 2016 GitHub, Inc.Terms Privacy Security Status Help
+
