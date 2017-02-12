@@ -6,7 +6,8 @@
 #pragma comment(lib, "dsound.lib")
 #endif
 
-#include "libnyquist/AudioDevice.h"
+#include "AudioDevice.h"
+
 #include "libnyquist/AudioDecoder.h"
 #include "libnyquist/WavEncoder.h"
 #include "libnyquist/PostProcess.h"
@@ -97,7 +98,6 @@ int main(int argc, const char **argv) try
 	myDevice.Record(fileData->sampleRate * fileData->lengthSeconds, fileData->samples);
 	*/
 
-	// Libnyquist does not (currently) perform sample rate conversion - not exactly true, anymore. See below.
 	if (fileData->sampleRate != desiredSampleRate)
 	{
 		std::cout << "[Warning - Sample Rate Mismatch] - file is sampled at " << fileData->sampleRate << " and output is " << desiredSampleRate << std::endl;

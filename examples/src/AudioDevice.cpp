@@ -28,8 +28,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <algorithm>
 #include <thread>
 #include <chrono>
-
-using namespace nqr;
+#include <iostream>
 
 static RingBufferT<float> buffer(BUFFER_LENGTH);
 static RingBufferT<float> record_buffer(BUFFER_LENGTH / 2);

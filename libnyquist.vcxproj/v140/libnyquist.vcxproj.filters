@@ -13,9 +13,6 @@
     <ClCompile Include="$(ProjectDir)..\..\src\CafDecoder.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="$(ProjectDir)..\..\src\AudioDevice.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="$(ProjectDir)..\..\src\FlacDecoder.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -66,9 +63,6 @@
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\AudioDecoder.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\AudioDevice.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\CafDecoder.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -89,9 +83,6 @@
     </ClInclude>
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\WavPackDecoder.h">
       <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\RingBuffer.h">
-      <Filter>include\util</Filter>
     </ClInclude>
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\PostProcess.h">
       <Filter>include\util</Filter>

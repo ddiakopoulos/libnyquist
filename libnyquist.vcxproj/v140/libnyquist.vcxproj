@@ -24,7 +24,6 @@
     <ClCompile Include="$(ProjectDir)..\..\src\FlacDecoder.cpp" />
     <ClCompile Include="$(ProjectDir)..\..\src\OpusDecoder.cpp" />
     <ClCompile Include="$(ProjectDir)..\..\src\WavDecoder.cpp" />
-    <ClCompile Include="$(ProjectDir)..\..\src\AudioDevice.cpp" />
     <ClCompile Include="$(ProjectDir)..\..\src\WavPackDecoder.cpp" />
     <ClCompile Include="$(ProjectDir)..\..\src\CafDecoder.cpp" />
     <ClCompile Include="$(ProjectDir)..\..\src\FlacDependencies.c" />
@@ -45,10 +44,8 @@
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\OpusDecoder.h" />
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\PostProcess.h" />
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\WavDecoder.h" />
-    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\AudioDevice.h" />
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\Common.h" />
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\Dither.h" />
-    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\RingBuffer.h" />
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\WavPackDecoder.h" />
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\CafDecoder.h" />
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\VorbisDecoder.h" />

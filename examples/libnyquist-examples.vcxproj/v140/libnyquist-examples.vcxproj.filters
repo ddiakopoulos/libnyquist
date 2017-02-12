@@ -17,10 +17,19 @@
     <ClCompile Include="..\..\..\third_party\rtaudio\RtAudio.cpp">
       <Filter>third_party</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\AudioDevice.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\third_party\rtaudio\RtAudio.h">
       <Filter>third_party</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AudioDevice.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\RingBuffer.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -28,45 +28,38 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef AUDIO_DEVICE_H
 #define AUDIO_DEVICE_H
 
-#include "Common.h"
 #include "RingBuffer.h"
 #include "rtaudio/RtAudio.h"
+#include <vector>
+#include <memory>
 
-namespace nqr
+static const uint32_t FRAME_SIZE = 512;
+static const int32_t CHANNELS = 2;
+static const int32_t BUFFER_LENGTH = FRAME_SIZE * CHANNELS;
+
+struct AudioDeviceInfo
 {
+	uint32_t id;
+	uint32_t numChannels;
+	uint32_t sampleRate;
+	uint32_t frameSize;
+	bool isPlaying = false;
+};
 
-	const uint32_t FRAME_SIZE = 512;
-	const int32_t CHANNELS = 2;
-	const int32_t BUFFER_LENGTH = FRAME_SIZE * CHANNELS;
-
-	struct AudioDeviceInfo
-	{
-		uint32_t id;
-		uint32_t numChannels;
-		uint32_t sampleRate;
-		uint32_t frameSize;
-		bool isPlaying = false;
-	};
-
-	class AudioDevice
-	{
-		NO_MOVE(AudioDevice);
-		std::unique_ptr<RtAudio> rtaudio;
-	public:
-    
-		AudioDeviceInfo info;
-    
-		AudioDevice(int numChannels, int sampleRate, int deviceId = -1);
-		~AudioDevice();
-    
-		bool Open(const int deviceId);
-		bool Play(const std::vector<float> & data);
-
-		bool Record(const uint32_t lengthInSamples, std::vector<float> & recordingBuffer);
-        
-		static void ListAudioDevices();
-	};
-    
-} // end namespace nqr
+class AudioDevice
+{
+	std::unique_ptr<RtAudio> rtaudio;
+protected:
+	AudioDevice(const AudioDevice& r) = delete;
+	AudioDevice & operator = (const AudioDevice& r) = delete;
+public:
+	AudioDeviceInfo info;
+	AudioDevice(int numChannels, int sampleRate, int deviceId = -1);
+	~AudioDevice();
+	static void ListAudioDevices();
+	bool Open(const int deviceId);
+	bool Play(const std::vector<float> & data);
+	bool Record(const uint32_t lengthInSamples, std::vector<float> & recordingBuffer);
+};
 
 #endif
