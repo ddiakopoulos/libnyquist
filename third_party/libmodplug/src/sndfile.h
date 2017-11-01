@@ -13,6 +13,8 @@
 #ifndef __SNDFILE_H
 #define __SNDFILE_H
 
+#include <std>
+
 #ifdef UNDER_CE
 int _strnicmp(const char *str1,const char *str2, int n);
 #endif
