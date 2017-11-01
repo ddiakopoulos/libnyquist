@@ -64,15 +64,16 @@ BOOL CSoundFile::ReadUlt(const BYTE *lpStream, DWORD dwMemLength)
 	if ((pmh->reserved) && (dwMemPos + pmh->reserved * 32 < dwMemLength))
 	{
 		UINT len = pmh->reserved * 32;
-		m_lpszSongComments = new char[len + 1 + pmh->reserved];
-		if (m_lpszSongComments)
-		{
-			for (UINT l=0; l<pmh->reserved; l++)
+		try {
+			m_lpszSongComments = new char[len + 1 + pmh->reserved];
+			for (UINT l = 0; l < pmh->reserved; l++)
 			{
-				memcpy(m_lpszSongComments+l*33, lpStream+dwMemPos+l*32, 32);
-				m_lpszSongComments[l*33+32] = 0x0D;
+				memcpy(m_lpszSongComments + l * 33, lpStream + dwMemPos + l * 32, 32);
+				m_lpszSongComments[l * 33 + 32] = 0x0D;
 			}
 			m_lpszSongComments[len] = 0;
+		}
+		catch (std::bad_alloc& ba) {
 		}
 		dwMemPos += len;
 	}
