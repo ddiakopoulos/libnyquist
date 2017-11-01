@@ -139,18 +139,20 @@ BOOL CSoundFile::ReadMTM(LPCBYTE lpStream, DWORD dwMemLength)
 	if ((pmh->commentsize) && (dwMemPos + pmh->commentsize < dwMemLength))
 	{
 		UINT n = pmh->commentsize;
-		m_lpszSongComments = new char[n+1];
-		if (m_lpszSongComments)
-		{
-			memcpy(m_lpszSongComments, lpStream+dwMemPos, n);
+
+		try {
+			m_lpszSongComments = new char[n + 1];
+			memcpy(m_lpszSongComments, lpStream + dwMemPos, n);
 			m_lpszSongComments[n] = 0;
-			for (UINT i=0; i<n; i++)
+			for (UINT i = 0; i < n; i++)
 			{
 				if (!m_lpszSongComments[i])
 				{
-					m_lpszSongComments[i] = ((i+1) % 40) ? 0x20 : 0x0D;
+					m_lpszSongComments[i] = ((i + 1) % 40) ? 0x20 : 0x0D;
 				}
 			}
+		}
+		catch (std::bad_alloc& ba) {
 		}
 	}
 	dwMemPos += pmh->commentsize;
