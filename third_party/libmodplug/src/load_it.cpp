@@ -221,11 +221,12 @@ BOOL CSoundFile::ReadIT(const BYTE *lpStream, DWORD dwMemLength)
 	// Reading Song Message
 	if ((pifh.special & 0x01) && (pifh.msglength) && (pifh.msglength <= dwMemLength) && (pifh.msgoffset < dwMemLength - pifh.msglength))
 	{
-		m_lpszSongComments = new char[pifh.msglength+1];
-		if (m_lpszSongComments)
-		{
-			memcpy(m_lpszSongComments, lpStream+pifh.msgoffset, pifh.msglength);
+		try {
+			m_lpszSongComments = new char[pifh.msglength + 1];
+			memcpy(m_lpszSongComments, lpStream + pifh.msgoffset, pifh.msglength);
 			m_lpszSongComments[pifh.msglength] = 0;
+		}
+		catch (std::bad_alloc& ba) {
 		}
 	}
 	// Reading orders
@@ -289,12 +290,14 @@ BOOL CSoundFile::ReadIT(const BYTE *lpStream, DWORD dwMemLength)
 		dwMemPos += 8;
 		if ((dwMemPos + len <= dwMemLength) && (len <= MAX_PATTERNS*MAX_PATTERNNAME) && (len >= MAX_PATTERNNAME))
 		{
-			m_lpszPatternNames = new char[len];
-			if (m_lpszPatternNames)
-			{
+			try {
+				m_lpszPatternNames = new char[len];
 				m_nPatternNames = len / MAX_PATTERNNAME;
-				memcpy(m_lpszPatternNames, lpStream+dwMemPos, len);
+				memcpy(m_lpszPatternNames, lpStream + dwMemPos, len);
 			}
+			catch (std::bad_alloc& ba) {
+			}
+
 			dwMemPos += len;
 		}
 	}
@@ -376,8 +379,14 @@ BOOL CSoundFile::ReadIT(const BYTE *lpStream, DWORD dwMemLength)
 	{
 		if ((inspos[nins] > 0) && (inspos[nins] < dwMemLength - sizeof(ITOLDINSTRUMENT)))
 		{
-			INSTRUMENTHEADER *penv = new INSTRUMENTHEADER;
-			if (!penv) continue;
+			INSTRUMENTHEADER *penv;
+			try {
+				penv = new INSTRUMENTHEADER;
+			}
+			catch (std::bad_alloc& ba) {
+				continue;
+			}
+
 			Headers[nins+1] = penv;
 			memset(penv, 0, sizeof(INSTRUMENTHEADER));
 			ITInstrToMPT(lpStream + inspos[nins], penv, pifh.cmwt);
