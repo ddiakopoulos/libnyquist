@@ -104,8 +104,13 @@ BOOL CSoundFile::ReadAMS(LPCBYTE lpStream, DWORD dwMemLength)
 		dwMemPos += tmp;
 	}
 	// Read Pattern Names
-	m_lpszPatternNames = new char[pfh->patterns * 32];  // changed from CHAR
-	if (!m_lpszPatternNames) return TRUE;
+	try {
+		m_lpszPatternNames = new char[pfh->patterns * 32];  // changed from CHAR
+	} 
+	catch (std::bad_alloc& ba) {
+		return TRUE;
+	}
+
 	m_nPatternNames = pfh->patterns;
 	memset(m_lpszPatternNames, 0, m_nPatternNames * 32);
 	for (UINT pNam=0; pNam < m_nPatternNames; pNam++)
@@ -122,8 +127,13 @@ BOOL CSoundFile::ReadAMS(LPCBYTE lpStream, DWORD dwMemLength)
 	if (dwMemPos + tmp >= dwMemLength) return TRUE;
 	if (tmp)
 	{
-		m_lpszSongComments = new char[tmp+1];  // changed from CHAR
-		if (!m_lpszSongComments) return TRUE;
+		try {
+			m_lpszSongComments = new char[tmp + 1];  // changed from CHAR
+		}
+		catch (std::bad_alloc& ba) {
+			return TRUE;
+		}
+
 		memset(m_lpszSongComments, 0, tmp+1);
 		memcpy(m_lpszSongComments, lpStream + dwMemPos, tmp);
 		dwMemPos += tmp;
@@ -350,8 +360,14 @@ BOOL CSoundFile::ReadAMS2(LPCBYTE lpStream, DWORD dwMemLength)
 		dwMemPos += 5 + panenv->points*3;
 		pitchenv = (AMS2ENVELOPE *)(lpStream+dwMemPos);
 		dwMemPos += 5 + pitchenv->points*3;
-		INSTRUMENTHEADER *penv = new INSTRUMENTHEADER;
-		if (!penv) return TRUE;
+
+		INSTRUMENTHEADER *penv;
+		try {
+			penv = new INSTRUMENTHEADER;
+		}
+		catch (std::bad_alloc& ba) {
+			return TRUE;
+		}
 		memset(smpmap, 0, sizeof(smpmap));
 		memset(penv, 0, sizeof(INSTRUMENTHEADER));
 		for (UINT ismpmap=0; ismpmap<pins->samples; ismpmap++)
@@ -430,11 +446,13 @@ BOOL CSoundFile::ReadAMS2(LPCBYTE lpStream, DWORD dwMemLength)
 		UINT composernamelen = lpStream[dwMemPos];
 		if (composernamelen)
 		{
-			m_lpszSongComments = new char[composernamelen+1]; // changed from CHAR
-			if (m_lpszSongComments)
-			{
-				memcpy(m_lpszSongComments, lpStream+dwMemPos+1, composernamelen);
+			try {
+				m_lpszSongComments = new char[composernamelen + 1]; // changed from CHAR
+
+				memcpy(m_lpszSongComments, lpStream + dwMemPos + 1, composernamelen);
 				m_lpszSongComments[composernamelen] = 0;
+			}
+			catch (std::bad_alloc& ba) {
 			}
 		}
 		dwMemPos += composernamelen + 1;
@@ -563,9 +581,15 @@ BOOL CSoundFile::ReadAMS2(LPCBYTE lpStream, DWORD dwMemLength)
 void AMSUnpack(const char *psrc, UINT inputlen, char *pdest, UINT dmax, char packcharacter)
 {
 	UINT tmplen = dmax;
-	signed char *amstmp = new signed char[tmplen];
-	
-	if (!amstmp) return;
+	signed char *amstmp;
+
+	try {
+		amstmp = new signed char[tmplen];
+	}
+	catch (std::bad_alloc& ba) {
+		return;
+	}
+
 	// Unpack Loop
 	{
 		signed char *p = amstmp;
