@@ -282,7 +282,13 @@ BOOL CSoundFile::ReadXM(const BYTE *lpStream, DWORD dwMemLength)
 		if (dwMemPos + sizeof(XMINSTRUMENTHEADER) >= dwMemLength) return TRUE;
 		pih = (XMINSTRUMENTHEADER *)(lpStream+dwMemPos);
 		if (dwMemPos + bswapLE32(pih->size) > dwMemLength) return TRUE;
-		if ((Headers[iIns] = new INSTRUMENTHEADER) == NULL) continue;
+		try {
+			Headers[iIns] = new INSTRUMENTHEADER;
+		}
+		catch (std::bad_alloc& ba) {
+			continue;
+		}
+
 		memset(Headers[iIns], 0, sizeof(INSTRUMENTHEADER));
 		memcpy(Headers[iIns]->name, pih->name, 22);
 		if ((nsamples = pih->samples) > 0)
@@ -519,12 +525,14 @@ BOOL CSoundFile::ReadXM(const BYTE *lpStream, DWORD dwMemLength)
 		dwMemPos += 8;
 		if ((dwMemPos + len <= dwMemLength) && (len < 16384))
 		{
-			m_lpszSongComments = new char[len+1];
-			if (m_lpszSongComments)
-			{
-				memcpy(m_lpszSongComments, lpStream+dwMemPos, len);
+			try {
+				m_lpszSongComments = new char[len + 1];
+				memcpy(m_lpszSongComments, lpStream + dwMemPos, len);
 				m_lpszSongComments[len] = 0;
 			}
+			catch (std::bad_alloc& ba) {
+			}
+
 			dwMemPos += len;
 		}
 	}
@@ -546,13 +554,14 @@ BOOL CSoundFile::ReadXM(const BYTE *lpStream, DWORD dwMemLength)
 		dwMemPos += 8;
 		if ((dwMemPos + len <= dwMemLength) && (len <= MAX_PATTERNS*MAX_PATTERNNAME) && (len >= MAX_PATTERNNAME))
 		{
-			m_lpszPatternNames = new char[len];
-
-			if (m_lpszPatternNames)
-			{
+			try {
+				m_lpszPatternNames = new char[len];
 				m_nPatternNames = len / MAX_PATTERNNAME;
-				memcpy(m_lpszPatternNames, lpStream+dwMemPos, len);
+				memcpy(m_lpszPatternNames, lpStream + dwMemPos, len);
 			}
+			catch (std::bad_alloc& ba) {
+			}
+
 			dwMemPos += len;
 		}
 	}
