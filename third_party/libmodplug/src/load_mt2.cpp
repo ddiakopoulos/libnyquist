@@ -251,11 +251,12 @@ BOOL CSoundFile::ReadMT2(LPCBYTE lpStream, DWORD dwMemLength)
 			{
 				DWORD nTxtLen = dwLen;
 				if (nTxtLen > 32000) nTxtLen = 32000;
-				m_lpszSongComments = new char[nTxtLen];  // changed from CHAR
-				if (m_lpszSongComments)
-				{
-					memcpy(m_lpszSongComments, lpStream+dwMemPos+1, nTxtLen-1);
-					m_lpszSongComments[nTxtLen-1] = 0;
+				try {
+					m_lpszSongComments = new char[nTxtLen];  // changed from CHAR
+					memcpy(m_lpszSongComments, lpStream + dwMemPos + 1, nTxtLen - 1);
+					m_lpszSongComments[nTxtLen - 1] = 0;
+				}
+				catch (std::bad_alloc& ba) {
 				}
 			}
 			break;
@@ -402,18 +403,19 @@ BOOL CSoundFile::ReadMT2(LPCBYTE lpStream, DWORD dwMemLength)
 		INSTRUMENTHEADER *penv = NULL;
 		if (iIns <= m_nInstruments)
 		{
-			penv = new INSTRUMENTHEADER;
-			Headers[iIns] = penv;
-			if (penv)
-			{
+			try {
+				penv = new INSTRUMENTHEADER;
+				Headers[iIns] = penv;
 				memset(penv, 0, sizeof(INSTRUMENTHEADER));
 				memcpy(penv->name, pmi->szName, 32);
 				penv->nGlobalVol = 64;
 				penv->nPan = 128;
-				for (UINT i=0; i<NOTE_MAX; i++)
+				for (UINT i = 0; i < NOTE_MAX; i++)
 				{
-					penv->NoteMap[i] = i+1;
+					penv->NoteMap[i] = i + 1;
 				}
+			}
+			catch (std::bad_alloc& ba) {
 			}
 		}
 	#ifdef MT2DEBUG
