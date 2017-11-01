@@ -339,8 +339,13 @@ BOOL CSoundFile::Destroy()
 MODCOMMAND *CSoundFile::AllocatePattern(UINT rows, UINT nchns)
 //------------------------------------------------------------
 {
-	MODCOMMAND *p = new MODCOMMAND[rows*nchns];
-	if (p) memset(p, 0, rows*nchns*sizeof(MODCOMMAND));
+	try {
+		MODCOMMAND *p = new MODCOMMAND[rows*nchns];
+		memset(p, 0, rows*nchns*sizeof(MODCOMMAND));
+	}
+	catch (std::bad_alloc& ba) {
+	}
+
 	return p;
 }
 
@@ -1777,8 +1782,15 @@ BOOL CSoundFile::SetPatternName(UINT nPat, LPCSTR lpszName)
 	{
 		if (!lpszName[0]) return TRUE;
 		UINT len = (nPat+1)*MAX_PATTERNNAME;
-		char *p = new char[len];
-		if (!p) return FALSE;
+
+		char *p;
+		try {
+			p = new char[len];
+		}
+		catch (std::bad_alloc& ba) {
+			return FALSE;
+		}
+
 		memset(p, 0, len);
 		if (m_lpszPatternNames)
 		{
