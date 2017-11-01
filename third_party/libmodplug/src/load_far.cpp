@@ -92,11 +92,14 @@ BOOL CSoundFile::ReadFAR(const BYTE *lpStream, DWORD dwMemLength)
 	{
 		UINT szLen = stlen;
 		if (szLen > dwMemLength - dwMemPos) szLen = dwMemLength - dwMemPos;
-		if ((m_lpszSongComments = new char[szLen + 1]) != NULL)
-		{
-			memcpy(m_lpszSongComments, lpStream+dwMemPos, szLen);
+		try {
+			m_lpszSongComments = new char[szLen + 1];
+			memcpy(m_lpszSongComments, lpStream + dwMemPos, szLen);
 			m_lpszSongComments[szLen] = 0;
 		}
+		catch (std::bad_alloc& ba) {
+		}
+
 		dwMemPos += stlen;
 	}
 	// Reading orders
