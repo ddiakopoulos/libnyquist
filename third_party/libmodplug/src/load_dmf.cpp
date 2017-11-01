@@ -118,18 +118,19 @@ BOOL CSoundFile::ReadDMF(const BYTE *lpStream, DWORD dwMemLength)
 			if ((psi->infosize > dwMemLength) || (psi->infosize + dwMemPos + 8 > dwMemLength)) goto dmfexit;
 			if ((psi->infosize >= 8) && (!m_lpszSongComments))
 			{
-			    m_lpszSongComments = new char[psi->infosize]; // changed from CHAR
-				if (m_lpszSongComments)
-				{
-					for (UINT i=0; i<psi->infosize-1; i++)
+				try {
+					m_lpszSongComments = new char[psi->infosize]; // changed from CHAR
+					for (UINT i = 0; i < psi->infosize - 1; i++)
 					{
-						CHAR c = lpStream[dwMemPos+8+i];
+						CHAR c = lpStream[dwMemPos + 8 + i];
 						if ((i % 40) == 39)
 							m_lpszSongComments[i] = 0x0d;
 						else
 							m_lpszSongComments[i] = (c < ' ') ? ' ' : c;
 					}
-					m_lpszSongComments[psi->infosize-1] = 0;
+					m_lpszSongComments[psi->infosize - 1] = 0;
+				}
+				catch (std::bad_alloc& ba) {
 				}
 			}
 			dwMemPos += psi->infosize + 8 - 1;
