@@ -16,7 +16,6 @@
 		086DADAD1AE029860031F793 /* VorbisDependencies.c in Sources */ = {isa = PBXBuildFile; fileRef = 086DADAB1ADF9DF30031F793 /* VorbisDependencies.c */; };
 		08B91D9A1AC73B8A00335131 /* CafDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D901AC73B8A00335131 /* CafDecoder.cpp */; };
 		08B91D9B1AC73B8A00335131 /* AudioDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D911AC73B8A00335131 /* AudioDecoder.cpp */; };
-		08B91D9C1AC73B8A00335131 /* AudioDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D921AC73B8A00335131 /* AudioDevice.cpp */; };
 		08B91D9D1AC73B8A00335131 /* Common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D931AC73B8A00335131 /* Common.cpp */; };
 		08B91D9E1AC73B8A00335131 /* FlacDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D941AC73B8A00335131 /* FlacDecoder.cpp */; };
 		08B91DA01AC73B8A00335131 /* VorbisDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D961AC73B8A00335131 /* VorbisDecoder.cpp */; };
@@ -66,7 +65,6 @@
 		08B91D8F1AC73B8000335131 /* WavPackDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WavPackDecoder.h; path = include/libnyquist/WavPackDecoder.h; sourceTree = SOURCE_ROOT; };
 		08B91D901AC73B8A00335131 /* CafDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CafDecoder.cpp; path = src/CafDecoder.cpp; sourceTree = SOURCE_ROOT; };
 		08B91D911AC73B8A00335131 /* AudioDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioDecoder.cpp; path = src/AudioDecoder.cpp; sourceTree = SOURCE_ROOT; };
-		08B91D921AC73B8A00335131 /* AudioDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioDevice.cpp; path = src/AudioDevice.cpp; sourceTree = SOURCE_ROOT; };
 		08B91D931AC73B8A00335131 /* Common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Common.cpp; path = src/Common.cpp; sourceTree = SOURCE_ROOT; };
 		08B91D941AC73B8A00335131 /* FlacDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FlacDecoder.cpp; path = src/FlacDecoder.cpp; sourceTree = SOURCE_ROOT; };
 		08B91D961AC73B8A00335131 /* VorbisDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VorbisDecoder.cpp; path = src/VorbisDecoder.cpp; sourceTree = SOURCE_ROOT; };
@@ -183,7 +181,6 @@
 				08B91D901AC73B8A00335131 /* CafDecoder.cpp */,
 				083730B81BE52B9600216BDC /* MusepackDecoder.cpp */,
 				08B91D911AC73B8A00335131 /* AudioDecoder.cpp */,
-				08B91D921AC73B8A00335131 /* AudioDevice.cpp */,
 				08B91D931AC73B8A00335131 /* Common.cpp */,
 				080A58571B0866F600302850 /* RiffUtils.cpp */,
 				08FFC72E1CA7038D005812D6 /* ModplugDecoder.cpp */,
@@ -268,7 +265,6 @@
 				08B91D9E1AC73B8A00335131 /* FlacDecoder.cpp in Sources */,
 				08FFC72F1CA7038D005812D6 /* ModplugDecoder.cpp in Sources */,
 				08D0EC751C6DA41300FCDA23 /* WavPackDependencies.c in Sources */,
-				08B91D9C1AC73B8A00335131 /* AudioDevice.cpp in Sources */,
 				086DADAD1AE029860031F793 /* VorbisDependencies.c in Sources */,
 				08B91DA31AC73B8A00335131 /* WavPackDecoder.cpp in Sources */,
 				08B91D9D1AC73B8A00335131 /* Common.cpp in Sources */,
