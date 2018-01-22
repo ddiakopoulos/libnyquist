@@ -243,11 +243,12 @@ BOOL CSoundFile::ReadMDL(const BYTE *lpStream, DWORD dwMemLength)
 			if (blocklen)
 			{
 				if (m_lpszSongComments) delete [] m_lpszSongComments;
-				m_lpszSongComments = new char[blocklen];
-				if (m_lpszSongComments)
-				{
-					memcpy(m_lpszSongComments, lpStream+dwMemPos, blocklen);
-					m_lpszSongComments[blocklen-1] = 0;
+				try {
+					m_lpszSongComments = new char[blocklen];
+					memcpy(m_lpszSongComments, lpStream + dwMemPos, blocklen);
+					m_lpszSongComments[blocklen - 1] = 0;
+				}
+				catch (std::bad_alloc& ba) {
 				}
 			}
 			break;
@@ -288,7 +289,13 @@ BOOL CSoundFile::ReadMDL(const BYTE *lpStream, DWORD dwMemLength)
 				if (!Headers[nins])
 				{
 					UINT note = 12;
-					if ((Headers[nins] = new INSTRUMENTHEADER) == NULL) break;
+					try {
+						Headers[nins] = new INSTRUMENTHEADER;
+					}
+					catch (std::bad_alloc& ba) {
+						break;
+					}
+
 					INSTRUMENTHEADER *penv = Headers[nins];
 					memset(penv, 0, sizeof(INSTRUMENTHEADER));
 					memcpy(penv->name, lpStream+dwPos+2, 32);
