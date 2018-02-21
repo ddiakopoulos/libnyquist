@@ -438,6 +438,7 @@ static MMFILE *mmfopen(const char *name, const char *mode)
 		mmfile = (MMFILE *)malloc(len+sizeof(MMFILE));
 	if( !mmfile || len <= 0 ) {
 		fclose(fp);
+		free(mmfile);
 		return NULL;
 	}
 	fseek(fp, 0, SEEK_SET);
