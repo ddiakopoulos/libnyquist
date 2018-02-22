@@ -63,26 +63,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -108,8 +108,9 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;D_SCL_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNING;WIN32;_WIN32;USE_ALLOCA;OPUS_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUG;_ITERATOR_DEBUG_LEVEL=0;_CRT_SECURE_NO_WARNINGS;_MBCS;D_SCL_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNING;WIN32;_WIN32;USE_ALLOCA;OPUS_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\third_party\;$(ProjectDir)..\..\include\libnyquist\;$(ProjectDir)..\..\third_party\libvorbis\include;$(ProjectDir)..\..\third_party\libogg\include;$(ProjectDir)..\..\third_party\wavpack\include;$(ProjectDir)..\..\third_party\flac\src\include;$(ProjectDir)..\..\third_party\opus\celt;$(ProjectDir)..\..\third_party\opus\libopus\include;$(ProjectDir)..\..\third_party\opus\libopus\src;$(ProjectDir)..\..\third_party\opus\opusfile\include;$(ProjectDir)..\..\third_party\opus\opusfile\src;$(ProjectDir)..\..\third_party\opus\opusfile\src\include;$(ProjectDir)..\..\third_party\opus\silk;$(ProjectDir)..\..\third_party\opus\silk\float;$(ProjectDir)..\..\third_party\musepack\include;$(ProjectDir)..\..\third_party\musepack\libmpcenc;$(ProjectDir)..\..\third_party\musepack\libmpcdec;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -120,8 +121,9 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;D_SCL_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNING;WIN32;_WIN32;USE_ALLOCA;OPUS_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUG;_ITERATOR_DEBUG_LEVEL=0;_CRT_SECURE_NO_WARNINGS;_MBCS;D_SCL_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNING;WIN32;_WIN32;USE_ALLOCA;OPUS_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\third_party\;$(ProjectDir)..\..\include\libnyquist\;$(ProjectDir)..\..\third_party\libvorbis\include;$(ProjectDir)..\..\third_party\libogg\include;$(ProjectDir)..\..\third_party\wavpack\include;$(ProjectDir)..\..\third_party\flac\src\include;$(ProjectDir)..\..\third_party\opus\celt;$(ProjectDir)..\..\third_party\opus\libopus\include;$(ProjectDir)..\..\third_party\opus\libopus\src;$(ProjectDir)..\..\third_party\opus\opusfile\include;$(ProjectDir)..\..\third_party\opus\opusfile\src;$(ProjectDir)..\..\third_party\opus\opusfile\src\include;$(ProjectDir)..\..\third_party\opus\silk;$(ProjectDir)..\..\third_party\opus\silk\float;$(ProjectDir)..\..\third_party\musepack\include;$(ProjectDir)..\..\third_party\musepack\libmpcenc;$(ProjectDir)..\..\third_party\musepack\libmpcdec;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -136,6 +138,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;D_SCL_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNING;WIN32;_WIN32;USE_ALLOCA;OPUS_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\third_party\;$(ProjectDir)..\..\include\libnyquist\;$(ProjectDir)..\..\third_party\libvorbis\include;$(ProjectDir)..\..\third_party\libogg\include;$(ProjectDir)..\..\third_party\wavpack\include;$(ProjectDir)..\..\third_party\flac\src\include;$(ProjectDir)..\..\third_party\opus\celt;$(ProjectDir)..\..\third_party\opus\libopus\include;$(ProjectDir)..\..\third_party\opus\libopus\src;$(ProjectDir)..\..\third_party\opus\opusfile\include;$(ProjectDir)..\..\third_party\opus\opusfile\src;$(ProjectDir)..\..\third_party\opus\opusfile\src\include;$(ProjectDir)..\..\third_party\opus\silk;$(ProjectDir)..\..\third_party\opus\silk\float;$(ProjectDir)..\..\third_party\musepack\include;$(ProjectDir)..\..\third_party\musepack\libmpcenc;$(ProjectDir)..\..\third_party\musepack\libmpcdec;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -152,6 +155,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;D_SCL_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNING;WIN32;_WIN32;USE_ALLOCA;OPUS_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\third_party\;$(ProjectDir)..\..\include\libnyquist\;$(ProjectDir)..\..\third_party\libvorbis\include;$(ProjectDir)..\..\third_party\libogg\include;$(ProjectDir)..\..\third_party\wavpack\include;$(ProjectDir)..\..\third_party\flac\src\include;$(ProjectDir)..\..\third_party\opus\celt;$(ProjectDir)..\..\third_party\opus\libopus\include;$(ProjectDir)..\..\third_party\opus\libopus\src;$(ProjectDir)..\..\third_party\opus\opusfile\include;$(ProjectDir)..\..\third_party\opus\opusfile\src;$(ProjectDir)..\..\third_party\opus\opusfile\src\include;$(ProjectDir)..\..\third_party\opus\silk;$(ProjectDir)..\..\third_party\opus\silk\float;$(ProjectDir)..\..\third_party\musepack\include;$(ProjectDir)..\..\third_party\musepack\libmpcenc;$(ProjectDir)..\..\third_party\musepack\libmpcdec;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
