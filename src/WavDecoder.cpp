@@ -26,6 +26,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "WavDecoder.h"
 #include "RiffUtils.h"
 #include "IMA4Util.h"
+#include <cstring>
 
 using namespace nqr;
 

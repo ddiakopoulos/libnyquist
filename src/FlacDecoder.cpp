@@ -24,10 +24,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "FlacDecoder.h"
-#include "flac/all.h"
-#include "flac/stream_decoder.h"
+#include "FLAC/all.h"
+#include "FLAC/stream_decoder.h"
 
 #include "AudioDecoder.h"
+#include <cstring>
 
 using namespace nqr;
 
