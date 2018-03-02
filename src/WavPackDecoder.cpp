@@ -25,6 +25,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "WavPackDecoder.h"
 #include "wavpack.h"
+#include <string.h>
 
 using namespace nqr;
 
@@ -37,6 +38,64 @@ public:
     {
         char errorStr[128];
         context = WavpackOpenFileInput(path.c_str(), errorStr, OPEN_WVC | OPEN_NORMALIZE, 0);
+        
+        if (!context)
+        {
+            throw std::runtime_error("Not a WavPack file");
+        }
+        
+        auto bitdepth = WavpackGetBitsPerSample(context);
+        
+        d->sampleRate = WavpackGetSampleRate(context);
+        d->channelCount = WavpackGetNumChannels(context);
+        d->lengthSeconds = double(getLengthInSeconds());
+        d->frameSize = d->channelCount * bitdepth;
+        
+        //@todo support channel masks
+        // WavpackGetChannelMask
+        
+        auto totalSamples = size_t(getTotalSamples());
+        
+        int mode = WavpackGetMode(context);
+        bool isFloatingPoint = (MODE_FLOAT & mode);
+        
+        d->sourceFormat = MakeFormatForBits(bitdepth, isFloatingPoint, false);
+
+        /* From the docs:
+            "... required memory at "buffer" is 4 * samples * num_channels bytes. The
+            audio data is returned right-justified in 32-bit longs in the endian
+            mode native to the executing processor."
+        */
+        d->samples.resize(totalSamples * d->channelCount);
+        
+        if (!isFloatingPoint)
+            internalBuffer.resize(totalSamples * d->channelCount);
+        
+        if (!readInternal(totalSamples))
+            throw std::runtime_error("could not read any data");
+        
+        // Next, process internal buffer into the user-visible samples array
+        if (!isFloatingPoint)
+            ConvertToFloat32(d->samples.data(), internalBuffer.data(), totalSamples * d->channelCount, d->sourceFormat);
+        
+    }
+
+    WavPackInternal(AudioData * d, const std::vector<uint8_t> & memory) : d(d), data(std::move(memory)), dataPos(0)
+    {
+        WavpackStreamReader64 reader = {
+          read_bytes,
+          write_bytes,
+          get_pos,
+          set_pos_abs,
+          set_pos_rel,
+          push_back_byte,
+          get_length,
+          can_seek,
+          truncate_here,
+          close,
+        };
+        char errorStr[128];
+        context = WavpackOpenFileInputEx64 (&reader, this, nullptr, errorStr, OPEN_WVC | OPEN_NORMALIZE, 0);
         
         if (!context)
         {
@@ -120,6 +179,114 @@ public:
         
         return totalFramesRead;
     }
+
+    static int32_t read_bytes(void *id, void *data, int32_t bcount) {
+      if (id != nullptr) {
+        WavPackInternal *decoder = (WavPackInternal *)id;
+        int32_t readLength = std::min<size_t>(bcount, decoder->data.size() - decoder->dataPos);
+        if (readLength > 0) {
+          memcpy(data, decoder->data.data(), readLength);
+          decoder->dataPos += readLength;
+          return readLength;
+        } else {
+          return 0;
+        }
+      } else {
+        return 0;
+      }
+    }
+    static int32_t write_bytes(void *id, void *data, int32_t bcount) {
+      if (id != nullptr) {
+        WavPackInternal *decoder = (WavPackInternal *)id;
+        int32_t writeLength = std::min<size_t>(bcount, decoder->data.size() - decoder->dataPos);
+        if (writeLength > 0) {
+          memcpy(decoder->data.data(), data, writeLength);
+          decoder->dataPos += writeLength;
+          return writeLength;
+        } else {
+          return 0;
+        }
+      } else {
+        return 0;
+      }
+    }
+    static int64_t get_pos(void *id) {
+      if (id != nullptr) {
+        WavPackInternal *decoder = (WavPackInternal *)id;
+        return decoder->dataPos;
+      } else {
+        return 0;
+      }
+    }
+    static int set_pos_abs(void *id, int64_t pos) {
+      if (id != nullptr) {
+        WavPackInternal *decoder = (WavPackInternal *)id;
+        size_t newPos = std::min<size_t>(pos, decoder->data.size());
+        decoder->dataPos = newPos;
+        return newPos;
+      } else {
+        return 0;
+      }
+    }
+    static int set_pos_rel(void *id, int64_t delta, int mode) {
+      if (id != nullptr) {
+        WavPackInternal *decoder = (WavPackInternal *)id;
+        size_t newPos = 0;
+        if (mode == SEEK_SET) {
+          newPos = delta;
+        } else if (mode == SEEK_CUR) {
+          newPos = decoder->dataPos + delta;
+        } else if (mode == SEEK_END) {
+          newPos = decoder->data.size() + delta;
+        }
+        newPos = std::min<size_t>(newPos, decoder->data.size());
+        decoder->dataPos = newPos;
+        return newPos;
+      } else {
+        return 0;
+      }
+    }
+    static int push_back_byte(void *id, int c) {
+      if (id != nullptr) {
+        WavPackInternal *decoder = (WavPackInternal *)id;
+        decoder->dataPos--;
+        decoder->data[decoder->dataPos] = c;
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+    static int64_t get_length(void *id) {
+      if (id != nullptr) {
+        WavPackInternal *decoder = (WavPackInternal *)id;
+        return decoder->data.size();
+      } else {
+        return 0;
+      }
+    }
+    static int can_seek(void *id) {
+      if (id != nullptr) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+    static int truncate_here(void *id) {
+      if (id != nullptr) {
+        WavPackInternal *decoder = (WavPackInternal *)id;
+        decoder->data.resize(decoder->dataPos);
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+    static int close(void *id) {
+      if (id != nullptr) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
     
 private:
     
@@ -130,6 +297,8 @@ private:
     WavpackContext * context; //@todo unique_ptr
     
     AudioData * d;
+    std::vector<uint8_t> data;
+    size_t dataPos;
     
     std::vector<int32_t> internalBuffer;
     
@@ -149,7 +318,7 @@ void WavPackDecoder::LoadFromPath(AudioData * data, const std::string & path)
 
 void WavPackDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
 {
-    throw LoadBufferNotImplEx();
+    WavPackInternal decoder(data, memory);
 }
 
 std::vector<std::string> WavPackDecoder::GetSupportedFileExtensions()
