@@ -35,7 +35,7 @@ class OpusDecoderInternal
     
 public:
     
-    OpusDecoderInternal(AudioData * d, const std::vector<uint8_t> & fileData) : d(d)
+    OpusDecoderInternal(AudioData * d, std::vector<uint8_t> & fileData) : d(d)
     {
         /* @todo proper steaming support + classes
         const opus_callbacks = {
@@ -166,7 +166,7 @@ void nqr::OpusDecoder::LoadFromPath(AudioData * data, const std::string & path)
     OpusDecoderInternal decoder(data, fileBuffer.buffer);
 }
 
-void nqr::OpusDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
+void nqr::OpusDecoder::LoadFromBuffer(AudioData * data, std::vector<uint8_t> & memory)
 {
     OpusDecoderInternal decoder(data, memory);
 }

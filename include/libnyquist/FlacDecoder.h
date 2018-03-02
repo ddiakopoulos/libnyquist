@@ -56,7 +56,7 @@ struct FlacDecoder : public nqr::BaseDecoder
     FlacDecoder() {}
     virtual ~FlacDecoder() {}
     virtual void LoadFromPath(nqr::AudioData * data, const std::string & path) override;
-    virtual void LoadFromBuffer(nqr::AudioData * data, const std::vector<uint8_t> & memory) override;
+    virtual void LoadFromBuffer(nqr::AudioData * data, std::vector<uint8_t> & memory) override;
     virtual std::vector<std::string> GetSupportedFileExtensions() override;
 };
 

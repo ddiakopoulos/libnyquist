@@ -36,7 +36,7 @@ void CAFDecoder::LoadFromPath(AudioData * data, const std::string & path)
     throw LoadPathNotImplEx();
 }
 
-void CAFDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
+void CAFDecoder::LoadFromBuffer(AudioData * data, std::vector<uint8_t> & memory)
 {
     throw LoadBufferNotImplEx();
 }

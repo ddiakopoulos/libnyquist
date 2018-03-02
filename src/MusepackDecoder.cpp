@@ -92,7 +92,7 @@ class MusepackInternal
 public:
     
     // Musepack is a purely variable bitrate format and does not work at a constant bitrate.
-    MusepackInternal(AudioData * d, const std::vector<uint8_t> & fileData) : d(d)
+    MusepackInternal(AudioData * d, std::vector<uint8_t> & fileData) : d(d)
     {
         decoderMemory = std::make_shared<mpc_reader_state>();
         
@@ -182,7 +182,7 @@ void MusepackDecoder::LoadFromPath(AudioData * data, const std::string & path)
     MusepackInternal decoder(data, fileBuffer.buffer);
 }
 
-void MusepackDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
+void MusepackDecoder::LoadFromBuffer(AudioData * data, std::vector<uint8_t> & memory)
 {
     MusepackInternal decoder(data, memory);
 }

@@ -38,7 +38,7 @@ class ModplugInternal
     
 public:
     
-    ModplugInternal(AudioData * d, const std::vector<uint8_t> & fileData) : d(d)
+    ModplugInternal(AudioData * d, std::vector<uint8_t> & fileData) : d(d)
     {
         ModPlug_Settings mps;
         ModPlug_GetSettings(&mps);
@@ -119,7 +119,7 @@ void ModplugDecoder::LoadFromPath(AudioData * data, const std::string & path)
     ModplugInternal decoder(data, fileBuffer.buffer);
 }
 
-void ModplugDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
+void ModplugDecoder::LoadFromBuffer(AudioData * data, std::vector<uint8_t> & memory)
 {
     ModplugInternal decoder(data, memory);
 }

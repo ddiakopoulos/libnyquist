@@ -38,7 +38,7 @@ class FlacDecoderInternal
 public:
     
     // FLAC is a big-endian format. All values are unsigned.
-    FlacDecoderInternal(AudioData * d, std::string filepath) : d(d)
+    FlacDecoderInternal(AudioData * d, const std::string & filepath) : d(d)
     {
         
         /////////////////////////////
@@ -90,7 +90,7 @@ public:
         
     }
 
-    FlacDecoderInternal(AudioData * d, const std::vector<uint8_t> & memory) : d(d), data(std::move(memory)), dataPos(0)
+    FlacDecoderInternal(AudioData * d, std::vector<uint8_t> & memory) : d(d), data(std::move(memory)), dataPos(0)
     {
         
         /////////////////////////////
@@ -268,7 +268,7 @@ void FlacDecoder::LoadFromPath(AudioData * data, const std::string & path)
     FlacDecoderInternal decoder(data, path);
 }
 
-void FlacDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
+void FlacDecoder::LoadFromBuffer(AudioData * data, std::vector<uint8_t> & memory)
 {
     FlacDecoderInternal decoder(data, memory);
 }

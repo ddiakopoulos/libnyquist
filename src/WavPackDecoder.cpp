@@ -34,7 +34,7 @@ class WavPackInternal
     
 public:
     
-    WavPackInternal(AudioData * d, const std::string path) : d(d)
+    WavPackInternal(AudioData * d, const std::string & path) : d(d)
     {
         char errorStr[128];
         context = WavpackOpenFileInput(path.c_str(), errorStr, OPEN_WVC | OPEN_NORMALIZE, 0);
@@ -80,7 +80,7 @@ public:
         
     }
 
-    WavPackInternal(AudioData * d, const std::vector<uint8_t> & memory) : d(d), data(std::move(memory)), dataPos(0)
+    WavPackInternal(AudioData * d, std::vector<uint8_t> & memory) : d(d), data(std::move(memory)), dataPos(0)
     {
         WavpackStreamReader64 reader = {
           read_bytes,
@@ -316,7 +316,7 @@ void WavPackDecoder::LoadFromPath(AudioData * data, const std::string & path)
     WavPackInternal decoder(data, path);
 }
 
-void WavPackDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
+void WavPackDecoder::LoadFromBuffer(AudioData * data, std::vector<uint8_t> & memory)
 {
     WavPackInternal decoder(data, memory);
 }

@@ -53,7 +53,7 @@ struct LoadBufferNotImplEx : public std::runtime_error
 struct BaseDecoder
 {
     virtual void LoadFromPath(nqr::AudioData * data, const std::string & path) = 0;
-    virtual void LoadFromBuffer(nqr::AudioData * data, const std::vector<uint8_t> & memory) = 0;
+    virtual void LoadFromBuffer(nqr::AudioData * data, std::vector<uint8_t> & memory) = 0;
     virtual std::vector<std::string> GetSupportedFileExtensions() = 0;
 };
 
@@ -67,7 +67,7 @@ public:
     ~NyquistIO();
     
     void Load(AudioData * data, const std::string & path);
-    void Load(AudioData *data, std::string extension, const std::vector<uint8_t> & buffer);
+    void Load(AudioData *data, std::string extension, std::vector<uint8_t> & buffer);
     
     bool IsFileSupported(const std::string path) const;
     

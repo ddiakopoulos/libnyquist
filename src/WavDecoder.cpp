@@ -40,7 +40,7 @@ void WavDecoder::LoadFromPath(AudioData * data, const std::string & path)
     return LoadFromBuffer(data, fileBuffer.buffer);
 }
 
-void WavDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
+void WavDecoder::LoadFromBuffer(AudioData * data, std::vector<uint8_t> & memory)
 {
     //////////////////////
     // Read RIFF Header //

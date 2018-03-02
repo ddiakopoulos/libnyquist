@@ -35,7 +35,7 @@ class VorbisDecoderInternal
     
 public:
     
-    VorbisDecoderInternal(AudioData * d, std::string filepath) : d(d)
+    VorbisDecoderInternal(AudioData * d, const std::string & filepath) : d(d)
     {
         fileHandle = new OggVorbis_File();
         
@@ -96,7 +96,7 @@ public:
             throw std::runtime_error("could not read any data");
     }
 
-    VorbisDecoderInternal(AudioData * d, const std::vector<uint8_t> & memory) : d(d), data(std::move(memory)), dataPos(0)
+    VorbisDecoderInternal(AudioData * d, std::vector<uint8_t> & memory) : d(d), data(std::move(memory)), dataPos(0)
     {
         fileHandle = new OggVorbis_File();
 
@@ -269,7 +269,7 @@ void VorbisDecoder::LoadFromPath(AudioData * data, const std::string & path)
     VorbisDecoderInternal decoder(data, path);
 }
 
-void VorbisDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
+void VorbisDecoder::LoadFromBuffer(AudioData * data, std::vector<uint8_t> & memory)
 {
     VorbisDecoderInternal decoder(data, memory);
 }
