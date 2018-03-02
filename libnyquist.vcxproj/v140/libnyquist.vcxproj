@@ -36,7 +36,6 @@
     <ClCompile Include="..\..\src\ModplugDependencies.cpp" />
     <ClCompile Include="..\..\src\MusepackDecoder.cpp" />
     <ClCompile Include="..\..\src\MusepackDependencies.c" />
-    <ClCompile Include="..\..\src\WavPackDependencies.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\AudioDecoder.h" />

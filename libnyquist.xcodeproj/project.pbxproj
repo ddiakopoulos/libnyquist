@@ -22,7 +22,6 @@
 		08B91DA11AC73B8A00335131 /* OpusDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D971AC73B8A00335131 /* OpusDecoder.cpp */; };
 		08B91DA21AC73B8A00335131 /* WavDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D981AC73B8A00335131 /* WavDecoder.cpp */; };
 		08B91DA31AC73B8A00335131 /* WavPackDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B91D991AC73B8A00335131 /* WavPackDecoder.cpp */; };
-		08D0EC751C6DA41300FCDA23 /* WavPackDependencies.c in Sources */ = {isa = PBXBuildFile; fileRef = 08D0EC741C6DA41300FCDA23 /* WavPackDependencies.c */; };
 		08FFC72D1CA702EC005812D6 /* ModplugDependencies.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08FFC72C1CA702EC005812D6 /* ModplugDependencies.cpp */; };
 		08FFC72F1CA7038D005812D6 /* ModplugDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08FFC72E1CA7038D005812D6 /* ModplugDecoder.cpp */; };
 /* End PBXBuildFile section */
@@ -72,7 +71,6 @@
 		08B91D981AC73B8A00335131 /* WavDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WavDecoder.cpp; path = src/WavDecoder.cpp; sourceTree = SOURCE_ROOT; };
 		08B91D991AC73B8A00335131 /* WavPackDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WavPackDecoder.cpp; path = src/WavPackDecoder.cpp; sourceTree = SOURCE_ROOT; };
 		08C83B7C1C25D7780071EED6 /* IMA4Util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IMA4Util.h; path = include/libnyquist/IMA4Util.h; sourceTree = SOURCE_ROOT; };
-		08D0EC741C6DA41300FCDA23 /* WavPackDependencies.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = WavPackDependencies.c; path = src/WavPackDependencies.c; sourceTree = SOURCE_ROOT; };
 		08FFC72C1CA702EC005812D6 /* ModplugDependencies.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ModplugDependencies.cpp; path = src/ModplugDependencies.cpp; sourceTree = SOURCE_ROOT; };
 		08FFC72E1CA7038D005812D6 /* ModplugDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ModplugDecoder.cpp; path = src/ModplugDecoder.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -92,7 +90,6 @@
 			isa = PBXGroup;
 			children = (
 				08FFC72C1CA702EC005812D6 /* ModplugDependencies.cpp */,
-				08D0EC741C6DA41300FCDA23 /* WavPackDependencies.c */,
 				081FFB181ADF803800673073 /* FlacDependencies.c */,
 				086DADAB1ADF9DF30031F793 /* VorbisDependencies.c */,
 				0804D13E1AE69F0100F4B1FD /* OpusDependencies.c */,
@@ -264,7 +261,6 @@
 				08FFC72D1CA702EC005812D6 /* ModplugDependencies.cpp in Sources */,
 				08B91D9E1AC73B8A00335131 /* FlacDecoder.cpp in Sources */,
 				08FFC72F1CA7038D005812D6 /* ModplugDecoder.cpp in Sources */,
-				08D0EC751C6DA41300FCDA23 /* WavPackDependencies.c in Sources */,
 				086DADAD1AE029860031F793 /* VorbisDependencies.c in Sources */,
 				08B91DA31AC73B8A00335131 /* WavPackDecoder.cpp in Sources */,
 				08B91D9D1AC73B8A00335131 /* Common.cpp in Sources */,

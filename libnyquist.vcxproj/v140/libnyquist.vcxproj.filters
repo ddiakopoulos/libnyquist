@@ -46,9 +46,6 @@
     <ClCompile Include="..\..\src\MusepackDecoder.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\WavPackDependencies.c">
-      <Filter>src\deps</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\ModplugDependencies.cpp">
       <Filter>src\deps</Filter>
     </ClCompile>
