@@ -25,6 +25,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "VorbisDecoder.h"
 #include "libvorbis/include/vorbis/vorbisfile.h"
+#include <string.h>
 
 using namespace nqr;
 
@@ -54,6 +55,64 @@ public:
             throw std::runtime_error("Can't open file");
         
         if (auto r = ov_test_callbacks(f, fileHandle, nullptr, 0, OV_CALLBACKS_DEFAULT) != 0)
+        {
+            std::cerr << errorAsString(r) << std::endl;
+            throw std::runtime_error("File is not a valid ogg vorbis file");
+        }
+        
+        if (auto r = ov_test_open(fileHandle) != 0)
+        {
+            std::cerr << errorAsString(r) << std::endl;
+            throw std::runtime_error("ov_test_open failed");
+        }
+        
+        // Don't need to fclose() after an open -- vorbis does this internally
+        
+        vorbis_info *ovInfo = ov_info(fileHandle, -1);
+        
+        if (ovInfo == nullptr)
+        {
+            throw std::runtime_error("Reading metadata failed");
+        }
+        
+        if (auto r = ov_streams(fileHandle) != 1)
+        {
+            std::cerr << errorAsString(r) << std::endl;
+            throw std::runtime_error( "Unsupported: file contains multiple bitstreams");
+        }
+        
+        d->sampleRate = int(ovInfo->rate);
+        d->channelCount = ovInfo->channels;
+        d->sourceFormat = MakeFormatForBits(32, true, false);
+        d->lengthSeconds = double(getLengthInSeconds());
+        d->frameSize = ovInfo->channels * GetFormatBitsPerSample(d->sourceFormat);
+        
+        // Samples in a single channel
+        auto totalSamples = size_t(getTotalSamples());
+        
+        d->samples.resize(totalSamples * d->channelCount);
+        
+        if (!readInternal(totalSamples))
+            throw std::runtime_error("could not read any data");
+    }
+
+    VorbisDecoderInternal(AudioData * d, const std::vector<uint8_t> & memory) : d(d)
+    {
+        fileHandle = new OggVorbis_File();
+
+        data = std::move(memory);
+        ov_callbacks callbacks = {
+          read_func,
+          seek_func,
+          close_func,
+          tell_func,
+        };
+        if (auto r = ov_open_callbacks(this, fileHandle, nullptr, 0, callbacks) != 0) {
+            std::cerr << errorAsString(r) << std::endl;
+            throw std::runtime_error("Failed to open ogg vorbis file");
+        }
+
+        if (auto r = ov_test_callbacks(this, fileHandle, nullptr, 0, callbacks) != 0)
         {
             std::cerr << errorAsString(r) << std::endl;
             throw std::runtime_error("File is not a valid ogg vorbis file");
@@ -163,7 +222,28 @@ public:
     //////////////////////
     // vorbis callbacks //
     //////////////////////
-    
+
+    static size_t read_func(void *ptr, size_t size, size_t nmemb, void *datasource) {
+      VorbisDecoderInternal *decoder = (VorbisDecoderInternal *)datasource;
+      size_t readLength = std::min<size_t>(size * nmemb, decoder->data.size() - decoder->dataPos);
+      if (readLength > 0) {
+        memcpy(ptr, decoder->data.data(), readLength);
+        decoder->dataPos += readLength;
+      }
+      return readLength;
+    }
+    static int seek_func(void *datasource, ogg_int64_t offset, int whence) {
+      VorbisDecoderInternal *decoder = (VorbisDecoderInternal *)datasource;
+      decoder->dataPos = std::min<size_t>(offset, decoder->data.size());
+      return 0;
+    }
+    static int close_func(void *datasource) {
+      // nothing
+    }
+    static long tell_func(void *datasource) {
+      VorbisDecoderInternal *decoder = (VorbisDecoderInternal *)datasource;
+      return decoder->dataPos;
+    }
     //@todo: implement streaming support
     
 private:
@@ -172,6 +252,8 @@ private:
     
     OggVorbis_File * fileHandle;
     AudioData * d;
+    std::vector<uint8_t> data;
+    size_t dataPos;
     
     inline int64_t getTotalSamples() const { return int64_t(ov_pcm_total(const_cast<OggVorbis_File *>(fileHandle), -1)); }
     inline int64_t getLengthInSeconds() const { return int64_t(ov_time_total(const_cast<OggVorbis_File *>(fileHandle), -1)); }
@@ -190,7 +272,7 @@ void VorbisDecoder::LoadFromPath(AudioData * data, const std::string & path)
 
 void VorbisDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
 {
-    throw LoadBufferNotImplEx();
+    VorbisDecoderInternal decoder(data, memory);
 }
 
 std::vector<std::string> VorbisDecoder::GetSupportedFileExtensions()
