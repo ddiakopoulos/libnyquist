@@ -237,7 +237,7 @@ public:
       return 0;
     }
     static int close_func(void *datasource) {
-      // nothing
+      return 0;
     }
     static long tell_func(void *datasource) {
       VorbisDecoderInternal *decoder = (VorbisDecoderInternal *)datasource;
