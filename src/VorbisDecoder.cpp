@@ -96,11 +96,10 @@ public:
             throw std::runtime_error("could not read any data");
     }
 
-    VorbisDecoderInternal(AudioData * d, const std::vector<uint8_t> & memory) : d(d)
+    VorbisDecoderInternal(AudioData * d, const std::vector<uint8_t> & memory) : d(d), data(std::move(memory)), dataPos(0)
     {
         fileHandle = new OggVorbis_File();
 
-        data = std::move(memory);
         ov_callbacks callbacks = {
           read_func,
           seek_func,
