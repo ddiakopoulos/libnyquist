@@ -36,6 +36,32 @@
     <ClCompile Include="..\..\src\ModplugDependencies.cpp" />
     <ClCompile Include="..\..\src\MusepackDecoder.cpp" />
     <ClCompile Include="..\..\src\MusepackDependencies.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\common_utils.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\decorr_utils.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\entropy_utils.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\extra1.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\extra2.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\open_filename.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\open_legacy.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\open_raw.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\open_utils.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\pack.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\pack_dns.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\pack_dsd.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\pack_floats.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\pack_utils.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\read_words.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\tags.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\tag_utils.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\unpack.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\unpack3.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\unpack3_open.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\unpack3_seek.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\unpack_dsd.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\unpack_floats.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\unpack_seek.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\unpack_utils.c" />
+    <ClCompile Include="..\..\third_party\wavpack\src\write_words.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\AudioDecoder.h" />
