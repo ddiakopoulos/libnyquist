@@ -233,8 +233,17 @@ public:
     }
     static int seek_func(void *datasource, ogg_int64_t offset, int whence) {
       VorbisDecoderInternal *decoder = (VorbisDecoderInternal *)datasource;
-      decoder->dataPos = std::min<size_t>(offset, decoder->data.size());
-      return 0;
+      size_t newPos = 0;
+      if (whence == SEEK_SET) {
+        newPos = offset;
+      } else if (whence == SEEK_CUR) {
+        newPos = decoder->dataPos + offset;
+      } else if (whence == SEEK_END) {
+        newPos = decoder->data.size() + offset;
+      }
+      newPos = std::min<size_t>(offset, decoder->data.size());
+      decoder->dataPos = newPos;
+      return newPos;
     }
     static int close_func(void *datasource) {
       return 0;
