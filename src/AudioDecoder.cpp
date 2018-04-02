@@ -93,36 +93,24 @@ void NyquistIO::Load(AudioData * data, std::string extension, const std::vector<
     {
         throw std::runtime_error("No available decoders.");
     }
-
 }
 
 bool NyquistIO::IsFileSupported(const std::string path) const
 {
     auto fileExtension = ParsePathForExtension(path);
-    if (decoderTable.find(fileExtension) == decoderTable.end())
-    {
-        return false;
-    }
-    else
-    {
-        return true;
-    }
+    if (decoderTable.find(fileExtension) == decoderTable.end()) return false;
+    else return true;
 }
 
 std::string NyquistIO::ParsePathForExtension(const std::string & path) const
 {
-    if (path.find_last_of(".") != std::string::npos)
-        return path.substr(path.find_last_of(".") + 1);
-    
+    if (path.find_last_of(".") != std::string::npos) return path.substr(path.find_last_of(".") + 1);
     return std::string("");
 }
 
 std::shared_ptr<BaseDecoder> NyquistIO::GetDecoderForExtension(const std::string ext)
 {
-    if (decoderTable.size())
-    {
-        return decoderTable[ext];
-    }
+    if (decoderTable.size()) return decoderTable[ext];
     else throw std::runtime_error("No available decoders.");
     return nullptr;
 }

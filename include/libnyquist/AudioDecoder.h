@@ -55,35 +55,25 @@ struct BaseDecoder
     virtual void LoadFromPath(nqr::AudioData * data, const std::string & path) = 0;
     virtual void LoadFromBuffer(nqr::AudioData * data, const std::vector<uint8_t> & memory) = 0;
     virtual std::vector<std::string> GetSupportedFileExtensions() = 0;
+    virtual ~BaseDecoder() {}
 };
 
 typedef std::pair<std::string, std::shared_ptr<nqr::BaseDecoder>> DecoderPair;
 
 class NyquistIO
 {
+    std::string ParsePathForExtension(const std::string & path) const;
+    std::shared_ptr<nqr::BaseDecoder> GetDecoderForExtension(const std::string ext);
+    void BuildDecoderTable();
+    void AddDecoderToTable(std::shared_ptr<nqr::BaseDecoder> decoder);
+    std::map<std::string, std::shared_ptr<BaseDecoder>> decoderTable;
+    NO_MOVE(NyquistIO);
 public:
-    
     NyquistIO();
     ~NyquistIO();
-    
     void Load(AudioData * data, const std::string & path);
     void Load(AudioData *data, std::string extension, const std::vector<uint8_t> & buffer);
-    
     bool IsFileSupported(const std::string path) const;
-    
-private:
-    
-    std::string ParsePathForExtension(const std::string & path) const;
-    
-    std::shared_ptr<nqr::BaseDecoder> GetDecoderForExtension(const std::string ext);
-    
-    void BuildDecoderTable();
-    
-    void AddDecoderToTable(std::shared_ptr<nqr::BaseDecoder> decoder);
-    
-    std::map<std::string, std::shared_ptr<BaseDecoder>> decoderTable;
-    
-    NO_MOVE(NyquistIO);
 };
 
 } // end namespace nqr
