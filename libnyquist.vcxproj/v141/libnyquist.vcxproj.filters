@@ -10,9 +10,6 @@
     <ClCompile Include="$(ProjectDir)..\..\src\AudioDecoder.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="$(ProjectDir)..\..\src\CafDecoder.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="$(ProjectDir)..\..\src\FlacDecoder.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -61,9 +58,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\AudioDecoder.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\CafDecoder.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\Common.h">
