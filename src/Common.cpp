@@ -27,7 +27,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace nqr;
 
-NyquistFileBuffer nqr::ReadFile(std::string pathToFile)
+NyquistFileBuffer nqr::ReadFile(const std::string & pathToFile)
 {
     //std::cout << "[Debug] Open: " << pathToFile << std::endl;
     FILE * audioFile = fopen(pathToFile.c_str(), "rb");
@@ -55,7 +55,6 @@ NyquistFileBuffer nqr::ReadFile(std::string pathToFile)
 
     fclose(audioFile);
 
-    // Copy out to user 
     return data;
 }
 

@@ -69,7 +69,7 @@ void NyquistIO::Load(AudioData * data, const std::string & path)
     }
 }
 
-void NyquistIO::Load(AudioData * data, std::string extension, const std::vector<uint8_t> & buffer)
+void NyquistIO::Load(AudioData * data, const std::string & extension, const std::vector<uint8_t> & buffer)
 {
     if (decoderTable.find(extension) == decoderTable.end())
     {
@@ -94,7 +94,7 @@ void NyquistIO::Load(AudioData * data, std::string extension, const std::vector<
     }
 }
 
-bool NyquistIO::IsFileSupported(const std::string path) const
+bool NyquistIO::IsFileSupported(const std::string & path) const
 {
     auto fileExtension = ParsePathForExtension(path);
     if (decoderTable.find(fileExtension) == decoderTable.end()) return false;
@@ -107,7 +107,7 @@ std::string NyquistIO::ParsePathForExtension(const std::string & path) const
     return std::string("");
 }
 
-std::shared_ptr<BaseDecoder> NyquistIO::GetDecoderForExtension(const std::string ext)
+std::shared_ptr<BaseDecoder> NyquistIO::GetDecoderForExtension(const std::string & ext)
 {
     if (decoderTable.size()) return decoderTable[ext];
     else throw std::runtime_error("No available decoders.");

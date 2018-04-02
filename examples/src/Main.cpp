@@ -42,7 +42,7 @@ int main(int argc, const char **argv) try
 		//loader.Load(fileData.get(), "test_data/1ch/44100/8/test.wav");
 		//loader.Load(fileData.get(), "test_data/1ch/44100/16/test.wav");
 		//loader.Load(fileData.get(), "test_data/1ch/44100/24/test.wav");
-		loader.Load(fileData.get(), "test_data/1ch/44100/32/test.wav");
+		//loader.Load(fileData.get(), "test_data/1ch/44100/32/test.wav");
 		//loader.Load(fileData.get(), "test_data/1ch/44100/64/test.wav");
 
 		// 2-channel wave
@@ -85,6 +85,10 @@ int main(int argc, const char **argv) try
 		// 1 + 2 channel musepack
 		//loader.Load(fileData.get(), "test_data/ad_hoc/44_16_stereo.mpc");
 		//loader.Load(fileData.get(), "test_data/ad_hoc/44_16_mono.mpc");
+
+        // In-memory ogg
+        auto memory = ReadFile("test_data/ad_hoc/BlockWoosh_Stereo.ogg");
+        loader.Load(fileData.get(), "ogg", memory.buffer);
 	}
 
 	/*

@@ -63,7 +63,7 @@ typedef std::pair<std::string, std::shared_ptr<nqr::BaseDecoder>> DecoderPair;
 class NyquistIO
 {
     std::string ParsePathForExtension(const std::string & path) const;
-    std::shared_ptr<nqr::BaseDecoder> GetDecoderForExtension(const std::string ext);
+    std::shared_ptr<nqr::BaseDecoder> GetDecoderForExtension(const std::string & ext);
     void BuildDecoderTable();
     void AddDecoderToTable(std::shared_ptr<nqr::BaseDecoder> decoder);
     std::map<std::string, std::shared_ptr<BaseDecoder>> decoderTable;
@@ -72,8 +72,8 @@ public:
     NyquistIO();
     ~NyquistIO();
     void Load(AudioData * data, const std::string & path);
-    void Load(AudioData *data, std::string extension, const std::vector<uint8_t> & buffer);
-    bool IsFileSupported(const std::string path) const;
+    void Load(AudioData * data, const std::string & extension, const std::vector<uint8_t> & buffer);
+    bool IsFileSupported(const std::string & path) const;
 };
 
 } // end namespace nqr

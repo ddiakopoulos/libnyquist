@@ -284,7 +284,7 @@ struct NyquistFileBuffer
     size_t size;
 };
 
-NyquistFileBuffer ReadFile(std::string pathToFile);
+NyquistFileBuffer ReadFile(const std::string & pathToFile);
     
 int GetFormatBitsPerSample(PCMFormat f);
 PCMFormat MakeFormatForBits(int bits, bool floatingPt, bool isSigned);
