@@ -31,13 +31,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace nqr
 {
     
-struct VorbisDecoder : public nqr::BaseDecoder
+struct VorbisDecoder final : public nqr::BaseDecoder
 {
-    VorbisDecoder() {}
-    virtual ~VorbisDecoder() {}
-    virtual void LoadFromPath(nqr::AudioData * data, const std::string & path) override;
-    virtual void LoadFromBuffer(nqr::AudioData * data, const std::vector<uint8_t> & memory) override;
-    virtual std::vector<std::string> GetSupportedFileExtensions() override;
+    VorbisDecoder() = default;
+    virtual ~VorbisDecoder() override {}
+    virtual void LoadFromPath(nqr::AudioData * data, const std::string & path) override final;
+    virtual void LoadFromBuffer(nqr::AudioData * data, const std::vector<uint8_t> & memory) override final;
+    virtual std::vector<std::string> GetSupportedFileExtensions() override final;
 };
     
 } // end namespace nqr

@@ -36,13 +36,13 @@ namespace nqr
 // an archival format or something designed for heavy DSP post-processing since
 // it's fundamentally limited to encode/decode at 48khz.
 // https://mf4.xiph.org/jenkins/view/opus/job/opusfile-unix/ws/doc/html/index.html
-struct OpusDecoder : public nqr::BaseDecoder
+struct OpusDecoder final : public nqr::BaseDecoder
 {
-    OpusDecoder() {}
-    virtual ~OpusDecoder() {}
-    virtual void LoadFromPath(nqr::AudioData * data, const std::string & path) override;
-    virtual void LoadFromBuffer(nqr::AudioData * data, const std::vector<uint8_t> & memory) override;
-    virtual std::vector<std::string> GetSupportedFileExtensions() override;
+    OpusDecoder() = default;
+    virtual ~OpusDecoder() override {}
+    virtual void LoadFromPath(nqr::AudioData * data, const std::string & path) override final;
+    virtual void LoadFromBuffer(nqr::AudioData * data, const std::vector<uint8_t> & memory) override final;
+    virtual std::vector<std::string> GetSupportedFileExtensions() override final;
 };
     
 } // end namespace nqr

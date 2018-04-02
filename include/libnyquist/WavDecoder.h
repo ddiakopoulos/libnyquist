@@ -168,13 +168,13 @@ inline int ComputeChannelMask(const size_t channels)
     }
 }
 
-struct WavDecoder : public nqr::BaseDecoder
+struct WavDecoder final : public nqr::BaseDecoder
 {
-    WavDecoder() {}
+    WavDecoder() = default;
     virtual ~WavDecoder() {}
-    virtual void LoadFromPath(nqr::AudioData * data, const std::string & path) override;
-    virtual void LoadFromBuffer(nqr::AudioData * data, const std::vector<uint8_t> & memory) override;
-    virtual std::vector<std::string> GetSupportedFileExtensions() override;
+    virtual void LoadFromPath(nqr::AudioData * data, const std::string & path) override final;
+    virtual void LoadFromBuffer(nqr::AudioData * data, const std::vector<uint8_t> & memory) override final;
+    virtual std::vector<std::string> GetSupportedFileExtensions() override final;
 };
     
 } // end namespace nqr
