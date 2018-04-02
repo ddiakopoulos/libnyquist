@@ -35,7 +35,7 @@ public:
     
     VorbisDecoderInternal(AudioData * d, const std::vector<uint8_t> & memory) : d(d)
     {
-        void *data = const_cast<uint8_t*>(memory.data());
+        void * data = const_cast<uint8_t*>(memory.data());
         
         ogg_file t;
         t.curPtr = t.filePtr = static_cast<char*>(data);
@@ -56,22 +56,8 @@ public:
     VorbisDecoderInternal(AudioData * d, std::string filepath) : d(d)
     {
         fileHandle = new OggVorbis_File();
-        
-        /* @todo proper steaming support + classes
-         const ov_callbacks callbacks =
-         {
-             .read_func = s_readCallback,
-             .seek_func = s_seekCallback,
-             .tell_func = s_tellCallback,
-             .close_func = nullptr
-         };
-         */
-        
         FILE * f = fopen(filepath.c_str(), "rb");
-        
-        if (!f)
-            throw std::runtime_error("Can't open file");
-        
+        if (!f) throw std::runtime_error("Can't open file");
         loadAudioData(f, OV_CALLBACKS_DEFAULT);
     }
     
@@ -82,7 +68,6 @@ public:
     
     size_t readInternal(size_t requestedFrameCount, size_t frameOffset = 0)
     {
-        
         //@todo support offset
         
         float **buffer = nullptr;
@@ -94,13 +79,12 @@ public:
         {
             int64_t framesRead = ov_read_float(fileHandle, &buffer, std::min(2048, (int) framesRemaining), &bitstream);
             
-            // EOF
-            if(!framesRead)
-                break;
+            // end of file
+            if(!framesRead) break;
             
+            // Probably OV_HOLE, OV_EBADLINK, OV_EINVAL. @todo - log warning here.
             if (framesRead < 0)
             {
-                // Probably OV_HOLE, OV_EBADLINK, OV_EINVAL. Log warning here.
                 continue;
             }
             
@@ -112,7 +96,6 @@ public:
                     totalFramesRead++;
                 }
             }
-            
         }
         
         return totalFramesRead;
@@ -177,41 +160,41 @@ private:
         return len;
     }
     
-    static int AR_seekOgg( void *fh, ogg_int64_t to, int type ) {
-        ogg_file* of = reinterpret_cast<ogg_file*>(fh);
+    static int AR_seekOgg(void * fh, ogg_int64_t to, int type) 
+    {
+        ogg_file * of = reinterpret_cast<ogg_file*>(fh);
     
-        switch( type ) {
-            case SEEK_CUR:
-                of->curPtr += to;
-                break;
-            case SEEK_END:
-                of->curPtr = of->filePtr + of->fileSize - to;
-                break;
-            case SEEK_SET:
-                of->curPtr = of->filePtr + to;
-                break;
-            default:
-                return -1;
+        switch (type)
+        {
+            case SEEK_CUR: of->curPtr += to; break;
+            case SEEK_END: of->curPtr = of->filePtr + of->fileSize - to; break;
+            case SEEK_SET: of->curPtr = of->filePtr + to; break;
+            default: return -1;
         }
-        if ( of->curPtr < of->filePtr ) {
+
+        if (of->curPtr < of->filePtr) 
+        {
             of->curPtr = of->filePtr;
             return -1;
         }
-        if ( of->curPtr > of->filePtr + of->fileSize ) {
+
+        if (of->curPtr > of->filePtr + of->fileSize)
+        {
             of->curPtr = of->filePtr + of->fileSize;
             return -1;
         }
+
         return 0;
     }
     
-    static int AR_closeOgg(void* fh)
+    static int AR_closeOgg(void * fh) 
     {
         return 0;
     }
     
-    static long AR_tellOgg( void *fh )
+    static long AR_tellOgg(void * fh)
     {
-        ogg_file* of = reinterpret_cast<ogg_file*>(fh);
+        ogg_file * of = reinterpret_cast<ogg_file*>(fh);
         return (of->curPtr - of->filePtr);
     }
     
@@ -231,12 +214,9 @@ private:
         
         // Don't need to fclose() after an open -- vorbis does this internally
         
-        vorbis_info *ovInfo = ov_info(fileHandle, -1);
+        vorbis_info * ovInfo = ov_info(fileHandle, -1);
         
-        if (ovInfo == nullptr)
-        {
-            throw std::runtime_error("Reading metadata failed");
-        }
+        if (ovInfo == nullptr) throw std::runtime_error("Reading metadata failed");
         
         if (auto r = ov_streams(fileHandle) != 1)
         {
@@ -255,8 +235,7 @@ private:
         
         d->samples.resize(totalSamples * d->channelCount);
         
-        if (!readInternal(totalSamples))
-            throw std::runtime_error("could not read any data");
+        if (!readInternal(totalSamples)) throw std::runtime_error("could not read any data");
     }
     
 };
