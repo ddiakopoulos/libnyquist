@@ -33,6 +33,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "MusepackDecoder.h"
 #include "ModplugDecoder.h"
 
+#include <unordered_map>
+
 using namespace nqr;
 
 NyquistIO::NyquistIO()
@@ -69,6 +71,44 @@ void NyquistIO::Load(AudioData * data, const std::string & path)
     }
 }
 
+
+void NyquistIO::Load(AudioData * data, const std::vector<uint8_t> & buffer)
+{
+    const std::vector<int16_t> wv = { 'w', 'v', 'p', 'k' };
+    const std::vector<int16_t> wav = { 0x52, 0x49, 0x46, 0x46, -0x1, -0x1, -0x11, -0x1, 0x57, 0x41, 0x56, 0x45 };
+    const std::vector<int16_t> flac = { 0x66, 0x4C, 0x61, 0x43 };
+    const std::vector<int16_t> pat = { 0x47, 0x50, 0x41, 0x54 };
+    const std::vector<int16_t> opus = { 'O', 'p', 'u', 's', 'H', 'e', 'a', 'd' };
+    const std::vector<int16_t> ogg = { 0x4F, 0x67, 0x67, 0x53, 0x00, 0x02, 0x00, 0x00 };
+    const std::vector<int16_t> mid = { 0x4D, 0x54, 0x68, 0x64 };
+
+    auto match_magic = [](const uint8_t * data, const int16_t * magic) 
+    {
+        for (int i = 0; magic[i] != -2; i++) 
+        {
+            if (magic[i] >= 0 && data[i] != magic[i])  return false;
+        }
+        return true;
+    };
+
+
+    static const int16_t * numbers[] = { wv, wav, flac, pat, mid, opus, ogg, nullptr };
+    static const char* extensions[] = { "wv", "wav", "flac", "pat", "mid", "opus", "ogg" };
+
+    for (int i = 0; numbers[i] != nullptr; i++) 
+    {
+
+        if (match_magic(data, numbers[i])) {
+            return extensions[i];
+        }
+
+    }
+
+
+
+}
+
+// With a known file extension
 void NyquistIO::Load(AudioData * data, const std::string & extension, const std::vector<uint8_t> & buffer)
 {
     if (decoderTable.find(extension) == decoderTable.end())
