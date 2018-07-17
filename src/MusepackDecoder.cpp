@@ -110,9 +110,7 @@ public:
         reader.tell = tell_mem;
         
         mpcDemux = mpc_demux_init(&reader);
-        
-        if (!mpcDemux)
-            throw std::runtime_error("could not initialize mpc demuxer");
+        if (!mpcDemux) throw std::runtime_error("could not initialize mpc demuxer");
         
         mpc_demux_get_info(mpcDemux, &streamInfo);
         

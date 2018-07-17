@@ -77,25 +77,25 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     
 #define HAVE_LROUND 1
 
-#include "flac/all.h"
+#include "FLAC/all.h"
 
 #if defined(_MSC_VER)
-#include "flac/src/win_utf8_io.c"
+#include "FLAC/src/win_utf8_io.c"
 #endif
 
-#include "flac/src/bitmath.c"
-#include "flac/src/bitreader.c"
-#include "flac/src/bitwriter.c"
-#include "flac/src/cpu.c"
-#include "flac/src/crc.c"
-#include "flac/src/fixed.c"
-#include "flac/src/float.c"
-#include "flac/src/format.c"
-#include "flac/src/lpc.c"
-#include "flac/src/md5.c"
-#include "flac/src/memory.c"
-#include "flac/src/stream_decoder.c"
-#include "flac/src/window.c"
+#include "FLAC/src/bitmath.c"
+#include "FLAC/src/bitreader.c"
+#include "FLAC/src/bitwriter.c"
+#include "FLAC/src/cpu.c"
+#include "FLAC/src/crc.c"
+#include "FLAC/src/fixed.c"
+#include "FLAC/src/float.c"
+#include "FLAC/src/format.c"
+#include "FLAC/src/lpc.c"
+#include "FLAC/src/md5.c"
+#include "FLAC/src/memory.c"
+#include "FLAC/src/stream_decoder.c"
+#include "FLAC/src/window.c"
 
 #undef VERSION
 

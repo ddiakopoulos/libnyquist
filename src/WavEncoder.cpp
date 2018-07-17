@@ -79,28 +79,25 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
 		sampleDataOptionalMix.resize(sampleDataSize * 2);
 		MonoToStereo(sampleData, sampleDataOptionalMix.data(), sampleDataSize); // Mix
 
-																				// Re-point data
+        // Re-point data
 		sampleData = sampleDataOptionalMix.data();
 		sampleDataSize = sampleDataOptionalMix.size();
 	}
-
 	// Stereo => Mono
 	else if (d->channelCount == 2 && p.channelCount == 1)
 	{
 		sampleDataOptionalMix.resize(sampleDataSize / 2);
 		StereoToMono(sampleData, sampleDataOptionalMix.data(), sampleDataSize); // Mix
 
-																				// Re-point data
+        // Re-point data
 		sampleData = sampleDataOptionalMix.data();
 		sampleDataSize = sampleDataOptionalMix.size();
 
 	}
-
 	else if (d->channelCount == p.channelCount)
 	{
 		// No op
 	}
-
 	else
 	{
 		return EncoderError::UnsupportedChannelMix;

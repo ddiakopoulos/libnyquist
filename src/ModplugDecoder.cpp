@@ -53,10 +53,7 @@ public:
         ModPlug_SetSettings(&mps);
         
         mpf = ModPlug_Load((const void*)fileData.data(), fileData.size());
-        if (!mpf)
-        {
-            throw std::runtime_error("could not load module");
-        }
+        if (!mpf) throw std::runtime_error("could not load module");
         
         d->sampleRate = 44100;
         d->channelCount = 2;
@@ -68,43 +65,46 @@ public:
         auto totalSamples = (44100LL * len_ms) / 1000;
         d->samples.resize(totalSamples * d->channelCount);
 
-        auto readInternal = [&]()
+        auto read_func = [&]()
         {
             const float invf = 1 / (float)0x7fffffff;
-        	float *ptr = d->samples.data();
-        	float *end = d->samples.data() + d->samples.size();
+            float *ptr = d->samples.data();
+            float *end = d->samples.data() + d->samples.size();
 
-        	while( ptr < end ) {
-	            int res = ModPlug_Read( mpf, (void*)ptr, (end - ptr) * sizeof(float) );
-	            int samples_read = res / (sizeof(float) * 2);
+            while (ptr < end) 
+            {
+                int res = ModPlug_Read(mpf, (void*)ptr, (end - ptr) * sizeof(float));
+                int samples_read = res / (sizeof(float) * 2);
 
-	            if( totalSamples < samples_read ) {
-	            	samples_read = totalSamples;
-	            }
+                if (totalSamples < samples_read) 
+                {
+                    samples_read = totalSamples;
+                }
 
-	            for( int i = 0; i < samples_read; ++i ) {
-	                *ptr++ = *((int*)ptr) * invf;
-	                *ptr++ = *((int*)ptr) * invf;
-	            }
+                for (int i = 0; i < samples_read; ++i) 
+                {
+                    *ptr++ = *((int*)ptr) * invf;
+                    *ptr++ = *((int*)ptr) * invf;
+                }
 
-	            totalSamples -= samples_read;
-        	}
+                totalSamples -= samples_read;
+            }
 
             return ptr >= end;
         };
 
-        if (!readInternal())
+        if (!read_func())
+        {
             throw std::runtime_error("could not read any data");
+        }
 
         ModPlug_Unload(mpf);
     }
     
 private:
 
-    ModPlugFile* mpf;
-    
+    ModPlugFile * mpf;
     NO_MOVE(ModplugInternal);
-    
     AudioData * d;
 };
 
@@ -128,4 +128,3 @@ std::vector<std::string> ModplugDecoder::GetSupportedFileExtensions()
 {
     return {"pat","mid", "mod","s3m","xm","it","669","amf","ams","dbm","dmf","dsm","far","mdl","med","mtm","okt","ptm","stm","ult","umx","mt2","psm"};
 }
-

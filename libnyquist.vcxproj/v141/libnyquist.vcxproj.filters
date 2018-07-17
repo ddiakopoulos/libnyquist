@@ -43,20 +43,92 @@
     <ClCompile Include="..\..\src\MusepackDecoder.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\WavPackDependencies.c">
-      <Filter>src\deps</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\ModplugDependencies.cpp">
       <Filter>src\deps</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\ModplugDecoder.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\entropy_utils.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\decorr_utils.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\open_legacy.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\open_filename.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\extra2.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\extra1.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\common_utils.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\open_utils.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\open_raw.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\pack.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\pack_dns.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\pack_floats.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\pack_dsd.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\pack_utils.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\read_words.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\tags.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\unpack.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\unpack_dsd.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\unpack_floats.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\tag_utils.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\unpack_seek.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\unpack_utils.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\unpack3.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\unpack3_open.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\unpack3_seek.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\wavpack\src\write_words.c">
+      <Filter>src\deps\WavpackDependencies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\OpusDecoder.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\AudioDecoder.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -93,6 +165,9 @@
     <ClInclude Include="..\..\include\libnyquist\IMA4Util.h">
       <Filter>include\util</Filter>
     </ClInclude>
+    <ClInclude Include="$(ProjectDir)..\..\include\libnyquist\OpusDecoder.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">
@@ -106,6 +181,9 @@
     </Filter>
     <Filter Include="src\deps">
       <UniqueIdentifier>{d839471f-71d1-471e-95e0-c33af9bb64bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\deps\WavpackDependencies">
+      <UniqueIdentifier>{4ed41d64-0c09-4382-8ee9-70aad6043650}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

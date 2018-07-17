@@ -24,6 +24,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "Common.h"
+#include <cstring>
 
 using namespace nqr;
 
@@ -104,9 +105,10 @@ void nqr::ConvertToFloat32(float * dst, const uint8_t * src, const size_t N, PCM
     
     else if (f == PCM_FLT)
     {
-        const float * dataPtr = reinterpret_cast<const float *>(src);
+        memcpy(dst, src, N * sizeof(float));
+        /* const float * dataPtr = reinterpret_cast<const float *>(src);
         for (size_t i = 0; i < N; ++i)
-            dst[i] = (float) Read32(dataPtr[i]);
+            dst[i] = (float) Read32(dataPtr[i]); */
     }
     else if (f == PCM_DBL)
     {

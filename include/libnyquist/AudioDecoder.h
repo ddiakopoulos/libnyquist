@@ -68,7 +68,9 @@ class NyquistIO
     void AddDecoderToTable(std::shared_ptr<nqr::BaseDecoder> decoder);
     std::map<std::string, std::shared_ptr<BaseDecoder>> decoderTable;
     NO_MOVE(NyquistIO);
+
 public:
+
     NyquistIO();
     ~NyquistIO();
     void Load(AudioData * data, const std::string & path);

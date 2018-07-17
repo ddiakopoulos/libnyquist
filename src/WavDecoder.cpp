@@ -26,6 +26,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "WavDecoder.h"
 #include "RiffUtils.h"
 #include "IMA4Util.h"
+#include <cstring>
 
 using namespace nqr;
 
@@ -200,7 +201,7 @@ void WavDecoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & m
         uint32_t frameOffset = 0;
         uint32_t frameCount = DataChunkInfo.size / s.frame_size;
 
-        for (int i = 0; i < frameCount; ++i)
+        for (uint32_t i = 0; i < frameCount; ++i)
         {
             decode_ima_adpcm(s, adpcm_pcm16.data() + frameOffset, wavHeader.channel_count);
             s.inBuffer += s.frame_size;

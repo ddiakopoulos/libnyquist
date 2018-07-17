@@ -100,7 +100,7 @@ namespace nqr
         const uint8_t * data = state.inBuffer;
         
         // Loop over the interleaved channels
-        for (int32_t ch = 0; ch < num_channels; ch++)
+        for (uint32_t ch = 0; ch < num_channels; ch++)
         {
             const int byteOffset = ch * 4;
             

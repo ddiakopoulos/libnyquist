@@ -70,11 +70,13 @@ int main(int argc, const char **argv) try
 		//loader.Load(fileData.get(), "test_data/ad_hoc/KittyPurr16_Stereo.flac");
 		//loader.Load(fileData.get(), "test_data/ad_hoc/KittyPurr16_Mono.flac");
 		//loader.Load(fileData.get(), "test_data/ad_hoc/KittyPurr24_Stereo.flac");
+        //auto memory = ReadFile("test_data/ad_hoc/KittyPurr24_Stereo.flac"); // broken
+        //loader.Load(fileData.get(), "flac", memory.buffer); // broken
 
 		// Single-channel opus
 		//loader.Load(fileData.get(), "test_data/ad_hoc/detodos.opus"); // "Firefox: From All, To All"
 
-		// 1 + 2 channel wavepack
+		// 1 + 2 channel wavpack
 		//loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_Float32.wv");
 		//loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_Float32_Mono.wv");
 		//loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_Int16.wv");
@@ -110,7 +112,7 @@ int main(int argc, const char **argv) try
 	// Resample
 	std::vector<float> outputBuffer;
 	outputBuffer.reserve(fileData->samples.size());
-	linear_resample(44100.0 / 48000.0, fileData->samples, outputBuffer, fileData->samples.size());
+	linear_resample(44100.0 / 48000.0, fileData->samples, outputBuffer, (uint32_t) fileData->samples.size());
 
 	std::cout << "Input Samples: " << fileData->samples.size() << std::endl;
 	std::cout << "Output Samples: " << outputBuffer.size() << std::endl;
