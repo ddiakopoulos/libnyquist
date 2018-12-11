@@ -132,7 +132,7 @@ int main(int argc, const char **argv) try
 	}
 
 	fileData->samples = outputBuffer;
-	int encoderStatus = OggOpusEncoder::WriteFile({ 1, PCM_FLT, DITHER_NONE }, fileData.get(), "encoded.opus");
+	int encoderStatus = encode_opus_to_disk({ 1, PCM_FLT, DITHER_NONE }, fileData.get(), "encoded.opus");
 	std::cout << "Encoder Status: " << encoderStatus << std::endl;
 
 	return EXIT_SUCCESS;

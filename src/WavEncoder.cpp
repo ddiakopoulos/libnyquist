@@ -23,26 +23,26 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <fstream>
 #include "WavEncoder.h"
+#include <fstream>
 
 using namespace nqr;
 
 static inline void to_bytes(uint8_t value, char * arr)
 {
-	arr[0] = (value)& 0xFF;
+	arr[0] = (value) & 0xFF;
 }
 
 static inline void to_bytes(uint16_t value, char * arr)
 {
-	arr[0] = (value)& 0xFF;
+	arr[0] = (value)      & 0xFF;
 	arr[1] = (value >> 8) & 0xFF;
 }
 
 static inline void to_bytes(uint32_t value, char * arr)
 {
-	arr[0] = (value)& 0xFF;
-	arr[1] = (value >> 8) & 0xFF;
+	arr[0] = (value)       & 0xFF;
+	arr[1] = (value >> 8)  & 0xFF;
 	arr[2] = (value >> 16) & 0xFF;
 	arr[3] = (value >> 24) & 0xFF;
 }
@@ -51,7 +51,7 @@ static inline void to_bytes(uint32_t value, char * arr)
 //   Wave File Encoding   //
 ////////////////////////////
 
-int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std::string & path)
+int nqr::encode_wav_to_disk(const EncoderParams p, const AudioData * d, const std::string & path)
 {
 	assert(d->samples.size() > 0);
 
@@ -92,16 +92,10 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
         // Re-point data
 		sampleData = sampleDataOptionalMix.data();
 		sampleDataSize = sampleDataOptionalMix.size();
+	}
+	else if (d->channelCount == p.channelCount) { /* do nothing */ }
+	else return EncoderError::UnsupportedChannelMix;
 
-	}
-	else if (d->channelCount == p.channelCount)
-	{
-		// No op
-	}
-	else
-	{
-		return EncoderError::UnsupportedChannelMix;
-	}
 	// -- End Channel Mixing
 
 	auto maxFileSizeInBytes = std::numeric_limits<uint32_t>::max();
@@ -144,9 +138,7 @@ int WavEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std:
 	auto sourceBits = GetFormatBitsPerSample(d->sourceFormat);
 	auto targetBits = GetFormatBitsPerSample(p.targetFormat);
 
-	////////////////////////////
-	//@todo - channel mixing! //
-	////////////////////////////
+	//@todo - channel mixing!
 
 	// Write out fact chunk
 	if (p.targetFormat == PCM_FLT)
@@ -394,15 +386,14 @@ public:
 
 		return true;
 	}
-
 };
 
 #define OPUS_MAX_PACKET_SIZE (1024 * 8)
 #define OPUS_FRAME_SIZE 960
 
-// Opus only supports a 48k samplerate... M
+// Opus only supports a 48k samplerate...
 // This encoder only supports mono for the time being
-int OggOpusEncoder::WriteFile(const EncoderParams p, const AudioData * d, const std::string & path)
+int nqr::encode_opus_to_disk(const EncoderParams p, const AudioData * d, const std::string & path)
 {
 	assert(d->samples.size() > 0);
 	//assert(d->sampleRate == 48000);

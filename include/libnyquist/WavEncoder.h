@@ -44,19 +44,14 @@ namespace nqr
 		BufferTooBig,
 	};
     
-	// A simplistic encoder that takes a blob of data, conforms it to the user's
+	// A simplistic encoder that takes a buffer of audio, conforms it to the user's
 	// EncoderParams preference, and writes to disk. Be warned, does not support resampling!
 	// @todo support dithering, samplerate conversion, etc.
-	struct WavEncoder
-	{
-		// Assume data adheres to EncoderParams, except for bit depth and fmt
-		static int WriteFile(const EncoderParams p, const AudioData * d, const std::string & path);
-	};
+	int encode_wav_to_disk(const EncoderParams p, const AudioData * d, const std::string & path);
 
-	struct OggOpusEncoder
-	{
-		static int WriteFile(const EncoderParams p, const AudioData * d, const std::string & path);
-	};
+    // Assume data adheres to EncoderParams, except for bit depth and fmt which are re-formatted
+    // to satisfy the Ogg/Opus spec.
+	int encode_opus_to_disk(const EncoderParams p, const AudioData * d, const std::string & path);
 
 } // end namespace nqr
 

@@ -26,11 +26,6 @@ Regardless of input bit depth, the library hands over an interleaved float array
 ## Encoding
 Simple but robust WAV format encoder now included. Extentions in the near future might include Ogg. 
 
-## Supported Project Files
-* Visual Studio 2013
-* Visual Studio 2015
-* XCode 6
-
 ## Known Issues & Bugs
 * See the Github issue tracker. 
 
