@@ -1,5 +1,5 @@
 // Note to Visual Studio / Windows users: you must set the working directory manually on the project file
-// to $(ProjectDir)../../../ since these settings are not saved directly in project. The loader
+// to $(ProjectDir)../ since these settings are not saved directly in project. The loader
 // will be unable to find the example assets unless the proper working directory is set.
 
 #if defined(_MSC_VER)
