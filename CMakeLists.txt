@@ -232,6 +232,14 @@ if(BUILD_EXAMPLE)
 
     add_executable(${NQR_EXAMPLE_APP_NAME} ${EXAMPLE_SOURCES})
 
+    if(WIN32)
+        target_compile_definitions(${NQR_EXAMPLE_APP_NAME} PRIVATE __WINDOWS_WASAPI__)
+    elseif(APPLE)
+        target_compile_definitions(${NQR_EXAMPLE_APP_NAME} PRIVATE __MACOSX_CORE__)
+    else()
+        message(FATAL, "Select an appropriate backend, such as __LINUX_ALSA__")
+    endif()
+
     target_include_directories(${NQR_EXAMPLE_APP_NAME} PRIVATE
         ${LIBNYQUIST_ROOT}/include
         ${LIBNYQUIST_ROOT}/examples/src
@@ -245,8 +253,6 @@ if(BUILD_EXAMPLE)
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
     )
 
-    #target_link_libraries(${NQR_EXAMPLE_APP_NAME} PUBLIC "libnyquist" libopus libwavpack)
-
-    add_dependencies(${NQR_EXAMPLE_APP_NAME} "libnyquist" libopus libwavpack)
+    target_link_libraries(${NQR_EXAMPLE_APP_NAME} PUBLIC libnyquist libopus libwavpack)
 
 endif()
