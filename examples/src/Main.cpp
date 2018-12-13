@@ -20,8 +20,9 @@ int main(int argc, const char **argv) try
 {
 	AudioDevice::ListAudioDevices();
 
-	int desiredSampleRate = 44100;
-	AudioDevice myDevice(2, desiredSampleRate);
+	const int desiredSampleRate = 44100;
+    const int desiredChannelCount = 2;
+	AudioDevice myDevice(desiredChannelCount, desiredSampleRate);
 	myDevice.Open(myDevice.info.id);
 
 	std::shared_ptr<AudioData> fileData = std::make_shared<AudioData>();
