@@ -114,13 +114,7 @@ int main(int argc, const char **argv) try
 		std::cout << "[Warning - Sample Rate Mismatch] - file is sampled at " << fileData->sampleRate << " and output is " << desiredSampleRate << std::endl;
 	}
 
-	// Resample
-	std::vector<float> outputBuffer;
-	outputBuffer.reserve(fileData->samples.size());
-	linear_resample(44100.0 / 48000.0, fileData->samples, outputBuffer, (uint32_t) fileData->samples.size());
-
 	std::cout << "Input Samples: " << fileData->samples.size() << std::endl;
-	std::cout << "Output Samples: " << outputBuffer.size() << std::endl;
 
 	// Convert mono to stereo for testing playback
 	if (fileData->channelCount == 1)
@@ -132,13 +126,23 @@ int main(int argc, const char **argv) try
 	}
 	else
 	{
-		std::cout << "Playing for: " << fileData->lengthSeconds << " seconds..." << std::endl;
+		std::cout << "Playing STEREO for: " << fileData->lengthSeconds << " seconds..." << std::endl;
 		myDevice.Play(fileData->samples);
 	}
 
-	fileData->samples = outputBuffer;
-	int encoderStatus = encode_opus_to_disk({ 1, PCM_FLT, DITHER_NONE }, fileData.get(), "encoded.opus");
-	std::cout << "Encoder Status: " << encoderStatus << std::endl;
+    // Test Opus Encoding
+    {
+        // Resample
+        std::vector<float> outputBuffer;
+        std::cout << "Output Samples: " << outputBuffer.size() << std::endl;
+
+        outputBuffer.reserve(fileData->samples.size() * 2);
+        linear_resample(fileData->sampleRate / 48000.0f, fileData->samples, outputBuffer, (uint32_t)fileData->samples.size());
+
+        fileData->samples = outputBuffer;
+        int encoderStatus = encode_opus_to_disk({ fileData->channelCount, PCM_FLT, DITHER_NONE }, fileData.get(), "libnyquist_example_output.opus");
+        std::cout << "Encoder Status: " << encoderStatus << std::endl;
+    }
 
 	return EXIT_SUCCESS;
 }
