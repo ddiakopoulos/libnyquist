@@ -161,7 +161,6 @@ set_cxx_version(libnyquist)
 _set_compile_options(libnyquist)
 
 if (WIN32)
-    target_compile_definitions(libnyquist PRIVATE MODPLUG_STATIC)
     _disable_warning(4244)
     _disable_warning(4018)
 endif()
