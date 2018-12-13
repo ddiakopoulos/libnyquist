@@ -32,9 +32,13 @@ using namespace nqr;
 #include "musepack/libmpcdec/decoder.h"
 #include "musepack/libmpcdec/internal.h"
 
+#define MINIMP3_FLOAT_OUTPUT
+#define MINIMP3_IMPLEMENTATION
+#include "minimp3/minimp3.h"
+#include "minimp3/minimp3_ex.h"
+
 class Mp3Internal
 {
- 
     NO_MOVE(Mp3Internal);
     AudioData * d;
 
@@ -42,29 +46,20 @@ public:
     
     Mp3Internal(AudioData * d, const std::vector<uint8_t> & fileData) : d(d)
     {
-        /*
-        d->sampleRate = (int) streamInfo.sample_freq;
-        d->channelCount = streamInfo.channels;
-        d->sourceFormat = MakeFormatForBits(32, true, false);
-        d->lengthSeconds = (double) mpc_streaminfo_get_length(&streamInfo);
-        
-        auto totalSamples = size_t(mpc_streaminfo_get_length_samples(&streamInfo));
-        d->samples.reserve(totalSamples * d->channelCount + (MPC_DECODER_BUFFER_LENGTH / sizeof(MPC_SAMPLE_FORMAT))); // demux writes in chunks
-        d->samples.resize(totalSamples * d->channelCount);
-        
-        if (!read_implementation())
-        {
-            throw std::runtime_error("could not read any data");
-        }
-        */
-    }
-    
-    size_t read_implementation()
-    {
-        return 0;
-    }
+        mp3dec_t mp3d;
+        mp3dec_file_info_t info;
+        mp3dec_load_buf(&mp3d, (const uint8_t*) fileData.data(), fileData.size(), &info, 0, 0);
 
-    ~Mp3Internal() {}
+        d->sampleRate = info.hz;
+        d->channelCount = info.channels;
+        d->sourceFormat = MakeFormatForBits(32, true, false);
+        d->lengthSeconds = ((float) info.samples / (float)d->channelCount) / (float)d->sampleRate;
+
+        if (info.samples == 0) throw std::runtime_error("mp3: could not read any data");
+
+        d->samples.resize(info.samples);
+        std::memcpy(d->samples.data(), info.buffer, sizeof(float) * info.samples);
+    }
 };
 
 //////////////////////

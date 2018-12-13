@@ -90,8 +90,12 @@ int main(int argc, const char **argv) try
 		//loader.Load(fileData.get(), "test_data/ad_hoc/44_16_mono.mpc");
 
         // In-memory ogg
-        auto memory = ReadFile("test_data/ad_hoc/BlockWoosh_Stereo.ogg");
-        loader.Load(fileData.get(), "ogg", memory.buffer);
+        //auto memory = ReadFile("test_data/ad_hoc/BlockWoosh_Stereo.ogg");
+        //loader.Load(fileData.get(), "ogg", memory.buffer);
+
+        // In-memory Mp3
+        auto memory = ReadFile("test_data/ad_hoc/acetylene.mp3");
+        loader.Load(fileData.get(), "mp3", memory.buffer);
 	}
 
 	/*
