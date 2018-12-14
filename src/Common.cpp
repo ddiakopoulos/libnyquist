@@ -24,9 +24,107 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "Common.h"
+#include "Decoders.h"
 #include <cstring>
 
 using namespace nqr;
+
+NyquistIO::NyquistIO() { BuildDecoderTable(); }
+NyquistIO::~NyquistIO() { }
+
+void NyquistIO::Load(AudioData * data, const std::string & path)
+{
+    if (IsFileSupported(path))
+    {
+        if (decoderTable.size())
+        {
+            auto fileExtension = ParsePathForExtension(path);
+            auto decoder = GetDecoderForExtension(fileExtension);
+
+            try
+            {
+                decoder->LoadFromPath(data, path);
+            }
+            catch (const std::exception & e)
+            {
+                std::cerr << "Caught internal exception: " << e.what() << std::endl;
+            }
+
+        }
+        else throw std::runtime_error("No available decoders.");
+    }
+    else
+    {
+        throw UnsupportedExtensionEx();
+    }
+}
+
+void NyquistIO::Load(AudioData * data, const std::string & extension, const std::vector<uint8_t> & buffer)
+{
+    if (decoderTable.find(extension) == decoderTable.end())
+    {
+        throw UnsupportedExtensionEx();
+    }
+
+    if (decoderTable.size())
+    {
+        auto decoder = GetDecoderForExtension(extension);
+        try
+        {
+            decoder->LoadFromBuffer(data, buffer);
+        }
+        catch (const std::exception & e)
+        {
+            std::cerr << "Caught internal exception: " << e.what() << std::endl;
+        }
+    }
+    else
+    {
+        throw std::runtime_error("No available decoders.");
+    }
+}
+
+bool NyquistIO::IsFileSupported(const std::string & path) const
+{
+    auto fileExtension = ParsePathForExtension(path);
+    if (decoderTable.find(fileExtension) == decoderTable.end()) return false;
+    else return true;
+}
+
+std::string NyquistIO::ParsePathForExtension(const std::string & path) const
+{
+    if (path.find_last_of(".") != std::string::npos) return path.substr(path.find_last_of(".") + 1);
+    return std::string("");
+}
+
+std::shared_ptr<BaseDecoder> NyquistIO::GetDecoderForExtension(const std::string & ext)
+{
+    if (decoderTable.size()) return decoderTable[ext];
+    else throw std::runtime_error("No available decoders.");
+    return nullptr;
+}
+
+void NyquistIO::AddDecoderToTable(std::shared_ptr<nqr::BaseDecoder> decoder)
+{
+    auto supportedExtensions = decoder->GetSupportedFileExtensions();
+
+    for (const auto ext : supportedExtensions)
+    {
+        if (decoderTable.count(ext) >= 1) throw std::runtime_error("decoder already exists for extension.");
+        decoderTable.insert(DecoderPair(ext, decoder));
+    }
+}
+
+void NyquistIO::BuildDecoderTable()
+{
+    AddDecoderToTable(std::make_shared<WavDecoder>());
+    AddDecoderToTable(std::make_shared<WavPackDecoder>());
+    AddDecoderToTable(std::make_shared<FlacDecoder>());
+    AddDecoderToTable(std::make_shared<VorbisDecoder>());
+    AddDecoderToTable(std::make_shared<OpusDecoder>());
+    AddDecoderToTable(std::make_shared<MusepackDecoder>());
+    AddDecoderToTable(std::make_shared<Mp3Decoder>());
+}
 
 NyquistFileBuffer nqr::ReadFile(const std::string & pathToFile)
 {
@@ -105,7 +203,7 @@ void nqr::ConvertToFloat32(float * dst, const uint8_t * src, const size_t N, PCM
     
     else if (f == PCM_FLT)
     {
-        memcpy(dst, src, N * sizeof(float));
+        std::memcpy(dst, src, N * sizeof(float));
         /* const float * dataPtr = reinterpret_cast<const float *>(src);
         for (size_t i = 0; i < N; ++i)
             dst[i] = (float) Read32(dataPtr[i]); */

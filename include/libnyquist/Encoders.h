@@ -23,22 +23,22 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef VORBIS_DECODER_H
-#define VORBIS_DECODER_H
+#ifndef NYQUIST_ENCODERS_H
+#define NYQUIST_ENCODERS_H
 
-#include "AudioDecoder.h"
+#include "Common.h"
 
 namespace nqr
 {
-    
-struct VorbisDecoder final : public nqr::BaseDecoder
-{
-    VorbisDecoder() = default;
-    virtual ~VorbisDecoder() override {}
-    virtual void LoadFromPath(nqr::AudioData * data, const std::string & path) override final;
-    virtual void LoadFromBuffer(nqr::AudioData * data, const std::vector<uint8_t> & memory) override final;
-    virtual std::vector<std::string> GetSupportedFileExtensions() override final;
-};
-    
+	// A simplistic encoder that takes a buffer of audio, conforms it to the user's
+	// EncoderParams preference, and writes to disk. Be warned, does not support resampling!
+	// @todo support dithering, samplerate conversion, etc.
+	int encode_wav_to_disk(const EncoderParams p, const AudioData * d, const std::string & path);
+
+    // Assume data adheres to EncoderParams, except for bit depth and fmt which are re-formatted
+    // to satisfy the Ogg/Opus spec.
+	int encode_opus_to_disk(const EncoderParams p, const AudioData * d, const std::string & path);
+
 } // end namespace nqr
-#endif
+
+#endif // end NYQUIST_ENCODERS_H

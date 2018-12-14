@@ -8,9 +8,8 @@
 
 #include "AudioDevice.h"
 
-#include "libnyquist/AudioDecoder.h"
-#include "libnyquist/WavEncoder.h"
-#include "libnyquist/PostProcess.h"
+#include "libnyquist/Decoders.h"
+#include "libnyquist/Encoders.h"
 
 #include <thread>
 

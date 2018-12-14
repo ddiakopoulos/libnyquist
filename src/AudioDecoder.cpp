@@ -23,15 +23,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "AudioDecoder.h"
-
-#include "WavDecoder.h"
-#include "WavPackDecoder.h"
-#include "FlacDecoder.h"
-#include "VorbisDecoder.h"
-#include "OpusDecoder.h"
-#include "MusepackDecoder.h"
-#include "Mp3Decoder.h"
+#include "Decoders.h"
 
 using namespace nqr;
 

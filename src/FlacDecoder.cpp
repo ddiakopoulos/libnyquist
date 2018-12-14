@@ -23,22 +23,24 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "FlacDecoder.h"
+#include "Decoders.h"
+
+// http://lists.xiph.org/pipermail/flac-dev/2012-March/003276.html
+#define FLAC__NO_DLL
+
 #include "FLAC/all.h"
 #include "FLAC/stream_decoder.h"
 
-#include "AudioDecoder.h"
 #include <cstring>
 
 using namespace nqr;
 
 // FLAC is a big-endian format. All values are unsigned.
-
 class FlacDecoderInternal
 {
-    
+  
 public:
-    
+
     FlacDecoderInternal(AudioData * d, const std::string & filepath) : d(d)
     {
         decoderInternal = FLAC__stream_decoder_new();

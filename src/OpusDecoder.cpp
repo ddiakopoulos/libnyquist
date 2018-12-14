@@ -23,12 +23,18 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "OpusDecoder.h"
+#include "Decoders.h"
 #include "opus/opusfile/include/opusfile.h"
 
 using namespace nqr;
 
 static const int OPUS_SAMPLE_RATE = 48000;
+
+// Opus is a general-purpose codec designed to replace Vorbis at some point. Primarily, it's a low
+// delay format making it suitable for high-quality, real time streaming. It's not really
+// an archival format or something designed for heavy DSP post-processing since
+// it's fundamentally limited to encode/decode at 48khz.
+// https://mf4.xiph.org/jenkins/view/opus/job/opusfile-unix/ws/doc/html/index.html
 
 class OpusDecoderInternal
 {

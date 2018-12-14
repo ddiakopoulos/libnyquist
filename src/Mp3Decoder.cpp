@@ -23,7 +23,7 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "Mp3Decoder.h"
+#include "Decoders.h"
 
 using namespace nqr;
 
@@ -37,30 +37,22 @@ using namespace nqr;
 #include "minimp3/minimp3.h"
 #include "minimp3/minimp3_ex.h"
 
-class Mp3Internal
+void mp3_decode_internal(AudioData * d, const std::vector<uint8_t> & fileData)
 {
-    NO_MOVE(Mp3Internal);
-    AudioData * d;
+    mp3dec_t mp3d;
+    mp3dec_file_info_t info;
+    mp3dec_load_buf(&mp3d, (const uint8_t*)fileData.data(), fileData.size(), &info, 0, 0);
 
-public:
-    
-    Mp3Internal(AudioData * d, const std::vector<uint8_t> & fileData) : d(d)
-    {
-        mp3dec_t mp3d;
-        mp3dec_file_info_t info;
-        mp3dec_load_buf(&mp3d, (const uint8_t*) fileData.data(), fileData.size(), &info, 0, 0);
+    d->sampleRate = info.hz;
+    d->channelCount = info.channels;
+    d->sourceFormat = MakeFormatForBits(32, true, false);
+    d->lengthSeconds = ((float)info.samples / (float)d->channelCount) / (float)d->sampleRate;
 
-        d->sampleRate = info.hz;
-        d->channelCount = info.channels;
-        d->sourceFormat = MakeFormatForBits(32, true, false);
-        d->lengthSeconds = ((float) info.samples / (float)d->channelCount) / (float)d->sampleRate;
+    if (info.samples == 0) throw std::runtime_error("mp3: could not read any data");
 
-        if (info.samples == 0) throw std::runtime_error("mp3: could not read any data");
-
-        d->samples.resize(info.samples);
-        std::memcpy(d->samples.data(), info.buffer, sizeof(float) * info.samples);
-    }
-};
+    d->samples.resize(info.samples);
+    std::memcpy(d->samples.data(), info.buffer, sizeof(float) * info.samples);
+}
 
 //////////////////////
 // Public Interface //
@@ -69,12 +61,12 @@ public:
 void Mp3Decoder::LoadFromPath(AudioData * data, const std::string & path)
 {
     auto fileBuffer = nqr::ReadFile(path);
-    Mp3Internal decoder(data, fileBuffer.buffer);
+    mp3_decode_internal(data, fileBuffer.buffer);
 }
 
 void Mp3Decoder::LoadFromBuffer(AudioData * data, const std::vector<uint8_t> & memory)
 {
-    Mp3Internal decoder(data, memory);
+    mp3_decode_internal(data, memory);
 }
 
 std::vector<std::string> Mp3Decoder::GetSupportedFileExtensions()

@@ -37,13 +37,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <type_traits>
 #include <numeric>
 #include <array>
-
-#include "PostProcess.h"
-#include "Dither.h"
+#include <map>
+#include <random>
 
 namespace nqr
 {
-    
+
 /////////////////
 // Util Macros //
 /////////////////
@@ -256,6 +255,35 @@ inline void hermite_resample(const double rate, const std::vector<float> & input
 // Conversion Utilities //
 //////////////////////////
 
+enum DitherType
+{
+    DITHER_NONE,
+    DITHER_TRIANGLE
+};
+
+class Dither
+{
+    std::uniform_real_distribution<float> distribution;
+    std::mt19937 gen;
+    float prev{ 0.0f };
+    DitherType d;
+public:
+
+    Dither(DitherType d) : distribution(-0.5f, +0.5f), d(d) {}
+
+    float operator()(float s)
+    {
+        if (d == DITHER_TRIANGLE)
+        {
+            const float value = distribution(gen);
+            s = s + value - prev;
+            prev = value;
+            return s;
+        }
+        else return s;
+    }
+};
+
 // Signed maxes, defined for readabilty/convenience
 #define NQR_INT16_MAX 32767.f
 #define NQR_INT24_MAX 8388608.f
@@ -303,6 +331,9 @@ void ConvertToFloat32(float * dst, const int16_t * src, const size_t N, PCMForma
     
 void ConvertFromFloat32(uint8_t * dst, const float * src, const size_t N, PCMFormat f, DitherType t = DITHER_NONE);
 
+int GetFormatBitsPerSample(PCMFormat f);
+PCMFormat MakeFormatForBits(int bits, bool floatingPt, bool isSigned);
+
 //////////////////////////
 // User Data + File Ops //
 //////////////////////////
@@ -336,9 +367,327 @@ struct NyquistFileBuffer
 };
 
 NyquistFileBuffer ReadFile(const std::string & pathToFile);
+
+////////////////////
+// Encoding Utils //
+////////////////////
+
+struct EncoderParams
+{
+    int channelCount;
+    PCMFormat targetFormat;
+    DitherType dither;
+};
+
+enum EncoderError
+{
+    NoError,
+    InsufficientSampleData,
+    FileIOError,
+    UnsupportedSamplerate,
+    UnsupportedChannelConfiguration,
+    UnsupportedBitdepth,
+    UnsupportedChannelMix,
+    BufferTooBig,
+};
+
+//////////////////////
+// Wav Format Utils //
+//////////////////////
+
+enum WaveFormatCode
+{
+    FORMAT_UNKNOWN = 0x0,       // Unknown Wave Format
+    FORMAT_PCM = 0x1,           // PCM Format
+    FORMAT_ADPCM = 0x2,         // Microsoft ADPCM Format
+    FORMAT_IEEE = 0x3,          // IEEE float/double
+    FORMAT_ALAW = 0x6,          // 8-bit ITU-T G.711 A-law
+    FORMAT_MULAW = 0x7,         // 8-bit ITU-T G.711 µ-law
+    FORMAT_IMA_ADPCM = 0x11,    // IMA ADPCM Format
+    FORMAT_EXT = 0xFFFE         // Set via subformat
+};
+
+struct RiffChunkHeader
+{
+    uint32_t id_riff;           // Chunk ID: 'RIFF'
+    uint32_t file_size;         // Entire file in bytes
+    uint32_t id_wave;           // Chunk ID: 'WAVE'
+};
+
+struct WaveChunkHeader
+{
+    uint32_t fmt_id;            // Chunk ID: 'fmt '
+    uint32_t chunk_size;        // Size in bytes
+    uint16_t format;            // Format code
+    uint16_t channel_count;     // Num interleaved channels
+    uint32_t sample_rate;       // SR
+    uint32_t data_rate;         // Data rate
+    uint16_t frame_size;        // 1 frame = channels * bits per sample (also known as block align)
+    uint16_t bit_depth;         // Bits per sample  
+};
+
+struct BextChunk 
+{
+    uint32_t fmt_id;            // Chunk ID: 'bext'
+    uint32_t chunk_size;        // Size in bytes
+    uint8_t description[256];   // Description of the sound (ascii)
+    uint8_t origin[32];         // Name of the originator (ascii)
+    uint8_t origin_ref[32];     // Reference of the originator (ascii)
+    uint8_t orgin_date[10];     // yyyy-mm-dd (ascii)
+    uint8_t origin_time[8];     // hh-mm-ss (ascii)
+    uint64_t time_ref;          // First sample count since midnight
+    uint32_t version;           // Version of the BWF
+    uint8_t uimd[64];           // Byte 0 of SMPTE UMID
+    uint8_t reserved[188];      // 190 bytes, reserved for future use & set to NULL
+};
+
+struct FactChunk
+{
+    uint32_t fact_id;           // Chunk ID: 'fact'
+    uint32_t chunk_size;        // Size in bytes 
+    uint32_t sample_length;     // number of samples per channel
+};
+
+struct ExtensibleData
+{
+    uint16_t size;
+    uint16_t valid_bits_per_sample;
+    uint32_t channel_mask;
+    struct GUID
+    {
+        uint32_t data0;
+        uint16_t data1;
+        uint16_t data2;
+        uint16_t data3;
+        uint8_t data4[6];
+    };
+};
+
+template<class C, class R> 
+std::basic_ostream<C,R> & operator << (std::basic_ostream<C,R> & a, const WaveChunkHeader & b) 
+{ 
+    return a <<
+        "Format ID:\t\t"        << b.fmt_id <<
+        "\nChunk Size:\t\t"     << b.chunk_size <<
+        "\nFormat Code:\t\t"    << b.format <<
+        "\nChannels:\t\t"       << b.channel_count <<
+        "\nSample Rate:\t\t"    << b.sample_rate <<
+        "\nData Rate:\t\t"      << b.data_rate <<
+        "\nFrame Size:\t\t"     << b.frame_size <<
+        "\nBit Depth:\t\t"      << b.bit_depth << std::endl;
+}
+
+//@todo expose speaker/channel/layout masks in the API: 
     
-int GetFormatBitsPerSample(PCMFormat f);
-PCMFormat MakeFormatForBits(int bits, bool floatingPt, bool isSigned);
+enum SpeakerChannelMask
+{
+    SPEAKER_FRONT_LEFT = 0x00000001,
+    SPEAKER_FRONT_RIGHT = 0x00000002,
+    SPEAKER_FRONT_CENTER = 0x00000004,
+    SPEAKER_LOW_FREQUENCY = 0x00000008,
+    SPEAKER_BACK_LEFT = 0x00000010,
+    SPEAKER_BACK_RIGHT = 0x00000020,
+    SPEAKER_FRONT_LEFT_OF_CENTER = 0x00000040,
+    SPEAKER_FRONT_RIGHT_OF_CENTER = 0x00000080,
+    SPEAKER_BACK_CENTER = 0x00000100,
+    SPEAKER_SIDE_LEFT = 0x00000200,
+    SPEAKER_SIDE_RIGHT = 0x00000400,
+    SPEAKER_TOP_CENTER = 0x00000800,
+    SPEAKER_TOP_FRONT_LEFT = 0x00001000,
+    SPEAKER_TOP_FRONT_CENTER = 0x00002000,
+    SPEAKER_TOP_FRONT_RIGHT = 0x00004000,
+    SPEAKER_TOP_BACK_LEFT = 0x00008000,
+    SPEAKER_TOP_BACK_CENTER = 0x00010000,
+    SPEAKER_TOP_BACK_RIGHT = 0x00020000,
+    SPEAKER_RESERVED = 0x7FFC0000,
+    SPEAKER_ALL = 0x80000000
+};
+
+enum SpeakerLayoutMask
+{
+    SPEAKER_MONO = (SPEAKER_FRONT_CENTER),
+    SPEAKER_STEREO = (SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT),
+    SPEAKER_2POINT1 = (SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_LOW_FREQUENCY),
+    SPEAKER_SURROUND = (SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER | SPEAKER_BACK_CENTER),
+    SPEAKER_QUAD = (SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_BACK_LEFT | SPEAKER_BACK_RIGHT),
+    SPEAKER_4POINT1 = (SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_LOW_FREQUENCY | SPEAKER_BACK_LEFT | SPEAKER_BACK_RIGHT),
+    SPEAKER_5POINT1 = (SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER | SPEAKER_LOW_FREQUENCY | SPEAKER_BACK_LEFT | SPEAKER_BACK_RIGHT),
+    SPEAKER_7POINT1 = (SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER | SPEAKER_LOW_FREQUENCY | SPEAKER_BACK_LEFT | SPEAKER_BACK_RIGHT | SPEAKER_FRONT_LEFT_OF_CENTER | SPEAKER_FRONT_RIGHT_OF_CENTER),
+    SPEAKER_5POINT1_SURROUND = (SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER | SPEAKER_LOW_FREQUENCY | SPEAKER_SIDE_LEFT | SPEAKER_SIDE_RIGHT),
+    SPEAKER_7POINT1_SURROUND = (SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER | SPEAKER_LOW_FREQUENCY | SPEAKER_BACK_LEFT | SPEAKER_BACK_RIGHT | SPEAKER_SIDE_LEFT | SPEAKER_SIDE_RIGHT),
+};
+
+//@todo verify mask values
+inline int ComputeChannelMask(const size_t channels)
+{
+    switch (channels)
+    {
+    case 1: return SPEAKER_MONO;
+    case 2: return SPEAKER_STEREO;
+    case 3: return SPEAKER_2POINT1;
+    case 4: return SPEAKER_QUAD;
+    case 5: return SPEAKER_4POINT1;
+    case 6: return SPEAKER_5POINT1;
+    default: return -1; 
+    }
+}
+
+/////////////////////
+// Chunk utilities //
+/////////////////////
+
+struct ChunkHeaderInfo
+{
+    uint32_t offset;            // Byte offset into chunk
+    uint32_t size;              // Size of the chunk in bytes
+};
+
+inline uint32_t GenerateChunkCode(uint8_t a, uint8_t b, uint8_t c, uint8_t d)
+{
+#ifdef ARCH_CPU_LITTLE_ENDIAN
+    return ((uint32_t)((a) | ((b) << 8) | ((c) << 16) | (((uint32_t)(d)) << 24)));
+#else
+    return ((uint32_t)((((uint32_t)(a)) << 24) | ((b) << 16) | ((c) << 8) | (d)));
+#endif
+}
+
+inline char * GenerateChunkCodeChar(uint8_t a, uint8_t b, uint8_t c, uint8_t d)
+{
+    auto chunk = GenerateChunkCode(a, b, c, d);
+
+    char * outArr = new char[4];
+
+    uint32_t t = 0x000000FF;
+
+    for (size_t i = 0; i < 4; i++)
+    {
+        outArr[i] = chunk & t;
+        chunk >>= 8;
+    }
+    return outArr;
+}
+
+inline ChunkHeaderInfo ScanForChunk(const std::vector<uint8_t> & fileData, uint32_t chunkMarker)
+{
+    // D[n] aligned to 16 bytes now
+    const uint16_t * d = reinterpret_cast<const uint16_t *>(fileData.data());
+
+    for (size_t i = 0; i < fileData.size() / sizeof(uint16_t); i++)
+    {
+        // This will be in machine endianess
+        uint32_t m = Pack(Read16(d[i]), Read16(d[i + 1]));
+
+        if (m == chunkMarker)
+        {
+            uint32_t cSz = Pack(Read16(d[i + 2]), Read16(d[i + 3]));
+            return { (uint32_t(i * sizeof(uint16_t))), cSz }; // return i in bytes to the start of the data
+        }
+        else continue;
+    }
+    return { 0, 0 };
+};
+
+inline WaveChunkHeader MakeWaveHeader(const EncoderParams param, const int sampleRate)
+{
+    WaveChunkHeader header;
+
+    int bitdepth = GetFormatBitsPerSample(param.targetFormat);
+
+    header.fmt_id = GenerateChunkCode('f', 'm', 't', ' ');
+    header.chunk_size = 16;
+    header.format = (param.targetFormat <= PCMFormat::PCM_32) ? WaveFormatCode::FORMAT_PCM : WaveFormatCode::FORMAT_IEEE;
+    header.channel_count = param.channelCount;
+    header.sample_rate = sampleRate;
+    header.data_rate = sampleRate * param.channelCount * (bitdepth / 8);
+    header.frame_size = param.channelCount * (bitdepth / 8);
+    header.bit_depth = bitdepth;
+
+    return header;
+}
+
+// @todo expose this in the FLAC API
+inline std::map<int, std::string> GetFlacQualityTable()
+{
+    return {
+            { 0, "0 (Fastest)" },
+            { 1, "1" },
+            { 2, "2" },
+            { 3, "3" },
+            { 4, "4" },
+            { 5, "5 (Default)" },
+            { 6, "6" },
+            { 7, "7" },
+            { 8, "8 (Highest)" },
+    };
+}
+
+template <typename T>
+inline void DeinterleaveStereo(T * c1, T * c2, T const * src, size_t count)
+{
+    auto src_end = src + count;
+    while (src != src_end)
+    {
+        *c1 = src[0];
+        *c2 = src[1];
+        c1++;
+        c2++;
+        src += 2;
+    }
+}
+
+template<typename T>
+void InterleaveChannels(const T * src, T * dest, size_t numFramesPerChannel, size_t numChannels, size_t N)
+{
+    for (size_t ch = 0; ch < numChannels; ch++)
+    {
+        size_t x = ch;
+        const T * srcChannel = &src[ch * numFramesPerChannel];
+        for (size_t i = 0; i < N; i++)
+        {
+            dest[x] = srcChannel[i];
+            x += numChannels;
+        }
+    }
+}
+
+template<typename T>
+void DeinterleaveChannels(const T * src, T * dest, size_t numFramesPerChannel, size_t numChannels, size_t N)
+{
+    for (size_t ch = 0; ch < numChannels; ch++)
+    {
+        size_t x = ch;
+        T *destChannel = &dest[ch * numFramesPerChannel];
+        for (size_t i = 0; i < N; i++)
+        {
+            destChannel[i] = (T)src[x];
+            x += numChannels;
+        }
+    }
+}
+
+template <typename T>
+void StereoToMono(const T * src, T * dest, size_t N)
+{
+    for (size_t i = 0, j = 0; i < N; i += 2, ++j)
+    {
+        dest[j] = (src[i] + src[i + 1]) / 2.0f;
+    }
+}
+
+template <typename T>
+void MonoToStereo(const T * src, T * dest, size_t N)
+{
+    for (size_t i = 0, j = 0; i < N; ++i, j += 2)
+    {
+        dest[j] = src[i];
+        dest[j + 1] = src[i];
+    }
+}
+
+inline void TrimSilenceInterleaved(std::vector<float> & buffer, float v, bool fromFront, bool fromEnd)
+{
+    //@todo implement me!
+}
 
 } // end namespace nqr
 
