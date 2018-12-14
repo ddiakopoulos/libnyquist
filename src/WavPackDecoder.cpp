@@ -175,7 +175,7 @@ public:
         if (id != nullptr) 
         {
             WavPackInternal *decoder = (WavPackInternal *)id;
-            int32_t readLength = std::min<size_t>(byte_count, decoder->data.size() - decoder->dataPos);
+            auto readLength = std::min<size_t>(byte_count, decoder->data.size() - decoder->dataPos);
             if (readLength > 0) 
             {
                 std::memcpy(data, decoder->data.data(), readLength);
@@ -191,7 +191,7 @@ public:
         if (id != nullptr) 
         {
             WavPackInternal *decoder = (WavPackInternal *)id;
-            int32_t writeLength = std::min<size_t>(byte_count, decoder->data.size() - decoder->dataPos);
+            auto writeLength = std::min<size_t>(byte_count, decoder->data.size() - decoder->dataPos);
             if (writeLength > 0) 
             {
                 std::memcpy(decoder->data.data(), data, writeLength);

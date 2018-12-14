@@ -36,7 +36,7 @@ int main(int argc, const char **argv) try
 	else
 	{
 		// Circular libnyquist testing
-		//loader.Load(fileData.get(), "encoded.opus");
+		//loader.Load(fileData.get(), "libnyquist_example_output.opus");
 
 		// 1-channel wave
 		//loader.Load(fileData.get(), "test_data/1ch/44100/8/test.wav");
@@ -70,6 +70,7 @@ int main(int argc, const char **argv) try
 		//loader.Load(fileData.get(), "test_data/ad_hoc/KittyPurr16_Stereo.flac");
 		//loader.Load(fileData.get(), "test_data/ad_hoc/KittyPurr16_Mono.flac");
 		//loader.Load(fileData.get(), "test_data/ad_hoc/KittyPurr24_Stereo.flac");
+
         //auto memory = ReadFile("test_data/ad_hoc/KittyPurr24_Stereo.flac"); // broken
         //loader.Load(fileData.get(), "flac", memory.buffer); // broken
 
