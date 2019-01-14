@@ -37,6 +37,8 @@ using namespace nqr;
 #include "minimp3/minimp3.h"
 #include "minimp3/minimp3_ex.h"
 
+#include <cstring>
+
 void mp3_decode_internal(AudioData * d, const std::vector<uint8_t> & fileData)
 {
     mp3dec_t mp3d;

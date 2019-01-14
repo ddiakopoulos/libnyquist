@@ -26,6 +26,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Decoders.h"
 #include "wavpack.h"
 #include <string.h>
+#include <cstring>
 
 using namespace nqr;
 

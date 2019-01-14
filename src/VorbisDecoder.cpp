@@ -26,6 +26,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Decoders.h"
 #include "libvorbis/include/vorbis/vorbisfile.h"
 
+#include <string.h>
+
 using namespace nqr;
 
 class VorbisDecoderInternal
