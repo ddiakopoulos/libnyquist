@@ -1,0 +1,17 @@
+language: cpp
+sudo: true
+
+matrix:
+  include:
+    - os: linux
+    - os: osx
+
+install:
+  
+script:
+  - mkdir build
+  - cd build
+  - cmake ..
+  - cmake --build .
+
+after_success:
