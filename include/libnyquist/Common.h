@@ -265,19 +265,19 @@ class Dither
 {
     std::uniform_real_distribution<float> distribution;
     std::mt19937 gen;
-    float prev{ 0.0f };
+    float previous;
     DitherType d;
 public:
 
-    Dither(DitherType d) : distribution(-0.5f, +0.5f), d(d) {}
+    Dither(DitherType d) : distribution(-0.5f, +0.5f), d(d), previous(0.f) {}
 
     float operator()(float s)
     {
         if (d == DITHER_TRIANGLE)
         {
             const float value = distribution(gen);
-            s = s + value - prev;
-            prev = value;
+            s = s + value - previous;
+            previous = value;
             return s;
         }
         else return s;
@@ -609,15 +609,15 @@ inline WaveChunkHeader MakeWaveHeader(const EncoderParams param, const int sampl
 inline std::map<int, std::string> GetFlacQualityTable()
 {
     return {
-            { 0, "0 (Fastest)" },
-            { 1, "1" },
-            { 2, "2" },
-            { 3, "3" },
-            { 4, "4" },
-            { 5, "5 (Default)" },
-            { 6, "6" },
-            { 7, "7" },
-            { 8, "8 (Highest)" },
+        { 0, "0 (Fastest)" },
+        { 1, "1" },
+        { 2, "2" },
+        { 3, "3" },
+        { 4, "4" },
+        { 5, "5 (Default)" },
+        { 6, "6" },
+        { 7, "7" },
+        { 8, "8 (Highest)" },
     };
 }
 

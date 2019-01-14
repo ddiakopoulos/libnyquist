@@ -36,6 +36,8 @@
 
 #include <atomic>
 #include <assert.h>
+#include <cstring>
+#include <cstdlib>
 
 template <typename T>
 class RingBufferT 
@@ -65,9 +67,9 @@ class RingBufferT
         size_t allocatedSize = count + 1; // one bin is used to distinguish between the read and write indices when full.
 
         if (mAllocatedSize)
-            mData = (T *)::realloc(mData, allocatedSize * sizeof(T));
+            mData = (T *) std::realloc(mData, allocatedSize * sizeof(T));
         else
-            mData = (T *)::calloc(allocatedSize, sizeof(T));
+            mData = (T *) std::calloc(allocatedSize, sizeof(T));
 
         assert(mData);
 

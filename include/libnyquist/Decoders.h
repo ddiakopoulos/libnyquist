@@ -42,7 +42,7 @@ namespace nqr
         virtual ~BaseDecoder() {}
     };
 
-    typedef std::pair<std::string, std::shared_ptr<nqr::BaseDecoder>> DecoderPair;
+    typedef std::pair< std::string, std::shared_ptr<nqr::BaseDecoder> > DecoderPair;
 
     class NyquistIO
     {
@@ -50,7 +50,7 @@ namespace nqr
         std::shared_ptr<nqr::BaseDecoder> GetDecoderForExtension(const std::string & ext);
         void BuildDecoderTable();
         void AddDecoderToTable(std::shared_ptr<nqr::BaseDecoder> decoder);
-        std::map<std::string, std::shared_ptr<BaseDecoder>> decoderTable;
+        std::map< std::string, std::shared_ptr<BaseDecoder> > decoderTable;
 
         NO_MOVE(NyquistIO);
 
