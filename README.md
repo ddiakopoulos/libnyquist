@@ -1,6 +1,10 @@
 # Libnyquist
 
-[![Build status](https://ci.appveyor.com/api/projects/status/2xeuyuxy618ndf4r?svg=true)](https://ci.appveyor.com/project/ddiakopoulos/libnyquist)
+
+Platform | Build Status |
+-------- | ------------ |
+Microsoft VS2017 x64 | [![Build status](https://ci.appveyor.com/api/projects/status/2xeuyuxy618ndf4r?svg=true)](https://ci.appveyor.com/project/ddiakopoulos/libnyquist) |
+Clang (OSX) & GCC (Linux) | [![Build Status](https://travis-ci.org/ddiakopoulos/libnyquist.svg?branch=master)](https://travis-ci.org/ddiakopoulos/libnyquist) |
 
 Libnyquist is a small C++11 library for reading sampled audio data from disk or memory. It is intended to be used an audio loading frontend for games, audio sequencers, music players, and more.
 
