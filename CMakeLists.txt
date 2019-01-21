@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.10)
 
 set(LIBNYQUIST_ROOT "${CMAKE_CURRENT_SOURCE_DIR}")
 set(CMAKE_MODULE_PATH ${LIBNYQUIST_ROOT}/cmake)
@@ -68,7 +68,7 @@ install (TARGETS libopus DESTINATION lib)
 
 # folders
 
-source_group(src\ FILES ${third_opus_src})
+source_group(src/ FILES ${third_opus_src})
 
 #-------------------------------------------------------------------------------
 
@@ -209,7 +209,7 @@ install(TARGETS libnyquist
 install(TARGETS libnyquist DESTINATION lib)
 
 # folders
-source_group(src\ FILES ${nyquist_src})
+source_group(src/ FILES ${nyquist_src})
 
 #-------------------------------------------------------------------------------
 
@@ -235,8 +235,14 @@ if(BUILD_EXAMPLE)
         target_compile_definitions(${NQR_EXAMPLE_APP_NAME} PRIVATE __WINDOWS_WASAPI__)
     elseif(APPLE)
         target_compile_definitions(${NQR_EXAMPLE_APP_NAME} PRIVATE __MACOSX_CORE__)
+    elseif(LIBNYQUIST_JACK)
+        target_compile_definitions(${NQR_EXAMPLE_APP_NAME} PRIVATE __UNIX_JACK__)
+    elseif(LIBNYQUIST_PULSE)
+        target_compile_definitions(${NQR_EXAMPLE_APP_NAME} PRIVATE __LINUX_PULSE__)
+    elseif(LIBNYQUIST_ASOUND)
+        target_compile_definitions(${NQR_EXAMPLE_APP_NAME} PRIVATE __LINUX_ALSA__)
     else()
-        message(FATAL, "Select an appropriate backend, such as __LINUX_ALSA__")
+        message(FATAL, "On Linux, one of LABSOUND_JACK, LABSOUND_PULSE, or LABSOUND_ASOUND must be set.")
     endif()
 
     target_include_directories(${NQR_EXAMPLE_APP_NAME} PRIVATE
