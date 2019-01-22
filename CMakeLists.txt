@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.10)
 
 set(LIBNYQUIST_ROOT "${CMAKE_CURRENT_SOURCE_DIR}")
 set(CMAKE_MODULE_PATH ${LIBNYQUIST_ROOT}/cmake)
-set(CMAKE_INSTALL_PREFIX ${LOCAL_ROOT} CACHE PATH "Install set to local" FORCE)
 
 include(CXXhelpers)
 
