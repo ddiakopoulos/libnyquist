@@ -1,44 +1,44 @@
 /*
-Copyright (c) 2019, Dimitri Diakopoulos All rights reserved.
+copyright (c) 2019, dimitri diakopoulos all rights reserved.
 
-Redistribution and use in source and binary forms, with or without
+redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
 
-* Redistributions of source code must retain the above copyright notice, this
+* redistributions of source code must retain the above copyright notice, this
   list of conditions and the following disclaimer.
 
-* Redistributions in binary form must reproduce the above copyright notice,
+* redistributions in binary form must reproduce the above copyright notice,
   this list of conditions and the following disclaimer in the documentation
   and/or other materials provided with the distribution.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+this software is provided by the copyright holders and contributors "as is"
+and any express or implied warranties, including, but not limited to, the
+implied warranties of merchantability and fitness for a particular purpose are
+disclaimed. in no event shall the copyright holder or contributors be liable
+for any direct, indirect, incidental, special, exemplary, or consequential
+damages (including, but not limited to, procurement of substitute goods or
+services; loss of use, data, or profits; or business interruption) however
+caused and on any theory of liability, whether in contract, strict liability,
+or tort (including negligence or otherwise) arising in any way out of the use
+of this software, even if advised of the possibility of such damage.
 */
 
-#ifndef NYQUIST_ENCODERS_H
-#define NYQUIST_ENCODERS_H
+#ifndef nyquist_encoders_h
+#define nyquist_encoders_h
 
-#include "Common.h"
+#include "common.h"
 
 namespace nqr
 {
-	// A simplistic encoder that takes a buffer of audio, conforms it to the user's
-	// EncoderParams preference, and writes to disk. Be warned, does not support resampling!
-	// @todo support dithering, samplerate conversion, etc.
-	int encode_wav_to_disk(const EncoderParams p, const AudioData * d, const std::string & path);
+    // a simplistic encoder that takes a buffer of audio, conforms it to the user's
+    // encoderparams preference, and writes to disk. be warned, does not support resampling!
+    // @todo support dithering, samplerate conversion, etc.
+    int encode_wav_to_disk(const encoderparams p, const audiodata * d, const std::string & path);
 
-    // Assume data adheres to EncoderParams, except for bit depth and fmt which are re-formatted
-    // to satisfy the Ogg/Opus spec.
-	int encode_opus_to_disk(const EncoderParams p, const AudioData * d, const std::string & path);
+    // assume data adheres to encoderparams, except for bit depth and fmt which are re-formatted
+    // to satisfy the ogg/opus spec.
+    int encode_opus_to_disk(const encoderparams p, const audiodata * d, const std::string & path);
 
 } // end namespace nqr
 
-#endif // end NYQUIST_ENCODERS_H
+#endif // end nyquist_encoders_h

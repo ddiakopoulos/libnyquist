@@ -39,27 +39,27 @@ static const int32_t BUFFER_LENGTH = FRAME_SIZE * CHANNELS;
 
 struct AudioDeviceInfo
 {
-	uint32_t id;
-	uint32_t numChannels;
-	uint32_t sampleRate;
-	uint32_t frameSize;
-	bool isPlaying = false;
+    uint32_t id;
+    uint32_t numChannels;
+    uint32_t sampleRate;
+    uint32_t frameSize;
+    bool isPlaying = false;
 };
 
 class AudioDevice
 {
-	std::unique_ptr<RtAudio> rtaudio;
+    std::unique_ptr<RtAudio> rtaudio;
 protected:
-	AudioDevice(const AudioDevice& r) = delete;
-	AudioDevice & operator = (const AudioDevice& r) = delete;
+    AudioDevice(const AudioDevice& r) = delete;
+    AudioDevice & operator = (const AudioDevice& r) = delete;
 public:
-	AudioDeviceInfo info;
-	AudioDevice(int numChannels, int sampleRate, int deviceId = -1);
-	~AudioDevice();
-	static void ListAudioDevices();
-	bool Open(const int deviceId);
-	bool Play(const std::vector<float> & data);
-	bool Record(const uint32_t lengthInSamples, std::vector<float> & recordingBuffer);
+    AudioDeviceInfo info;
+    AudioDevice(int numChannels, int sampleRate, int deviceId = -1);
+    ~AudioDevice();
+    static void ListAudioDevices();
+    bool Open(const int deviceId);
+    bool Play(const std::vector<float> & data);
+    bool Record(const uint32_t lengthInSamples, std::vector<float> & recordingBuffer);
 };
 
 #endif

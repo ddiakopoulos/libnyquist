@@ -37,12 +37,12 @@ static int rt_callback(void * output_buffer, void * input_buffer, uint32_t num_b
 {
     if (status) std::cerr << "[rtaudio] buffer over or underflow" << std::endl;
 
-	// Playback
+    // Playback
     if (buffer.getAvailableRead()) buffer.read((float*) output_buffer, BUFFER_LENGTH);
     else memset(output_buffer, 0, BUFFER_LENGTH * sizeof(float));
 
-	// Recording
-	if (record_buffer.getAvailableWrite()) record_buffer.write((float*) input_buffer, BUFFER_LENGTH / 2);
+    // Recording
+    if (record_buffer.getAvailableWrite()) record_buffer.write((float*) input_buffer, BUFFER_LENGTH / 2);
 
     return 0;
 }
@@ -62,9 +62,9 @@ AudioDevice::~AudioDevice()
     {
         rtaudio->stopStream();
         if (rtaudio->isStreamOpen())
-		{
+        {
             rtaudio->closeStream();
-		}
+        }
     }
 }
 
@@ -77,7 +77,7 @@ bool AudioDevice::Open(const int deviceId)
     outputParams.nChannels = info.numChannels;
     outputParams.firstChannel = 0;
 
-	RtAudio::StreamParameters inputParams;
+    RtAudio::StreamParameters inputParams;
     inputParams.deviceId = rtaudio->getDefaultInputDevice();
     inputParams.nChannels = 1;
     inputParams.firstChannel = 0;
@@ -129,21 +129,21 @@ bool AudioDevice::Play(const std::vector<float> & data)
 
 bool AudioDevice::Record(const uint32_t lengthInSamples, std::vector<float> & recordingBuffer)
 {
-	uint64_t recordedSamples = 0;
+    uint64_t recordedSamples = 0;
 
-	// Allocate memory upfront (revisit this later...)
-	recordingBuffer.resize(lengthInSamples + (BUFFER_LENGTH)); // + a little padding
+    // Allocate memory upfront (revisit this later...)
+    recordingBuffer.resize(lengthInSamples + (BUFFER_LENGTH)); // + a little padding
 
-	while (recordedSamples < lengthInSamples)
-	{
-		if (record_buffer.getAvailableRead())
-		{
-			if (record_buffer.read(recordingBuffer.data() + recordedSamples, BUFFER_LENGTH / 2))
-			{
-				recordedSamples += (BUFFER_LENGTH / 2);
-			}
-		}
-	}
+    while (recordedSamples < lengthInSamples)
+    {
+        if (record_buffer.getAvailableRead())
+        {
+            if (record_buffer.read(recordingBuffer.data() + recordedSamples, BUFFER_LENGTH / 2))
+            {
+                recordedSamples += (BUFFER_LENGTH / 2);
+            }
+        }
+    }
 
-	return true;
+    return true;
 }
