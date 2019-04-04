@@ -26,6 +26,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Common.h"
 #include "Decoders.h"
 #include <cstring>
+#include <unordered_map>
 
 using namespace nqr;
 
@@ -59,6 +60,63 @@ void NyquistIO::Load(AudioData * data, const std::string & path)
     }
 }
 
+void NyquistIO::Load(AudioData * data, const std::vector<uint8_t> & buffer)
+{
+
+    const std::map<std::vector<int16_t>, std::string> magic_map{
+        {{ 'w', 'v', 'p', 'k' },                                                     "wv"             },
+        {{ 'M', 'P', 'C', 'K' },                                                     "mpc"            },
+        {{ 0xFF, 0xFB },                                                             "mp3"            }, // ÿû, mp3 without ID3 header
+        {{ 'I', 'D', '3' },                                                          "mp3"            }, // mp3 with ID3 header
+        {{ 'O', 'g', 'g', 'S' },                                                     "ogg_or_vorbis"  }, // see `match_ogg_subtype`
+        {{ 'f', 'L', 'a', 'C' },                                                     "flac"           },
+        {{ 0x52, 0x49, 0x46, 0x46, -0x1, -0x1, -0x1, -0x1, 0x57, 0x41, 0x56, 0x45 }, "wav"            }  // RIFF....WAVE
+    };
+
+    auto match_magic = [](const uint8_t * data, const std::vector<int16_t> & magic)
+    {
+        for (int i = 0; i < magic.size(); ++i)
+        {
+            if (magic[i] != data[i] && magic[i] != -0x1) // -0x1 skips things that don't contribute to the magic number
+            {
+                return false;
+            }
+        }
+        return true;
+    };
+
+    auto match_ogg_subtype = [](const uint8_t * data)
+    {
+        std::string header; // arbitrarily read the first 64 bytes as ascii characters
+        for (int i = 0; i < 64; ++i) header += data[i];
+
+        std::size_t found_opus = header.find("OpusHead");
+        if (found_opus != std::string::npos) return "opus";
+
+        std::size_t found_vorbis = header.find("vorbis");
+        if (found_vorbis != std::string::npos) return "ogg";
+
+        return "none";
+    };
+
+    std::string ext = "none";
+
+    for (auto & filetype : magic_map)
+    {
+        if (match_magic(buffer.data(), filetype.first))
+        {
+            ext = filetype.second;
+        }
+
+        if (ext == "ogg_or_vorbis")
+        {
+            ext = match_ogg_subtype(buffer.data());
+        }
+    }
+
+    NyquistIO::Load(data, ext, buffer);
+}
+
 void NyquistIO::Load(AudioData * data, const std::string & extension, const std::vector<uint8_t> & buffer)
 {
     if (decoderTable.find(extension) == decoderTable.end())
@@ -75,13 +133,10 @@ void NyquistIO::Load(AudioData * data, const std::string & extension, const std:
         }
         catch (const std::exception & e)
         {
-            std::cerr << "Caught internal exception: " << e.what() << std::endl;
+            std::cerr << "caught internal loading exception: " << e.what() << std::endl;
         }
     }
-    else
-    {
-        throw std::runtime_error("No available decoders.");
-    }
+    else throw std::runtime_error("fatal: no decoders available");
 }
 
 bool NyquistIO::IsFileSupported(const std::string & path) const
@@ -110,7 +165,7 @@ void NyquistIO::AddDecoderToTable(std::shared_ptr<nqr::BaseDecoder> decoder)
 
     for (const auto ext : supportedExtensions)
     {
-        if (decoderTable.count(ext) >= 1) throw std::runtime_error("decoder already exists for extension.");
+        if (decoderTable.count(ext) >= 1) throw std::runtime_error("decoder already exists for extension");
         decoderTable.insert(DecoderPair(ext, decoder));
     }
 }

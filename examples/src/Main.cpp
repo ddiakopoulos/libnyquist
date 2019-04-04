@@ -98,8 +98,7 @@ int main(int argc, const char **argv) try
         loader.Load(fileData.get(), "mp3", memory.buffer);
 	}
 
-	/*
-	// Test Recording Capabilities of AudioDevice
+	/* Test Recording Capabilities of AudioDevice
 	fileData->samples.reserve(44100 * 5);
 	fileData->channelCount = 1;
 	fileData->frameSize = 32;
