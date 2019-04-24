@@ -260,6 +260,14 @@ if(BUILD_EXAMPLE)
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
     )
 
-    target_link_libraries(${NQR_EXAMPLE_APP_NAME} PUBLIC libnyquist libopus libwavpack)
+    if(APPLE)
+        set(DARWIN_LIBS
+            "-framework AudioToolbox"
+            "-framework AudioUnit"
+            "-framework Accelerate"
+            "-framework CoreAudio"
+            "-framework Cocoa")
+    ENDIF(APPLE)
 
+    target_link_libraries(${NQR_EXAMPLE_APP_NAME} PUBLIC ${DARWIN_LIBS} libnyquist libopus libwavpack)
 endif()

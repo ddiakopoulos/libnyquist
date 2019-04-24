@@ -269,7 +269,7 @@ class Dither
     DitherType d;
 public:
 
-    Dither(DitherType d) : distribution(-0.5f, +0.5f), d(d), previous(0.f) {}
+    Dither(DitherType d) : distribution(-0.5f, +0.5f), previous(0.f), d(d) {}
 
     float operator()(float s)
     {
