@@ -96,12 +96,6 @@ struct OpusCustomDecoder {
    /* opus_val16 backgroundLogE[], Size = 2*mode->nbEBands */
 };
 
-int celt_decoder_get_size(int channels)
-{
-   const CELTMode *mode = opus_custom_mode_create(48000, 960, NULL);
-   return opus_custom_decoder_get_size(mode, channels);
-}
-
 OPUS_CUSTOM_NOSTATIC int opus_custom_decoder_get_size(const CELTMode *mode, int channels)
 {
    int size = sizeof(struct CELTDecoder)
@@ -109,6 +103,12 @@ OPUS_CUSTOM_NOSTATIC int opus_custom_decoder_get_size(const CELTMode *mode, int 
             + channels*LPC_ORDER*sizeof(opus_val16)
             + 4*2*mode->nbEBands*sizeof(opus_val16);
    return size;
+}
+
+int celt_decoder_get_size(int channels)
+{
+    const CELTMode *mode = opus_custom_mode_create(48000, 960, NULL);
+    return opus_custom_decoder_get_size(mode, channels);
 }
 
 #ifdef CUSTOM_MODES
@@ -128,18 +128,6 @@ CELTDecoder *opus_custom_decoder_create(const CELTMode *mode, int channels, int 
 }
 #endif /* CUSTOM_MODES */
 
-int celt_decoder_init(CELTDecoder *st, opus_int32 sampling_rate, int channels)
-{
-   int ret;
-   ret = opus_custom_decoder_init(st, opus_custom_mode_create(48000, 960, NULL), channels);
-   if (ret != OPUS_OK)
-      return ret;
-   st->downsample = resampling_factor(sampling_rate);
-   if (st->downsample==0)
-      return OPUS_BAD_ARG;
-   else
-      return OPUS_OK;
-}
 
 OPUS_CUSTOM_NOSTATIC int opus_custom_decoder_init(CELTDecoder *st, const CELTMode *mode, int channels)
 {
@@ -166,6 +154,20 @@ OPUS_CUSTOM_NOSTATIC int opus_custom_decoder_init(CELTDecoder *st, const CELTMod
    opus_custom_decoder_ctl(st, OPUS_RESET_STATE);
 
    return OPUS_OK;
+}
+
+
+int celt_decoder_init(CELTDecoder *st, opus_int32 sampling_rate, int channels)
+{
+    int ret;
+    ret = opus_custom_decoder_init(st, opus_custom_mode_create(48000, 960, NULL), channels);
+    if (ret != OPUS_OK)
+        return ret;
+    st->downsample = resampling_factor(sampling_rate);
+    if (st->downsample==0)
+        return OPUS_BAD_ARG;
+    else
+        return OPUS_OK;
 }
 
 #ifdef CUSTOM_MODES

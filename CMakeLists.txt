@@ -5,7 +5,16 @@ set(CMAKE_MODULE_PATH ${LIBNYQUIST_ROOT}/cmake)
 
 include(CXXhelpers)
 
-option(BUILD_EXAMPLE "Build example application" ON)
+if (CMAKE_OSX_ARCHITECTURES)
+    if(CMAKE_OSX_SYSROOT MATCHES ".*iphoneos.*")
+        # RtAudio is not portable to ios currently
+        option(BUILD_EXAMPLE "Build example application" OFF)
+    else()
+        option(BUILD_EXAMPLE "Build example application" ON)
+    endif()
+else()
+    option(BUILD_EXAMPLE "Build example application" ON)
+endif()
 
 #-------------------------------------------------------------------------------
 
