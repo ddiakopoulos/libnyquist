@@ -173,8 +173,11 @@ if (WIN32)
     _disable_warning(4018)
 endif()
 
-target_include_directories(libnyquist PRIVATE
-    ${LIBNYQUIST_ROOT}/include
+target_include_directories(libnyquist
+  PUBLIC
+    $<INSTALL_INTERFACE:include>
+    $<BUILD_INTERFACE:${LIBNYQUIST_ROOT}/include>
+  PRIVATE
     ${LIBNYQUIST_ROOT}/include/libnyquist
     ${LIBNYQUIST_ROOT}/third_party
     ${LIBNYQUIST_ROOT}/third_party/FLAC/src/include
@@ -207,7 +210,7 @@ set_target_properties(libnyquist
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )
 
-#target_link_libraries(libnyquist libopus libwavpack)
+target_link_libraries(libnyquist PRIVATE libopus libwavpack)
 
 install(TARGETS libnyquist
         LIBRARY DESTINATION lib
@@ -245,22 +248,22 @@ if(BUILD_EXAMPLE)
         target_compile_definitions(${NQR_EXAMPLE_APP_NAME} PRIVATE __MACOSX_CORE__)
     elseif(LIBNYQUIST_JACK)
         target_compile_definitions(${NQR_EXAMPLE_APP_NAME} PRIVATE __UNIX_JACK__)
-        target_link_libraries(${NQR_EXAMPLE_APP_NAME} PUBLIC jack pthread)
+        target_link_libraries(${NQR_EXAMPLE_APP_NAME} PRIVATE jack pthread)
     elseif(LIBNYQUIST_PULSE)
         target_compile_definitions(${NQR_EXAMPLE_APP_NAME} PRIVATE __LINUX_PULSE__)
-        target_link_libraries(${NQR_EXAMPLE_APP_NAME} PUBLIC pulse pthread)
+        target_link_libraries(${NQR_EXAMPLE_APP_NAME} PRIVATE pulse pthread)
     elseif(LIBNYQUIST_ASOUND)
         target_compile_definitions(${NQR_EXAMPLE_APP_NAME} PRIVATE __LINUX_ALSA__)
-        target_link_libraries(${NQR_EXAMPLE_APP_NAME} PUBLIC asound pthread)
+        target_link_libraries(${NQR_EXAMPLE_APP_NAME} PRIVATE asound pthread)
     else()
         message(FATAL, "On Linux, one of LIBNYQUIST_JACK, LIBNYQUIST_PULSE, or LIBNYQUIST_ASOUND must be set.")
     endif()
 
     target_include_directories(${NQR_EXAMPLE_APP_NAME} PRIVATE
-        ${LIBNYQUIST_ROOT}/include
         ${LIBNYQUIST_ROOT}/examples/src
         ${LIBNYQUIST_ROOT}/third_party
     )
+    target_link_libraries(${NQR_EXAMPLE_APP_NAME} PRIVATE libnyquist)
 
     set_target_properties(${NQR_EXAMPLE_APP_NAME}
         PROPERTIES
@@ -270,13 +273,13 @@ if(BUILD_EXAMPLE)
     )
 
     if(APPLE)
-        set(DARWIN_LIBS
+        target_link_libraries(${NQR_EXAMPLE_APP_NAME} PRIVATE
             "-framework AudioToolbox"
             "-framework AudioUnit"
             "-framework Accelerate"
             "-framework CoreAudio"
-            "-framework Cocoa")
+            "-framework Cocoa"
+        )
     ENDIF(APPLE)
 
-    target_link_libraries(${NQR_EXAMPLE_APP_NAME} PUBLIC ${DARWIN_LIBS} libnyquist libopus libwavpack)
 endif()
