@@ -76,7 +76,7 @@ install (TARGETS libopus DESTINATION lib)
 
 # folders
 
-source_group(src/ FILES ${third_opus_src})
+source_group(src FILES ${third_opus_src})
 
 #-------------------------------------------------------------------------------
 
@@ -220,7 +220,7 @@ install(TARGETS libnyquist
 install(TARGETS libnyquist DESTINATION lib)
 
 # folders
-source_group(src/ FILES ${nyquist_src})
+source_group(src FILES ${nyquist_src})
 
 #-------------------------------------------------------------------------------
 
