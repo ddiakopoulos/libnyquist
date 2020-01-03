@@ -24,13 +24,22 @@ project(libopus)
 
 file(GLOB third_opus_src
     "${LIBNYQUIST_ROOT}/third_party/opus/celt/*.c"
-    "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/*.c"
     "${LIBNYQUIST_ROOT}/third_party/opus/opusfile/src/*.c"
     "${LIBNYQUIST_ROOT}/third_party/opus/silk/*.c"
     "${LIBNYQUIST_ROOT}/third_party/opus/silk/float/*.c"
 )
+set(lib_opus_src
+    "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/analysis.c"
+    "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/mlp_data.c"
+    "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/mlp.c"
+    "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/opus_decoder.c"
+    "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/opus_multistream_decoder.c"
+    "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/opus_multistream_encoder.c"
+    "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/opus.c"
+    "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/repacketizer.c"
+)
 
-add_library(libopus STATIC ${third_opus_src})
+add_library(libopus STATIC ${third_opus_src} ${lib_opus_src})
 
 set_cxx_version(libopus)
 _set_compile_options(libopus)
@@ -152,7 +161,7 @@ install (TARGETS libwavpack DESTINATION lib)
 
 #-------------------------------------------------------------------------------
 
-# libnyquist static library 
+# libnyquist static library
 
 project(libnyquist)
 
@@ -161,7 +170,7 @@ file(GLOB nyquist_src     "${LIBNYQUIST_ROOT}/src/*")
 file(GLOB wavpack_src     "${LIBNYQUIST_ROOT}/third_party/wavpack/src/*")
 
 add_library(libnyquist STATIC
-    ${nyquist_include} 
+    ${nyquist_include}
     ${nyquist_src}
 )
 
