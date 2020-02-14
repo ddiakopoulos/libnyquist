@@ -48,7 +48,8 @@ void NyquistIO::Load(AudioData * data, const std::string & path)
             }
             catch (const std::exception & e)
             {
-                std::cerr << "Caught internal exception: " << e.what() << std::endl;
+                std::cerr << "NyquistIO::Load(" << path << ") caught internal exception: " << e.what() << std::endl;
+                throw;
             }
 
         }
