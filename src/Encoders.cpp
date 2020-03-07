@@ -53,7 +53,8 @@ static inline void to_bytes(uint32_t value, char * arr)
 
 int nqr::encode_wav_to_disk(const EncoderParams p, const AudioData * d, const std::string & path)
 {
-	assert(d->samples.size() > 0);
+	if (!d->samples.size())
+		return EncoderError::InsufficientSampleData;
 
 	// Cast away const because we know what we are doing (Hopefully?)
 	float * sampleData = const_cast<float *>(d->samples.data());
