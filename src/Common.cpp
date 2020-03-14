@@ -135,6 +135,7 @@ void NyquistIO::Load(AudioData * data, const std::string & extension, const std:
         catch (const std::exception & e)
         {
             std::cerr << "caught internal loading exception: " << e.what() << std::endl;
+            throw;
         }
     }
     else throw std::runtime_error("fatal: no decoders available");
@@ -186,26 +187,26 @@ NyquistFileBuffer nqr::ReadFile(const std::string & pathToFile)
 {
     //std::cout << "[Debug] Open: " << pathToFile << std::endl;
     FILE * audioFile = fopen(pathToFile.c_str(), "rb");
-    
+
     if (!audioFile)
     {
         throw std::runtime_error("file not found");
     }
-    
+
     fseek(audioFile, 0, SEEK_END);
     size_t lengthInBytes = ftell(audioFile);
     fseek(audioFile, 0, SEEK_SET);
-    
+
     // Allocate temporary buffer
     std::vector<uint8_t> fileBuffer(lengthInBytes);
-    
+
     size_t elementsRead = fread(fileBuffer.data(), 1, lengthInBytes, audioFile);
-    
+
     if (elementsRead == 0 || fileBuffer.size() < 64)
     {
         throw std::runtime_error("error reading file or file too small");
     }
-   
+
     NyquistFileBuffer data = {std::move(fileBuffer), elementsRead};
 
     fclose(audioFile);
@@ -218,7 +219,7 @@ NyquistFileBuffer nqr::ReadFile(const std::string & pathToFile)
 void nqr::ConvertToFloat32(float * dst, const uint8_t * src, const size_t N, PCMFormat f)
 {
     assert(f != PCM_END);
-    
+
     if (f == PCM_U8)
     {
         const uint8_t * dataPtr = reinterpret_cast<const uint8_t *>(src);
@@ -254,9 +255,9 @@ void nqr::ConvertToFloat32(float * dst, const uint8_t * src, const size_t N, PCM
         for (size_t i = 0; i < N; ++i)
             dst[i] = int32_to_float32(Read32(dataPtr[i]));
     }
-    
+
     //@todo add int64 format
-    
+
     else if (f == PCM_FLT)
     {
         std::memcpy(dst, src, N * sizeof(float));
@@ -276,7 +277,7 @@ void nqr::ConvertToFloat32(float * dst, const uint8_t * src, const size_t N, PCM
 void nqr::ConvertToFloat32(float * dst, const int32_t * src, const size_t N, PCMFormat f)
 {
     assert(f != PCM_END);
-    
+
     if (f == PCM_16)
     {
         for (size_t i = 0; i < N; ++i)
@@ -315,7 +316,7 @@ void nqr::ConvertFromFloat32(uint8_t * dst, const float * src, const size_t N, P
     assert(f != PCM_END);
 
     Dither dither(t);
-    
+
     if (f == PCM_U8)
     {
         uint8_t * destPtr = reinterpret_cast<uint8_t *>(dst);
