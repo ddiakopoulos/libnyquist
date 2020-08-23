@@ -41,95 +41,30 @@ public:
         context = WavpackOpenFileInput(path.c_str(), errorStr, OPEN_WVC | OPEN_NORMALIZE, 0);
         
         if (!context) throw std::runtime_error("Not a WavPack file");
-        
-        auto bitdepth = WavpackGetBitsPerSample(context);
-        
-        d->sampleRate = WavpackGetSampleRate(context);
-        d->channelCount = WavpackGetNumChannels(context);
-        d->lengthSeconds = double(getLengthInSeconds());
-        d->frameSize = d->channelCount * bitdepth;
-        
-        //@todo support channel masks
-        // WavpackGetChannelMask
-        
-        auto totalSamples = size_t(getTotalSamples());
-        
-        int mode = WavpackGetMode(context);
-        bool isFloatingPoint = (MODE_FLOAT & mode);
-        
-        d->sourceFormat = MakeFormatForBits(bitdepth, isFloatingPoint, false);
 
-        /// From the  WavPack docs:
-        /// "... required memory at "buffer" is 4 * samples * num_channels bytes. The
-        /// audio data is returned right-justified in 32-bit longs in the endian
-        /// mode native to the executing processor."
-        d->samples.resize(totalSamples * d->channelCount);
-        
-        if (!isFloatingPoint)
-            internalBuffer.resize(totalSamples * d->channelCount);
-        
-        if (!readInternal(totalSamples))
-            throw std::runtime_error("could not read any data");
-        
-        // Next, process internal buffer into the user-visible samples array
-        if (!isFloatingPoint)
-            ConvertToFloat32(d->samples.data(), internalBuffer.data(), totalSamples * d->channelCount, d->sourceFormat);
-        
+        auto totalSamples = size_t(WavpackGetNumSamples(context));
+
+        decode(totalSamples);
     }
 
-    WavPackInternal(AudioData * d, const std::vector<uint8_t> & memory) : d(d), data(std::move(memory)), dataPos(0)
+    WavPackInternal(AudioData * d, const std::vector<uint8_t> & memory) : d(d)
     {
-        WavpackStreamReader64 reader = 
-        {
-            read_bytes,
-            write_bytes,
-            get_pos,
-            set_pos_abs,
-            set_pos_rel,
-            push_back_byte,
-            get_length,
-            can_seek,
-            truncate_here,
-            close,
-        };
-
         char errorStr[128];
-        context = WavpackOpenFileInputEx64(&reader, this, nullptr, errorStr, OPEN_WVC | OPEN_NORMALIZE, 0);
-        
-        if (!context)
+        context = WavpackOpenRawDecoder((void *) memory.data(), memory.size(), nullptr, 0, 0, errorStr, OPEN_WVC | OPEN_NORMALIZE, 0);
+
+        // Since we are using OpenRawDecoder, WavpackGetNumSamples won't work.
+        // Instead, find the first block and get totalSamples from its header.
+        WavpackHeader wph;
+        auto headerOffset = readNextHeader(memory, &wph, 0);
+
+        if (!context || headerOffset == -1)
         {
             throw std::runtime_error("Not a WavPack file");
         }
-        
-        auto bitdepth = WavpackGetBitsPerSample(context);
-        
-        d->sampleRate = WavpackGetSampleRate(context);
-        d->channelCount = WavpackGetNumChannels(context);
-        d->lengthSeconds = double(getLengthInSeconds());
-        d->frameSize = d->channelCount * bitdepth;
-        
-        //@todo support channel masks
-        // WavpackGetChannelMask
-        
-        auto totalSamples = size_t(getTotalSamples());
-        
-        int mode = WavpackGetMode(context);
-        bool isFloatingPoint = (MODE_FLOAT & mode);
-        
-        d->sourceFormat = MakeFormatForBits(bitdepth, isFloatingPoint, false);
 
-        d->samples.resize(totalSamples * d->channelCount);
-        
-        if (!isFloatingPoint)
-            internalBuffer.resize(totalSamples * d->channelCount);
-        
-        if (!readInternal(totalSamples))
-            throw std::runtime_error("could not read any data");
-        
-        // Next, process internal buffer into the user-visible samples array
-        if (!isFloatingPoint)
-            ConvertToFloat32(d->samples.data(), internalBuffer.data(), totalSamples * d->channelCount, d->sourceFormat);
-        
+        auto totalSamples = wph.total_samples;
+
+        decode(totalSamples);
     }
     
     ~WavPackInternal()
@@ -163,124 +98,68 @@ public:
             
             // EOF
             //if (framesRead == 0) break;
-            
+
             totalFramesRead += framesRead;
             framesRemaining -= framesRead;
         }
-        
+
         return totalFramesRead;
     }
 
-    static int32_t read_bytes(void * id, void * data, int32_t byte_count) 
-    {
-        if (id != nullptr) 
-        {
-            WavPackInternal *decoder = (WavPackInternal *)id;
-            auto readLength = std::min<size_t>(byte_count, decoder->data.size() - decoder->dataPos);
-            if (readLength > 0) 
-            {
-                std::memcpy(data, decoder->data.data(), readLength);
-                decoder->dataPos += readLength;
-                return readLength;
-            } 
-            else return 0;
-        } 
-        return 0;
-    }
-    static int32_t write_bytes(void * id, void * data, int32_t byte_count)
-    {
-        if (id != nullptr) 
-        {
-            WavPackInternal *decoder = (WavPackInternal *)id;
-            auto writeLength = std::min<size_t>(byte_count, decoder->data.size() - decoder->dataPos);
-            if (writeLength > 0) 
-            {
-                std::memcpy(decoder->data.data(), data, writeLength);
-                decoder->dataPos += writeLength;
-                return writeLength;
-            } 
-            else return 0;
-        } 
-        return 0;
-    }
-    static int64_t get_pos(void *id) 
-    {
-        if (id != nullptr) 
-        {
-            WavPackInternal *decoder = (WavPackInternal *)id;
-            return decoder->dataPos;
-        }
-        return 0;
-    }
-    static int set_pos_abs(void *id, int64_t pos) 
-    {
-        if (id != nullptr) 
-        {
-            WavPackInternal *decoder = (WavPackInternal *)id;
-            size_t newPos = std::min<size_t>(pos, decoder->data.size());
-            decoder->dataPos = newPos;
-            return newPos;
-        } 
-        return 0;
-    }
-    static int set_pos_rel(void *id, int64_t delta, int mode) 
-    {
-        if (id != nullptr) 
-        {
-            WavPackInternal *decoder = (WavPackInternal *)id;
-            size_t newPos = 0;
-            if (mode == SEEK_SET) newPos = delta;
-            else if (mode == SEEK_CUR) newPos = decoder->dataPos + delta;
-            else if (mode == SEEK_END) newPos = decoder->data.size() + delta;
-            newPos = std::min<size_t>(newPos, decoder->data.size());
-            decoder->dataPos = newPos;
-            return newPos;
-        } 
-        return 0;
-    }
-    static int push_back_byte(void *id, int c) 
-    {
-        if (id != nullptr) 
-        {
-            WavPackInternal *decoder = (WavPackInternal *)id;
-            decoder->dataPos--;
-            decoder->data[decoder->dataPos] = c;
-            return 1;
-        } 
-        return 0;
-    }
-    static int64_t get_length(void *id) 
-    {
-        if (id != nullptr) 
-        {
-            WavPackInternal *decoder = (WavPackInternal *)id;
-            return decoder->data.size();
-        } 
-        return 0;
-    }
-    static int can_seek(void *id) 
-    {
-        if (id != nullptr) return 1;
-        return 0;
+private:
+    void decode(size_t totalSamples) {
+        auto bitdepth = WavpackGetBitsPerSample(context);
+
+        d->sampleRate = WavpackGetSampleRate(context);
+        d->channelCount = WavpackGetNumChannels(context);
+        d->lengthSeconds = double(totalSamples / WavpackGetSampleRate(context));
+        d->frameSize = d->channelCount * bitdepth;
+
+        //@todo support channel masks
+        // WavpackGetChannelMask
+
+        int mode = WavpackGetMode(context);
+        bool isFloatingPoint = (MODE_FLOAT & mode);
+
+        d->sourceFormat = MakeFormatForBits(bitdepth, isFloatingPoint, false);
+
+        d->samples.resize(totalSamples * d->channelCount);
+
+        if (!isFloatingPoint)
+            internalBuffer.resize(totalSamples * d->channelCount);
+
+        if (!readInternal(totalSamples))
+            throw std::runtime_error("could not read any data");
+
+        // Next, process internal buffer into the user-visible samples array
+        if (!isFloatingPoint)
+            ConvertToFloat32(d->samples.data(), internalBuffer.data(), totalSamples * d->channelCount, d->sourceFormat);
     }
 
-    static int truncate_here(void *id) 
-    {
-        if (id != nullptr) 
-        {
-            WavPackInternal *decoder = (WavPackInternal *)id;
-            decoder->data.resize(decoder->dataPos);
-            return 1;
-        } 
-        return 0;
+    int64_t readNextHeader(const std::vector<uint8_t> & memory, WavpackHeader *wphdr, size_t startOffset) {
+        /// Based on read_next_header function in wavpack's openutils.c.
+        /// This will find the position of the next WavPack header in the given vector, at or after startOffset.
+        /// If a header is found, it will write the header to *wphdr and return the position of its first byte in the vector.
+        /// Otherwise, it will return -1.
+        unsigned char* sp;
+
+        for (size_t i = startOffset; i < memory.size(); i++) {
+            sp = const_cast<unsigned char *>(memory.data() + i);
+
+            auto headerStartPoint = sp;
+
+            if (*sp++ == 'w' && *sp == 'v' && *++sp == 'p' && *++sp == 'k' &&
+                !(*++sp & 1) && sp [2] < 16 && !sp [3] && (sp [2] || sp [1] || *sp >= 24) && sp [5] == 4 &&
+                sp [4] >= (MIN_STREAM_VERS & 0xff) && sp [4] <= (MAX_STREAM_VERS & 0xff) && sp [18] < 3 && !sp [19]) {
+
+                memcpy (wphdr, headerStartPoint, sizeof (*wphdr));
+                WavpackLittleEndianToNative (wphdr, (char*)WavpackHeaderFormat);
+                return i;
+            }
+        }
+
+        return -1;
     }
-    static int close(void *id) 
-    {
-        if (id != nullptr) return 1;
-        return 0;
-    }
-    
-private:
     
     NO_MOVE(WavPackInternal);
     
@@ -289,9 +168,7 @@ private:
     WavpackContext * context; //@todo unique_ptr
     
     AudioData * d;
-    std::vector<uint8_t> data;
-    size_t dataPos;
-    
+
     std::vector<int32_t> internalBuffer;
     
     inline int64_t getTotalSamples() const { return WavpackGetNumSamples(context); }
