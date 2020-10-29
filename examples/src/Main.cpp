@@ -85,6 +85,10 @@ int main(int argc, const char **argv) try
         //loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_Int32.wv");
         //loader.Load(fileData.get(), "test_data/ad_hoc/TestBeat_Int24_Mono.wv");
 
+        // In-memory wavpack
+        auto memory = ReadFile("test_data/ad_hoc/TestBeat_Float32.wv");
+        loader.Load(fileData.get(), "wv", memory.buffer);
+
         // 1 + 2 channel musepack
         //loader.Load(fileData.get(), "test_data/ad_hoc/44_16_stereo.mpc");
         //loader.Load(fileData.get(), "test_data/ad_hoc/44_16_mono.mpc");
@@ -94,8 +98,8 @@ int main(int argc, const char **argv) try
         //loader.Load(fileData.get(), "ogg", memory.buffer);
 
         // In-memory Mp3
-        auto memory = ReadFile("test_data/ad_hoc/acetylene.mp3");
-        loader.Load(fileData.get(), "mp3", memory.buffer);
+        //auto memory = ReadFile("test_data/ad_hoc/acetylene.mp3");
+        //loader.Load(fileData.get(), "mp3", memory.buffer);
     }
 
     /* Test Recording Capabilities of AudioDevice
