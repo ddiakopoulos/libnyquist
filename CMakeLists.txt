@@ -20,72 +20,74 @@ endif()
 
 # libopus
 
-project(libopus)
+if (BUILD_LIBOPUS)
+    project(libopus)
 
-file(GLOB third_opus_src
-    "${LIBNYQUIST_ROOT}/third_party/opus/celt/*.c"
-    "${LIBNYQUIST_ROOT}/third_party/opus/opusfile/src/*.c"
-    "${LIBNYQUIST_ROOT}/third_party/opus/silk/*.c"
-    "${LIBNYQUIST_ROOT}/third_party/opus/silk/float/*.c"
-)
-set(lib_opus_src
-    "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/analysis.c"
-    "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/mlp_data.c"
-    "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/mlp.c"
-    "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/opus_decoder.c"
-    "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/opus_multistream_decoder.c"
-    "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/opus_multistream_encoder.c"
-    "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/opus.c"
-    "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/repacketizer.c"
-)
+    file(GLOB third_opus_src
+        "${LIBNYQUIST_ROOT}/third_party/opus/celt/*.c"
+        "${LIBNYQUIST_ROOT}/third_party/opus/opusfile/src/*.c"
+        "${LIBNYQUIST_ROOT}/third_party/opus/silk/*.c"
+        "${LIBNYQUIST_ROOT}/third_party/opus/silk/float/*.c"
+    )
+    set(lib_opus_src
+        "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/analysis.c"
+        "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/mlp_data.c"
+        "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/mlp.c"
+        "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/opus_decoder.c"
+        "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/opus_multistream_decoder.c"
+        "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/opus_multistream_encoder.c"
+        "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/opus.c"
+        "${LIBNYQUIST_ROOT}/third_party/opus/libopus/src/repacketizer.c"
+    )
 
-add_library(libopus STATIC ${third_opus_src} ${lib_opus_src})
+    add_library(libopus STATIC ${third_opus_src} ${lib_opus_src})
 
-set_cxx_version(libopus)
-_set_compile_options(libopus)
+    set_cxx_version(libopus)
+    _set_compile_options(libopus)
 
-if (WIN32)
-    _disable_warning(4244)
-    _disable_warning(4018)
+    if (WIN32)
+        _disable_warning(4244)
+        _disable_warning(4018)
+    endif()
+
+    target_include_directories(libopus PRIVATE
+        ${LIBNYQUIST_ROOT}/third_party/libogg/include
+        ${LIBNYQUIST_ROOT}/third_party/opus/celt
+        ${LIBNYQUIST_ROOT}/third_party/opus/libopus/include
+        ${LIBNYQUIST_ROOT}/third_party/opus/opusfile/include
+        ${LIBNYQUIST_ROOT}/third_party/opus/opusfile/src/include
+        ${LIBNYQUIST_ROOT}/third_party/opus/silk
+        ${LIBNYQUIST_ROOT}/third_party/opus/silk/float)
+
+    if (MSVC_IDE)
+        # hack to get around the "Debug" and "Release" directories cmake tries to add on Windows
+        #set_target_properties(libnyquist PROPERTIES PREFIX "../")
+        set_target_properties(libopus PROPERTIES IMPORT_PREFIX "../")
+    endif()
+
+    target_compile_definitions(libopus PRIVATE OPUS_BUILD)
+    target_compile_definitions(libopus PRIVATE USE_ALLOCA)
+
+    set_target_properties(libopus
+        PROPERTIES
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+    )
+
+    set_target_properties(libopus PROPERTIES OUTPUT_NAME_DEBUG libopus_d)
+
+    install (TARGETS libopus
+             LIBRARY DESTINATION lib
+             ARCHIVE DESTINATION lib
+             RUNTIME DESTINATION bin)
+
+    install (TARGETS libopus DESTINATION lib)
+
+    # folders
+
+    source_group(src FILES ${third_opus_src})
 endif()
-
-target_include_directories(libopus PRIVATE
-    ${LIBNYQUIST_ROOT}/third_party/libogg/include
-    ${LIBNYQUIST_ROOT}/third_party/opus/celt
-    ${LIBNYQUIST_ROOT}/third_party/opus/libopus/include
-    ${LIBNYQUIST_ROOT}/third_party/opus/opusfile/include
-    ${LIBNYQUIST_ROOT}/third_party/opus/opusfile/src/include
-    ${LIBNYQUIST_ROOT}/third_party/opus/silk
-    ${LIBNYQUIST_ROOT}/third_party/opus/silk/float)
-
-if (MSVC_IDE)
-    # hack to get around the "Debug" and "Release" directories cmake tries to add on Windows
-    #set_target_properties(libnyquist PROPERTIES PREFIX "../")
-    set_target_properties(libopus PROPERTIES IMPORT_PREFIX "../")
-endif()
-
-target_compile_definitions(libopus PRIVATE OPUS_BUILD)
-target_compile_definitions(libopus PRIVATE USE_ALLOCA)
-
-set_target_properties(libopus
-    PROPERTIES
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-)
-
-set_target_properties(libopus PROPERTIES OUTPUT_NAME_DEBUG libopus_d)
-
-install (TARGETS libopus
-         LIBRARY DESTINATION lib
-         ARCHIVE DESTINATION lib
-         RUNTIME DESTINATION bin)
-
-install (TARGETS libopus DESTINATION lib)
-
-# folders
-
-source_group(src FILES ${third_opus_src})
 
 #-------------------------------------------------------------------------------
 
@@ -219,7 +221,7 @@ set_target_properties(libnyquist
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )
 
-target_link_libraries(libnyquist PRIVATE libopus libwavpack)
+target_link_libraries(libnyquist PRIVATE libwavpack)
 
 install(TARGETS libnyquist
         LIBRARY DESTINATION lib
