@@ -14,7 +14,7 @@ function(_disable_warning flag)
 endfunction()
 
 function(_set_compile_options proj)
-    if (WIN32)
+    if(MSVC)
         target_compile_options(${proj} PRIVATE /arch:AVX /Zi )
     endif()
 endfunction()
