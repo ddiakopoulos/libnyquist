@@ -26,6 +26,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef LIBNYQUIST_COMMON_H
 #define LIBNYQUIST_COMMON_H
 
+#if defined(__GNUC__) || defined(__MINGW32__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#elif defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4244) // conversion from X to Y, possible loss of data
+#pragma warning(disable: 4100) // unreferenced formal parameter
+#endif
+
 #include <memory>
 #include <vector>
 #include <algorithm>
@@ -402,7 +411,7 @@ enum WaveFormatCode
     FORMAT_ADPCM = 0x2,         // Microsoft ADPCM Format
     FORMAT_IEEE = 0x3,          // IEEE float/double
     FORMAT_ALAW = 0x6,          // 8-bit ITU-T G.711 A-law
-    FORMAT_MULAW = 0x7,         // 8-bit ITU-T G.711 µ-law
+    FORMAT_MULAW = 0x7,         // 8-bit ITU-T G.711 ï¿½-law
     FORMAT_IMA_ADPCM = 0x11,    // IMA ADPCM Format
     FORMAT_EXT = 0xFFFE         // Set via subformat
 };
@@ -690,5 +699,11 @@ inline void TrimSilenceInterleaved(std::vector<float> & buffer, float v, bool fr
 }
 
 } // end namespace nqr
+
+#if defined(__GNUC__) || defined(__MINGW32__)
+#pragma GCC diagnostic pop
+#elif defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 
 #endif
