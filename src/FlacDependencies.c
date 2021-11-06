@@ -79,7 +79,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "FLAC/all.h"
 
-#if defined(_MSC_VER)
+#if defined(_WIN32) || defined(_WIN64)
 #include "FLAC/src/win_utf8_io.c"
 #endif
 
