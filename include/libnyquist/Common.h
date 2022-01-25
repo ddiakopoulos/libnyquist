@@ -411,7 +411,7 @@ enum WaveFormatCode
     FORMAT_ADPCM = 0x2,         // Microsoft ADPCM Format
     FORMAT_IEEE = 0x3,          // IEEE float/double
     FORMAT_ALAW = 0x6,          // 8-bit ITU-T G.711 A-law
-    FORMAT_MULAW = 0x7,         // 8-bit ITU-T G.711 �-law
+    FORMAT_MULAW = 0x7,         // 8-bit ITU-T G.711 µ-law
     FORMAT_IMA_ADPCM = 0x11,    // IMA ADPCM Format
     FORMAT_EXT = 0xFFFE         // Set via subformat
 };
