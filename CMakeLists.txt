@@ -8,12 +8,12 @@ include(CXXhelpers)
 if (CMAKE_OSX_ARCHITECTURES)
     if(CMAKE_OSX_SYSROOT MATCHES ".*iphoneos.*")
         # RtAudio is not portable to ios currently
-        option(BUILD_EXAMPLE "Build example application" OFF)
+        option(LIBNYQUIST_BUILD_EXAMPLE "Build example application" OFF)
     else()
-        option(BUILD_EXAMPLE "Build example application" ON)
+        option(LIBNYQUIST_BUILD_EXAMPLE "Build example application" ON)
     endif()
 else()
-    option(BUILD_EXAMPLE "Build example application" ON)
+    option(LIBNYQUIST_BUILD_EXAMPLE "Build example application" ON)
 endif()
 
 #-------------------------------------------------------------------------------
@@ -240,7 +240,7 @@ source_group(src FILES ${nyquist_src})
 
 # libnyquist-examples
 
-if(BUILD_EXAMPLE)
+if(LIBNYQUIST_BUILD_EXAMPLE)
 
     set(NQR_EXAMPLE_APP_NAME "libnyquist-examples")
 
