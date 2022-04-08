@@ -186,7 +186,7 @@ public:
 
         if (readLength > 0) 
         {
-            std::memcpy(buffer, decoderInternal->data.data(), readLength);
+            std::memcpy(buffer, decoderInternal->data.data() + decoderInternal->dataPos, readLength);
             decoderInternal->dataPos += readLength;
             *bytes = readLength;
             if (decoderInternal->dataPos < decoderInternal->data.size()) return FLAC__STREAM_DECODER_READ_STATUS_CONTINUE;
@@ -198,7 +198,7 @@ public:
     static FLAC__StreamDecoderSeekStatus seek_callback(const FLAC__StreamDecoder *decoder, FLAC__uint64 absolute_byte_offset, void *client_data) 
     {
         FlacDecoderInternal *decoderInternal = (FlacDecoderInternal *)client_data;
-        size_t newPos = std::min<size_t>(absolute_byte_offset, decoderInternal->data.size() - decoderInternal->dataPos);
+        size_t newPos = std::min<size_t>(absolute_byte_offset, decoderInternal->data.size());
         decoderInternal->dataPos = newPos;
         return FLAC__STREAM_DECODER_SEEK_STATUS_OK;
     }
