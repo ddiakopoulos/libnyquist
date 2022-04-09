@@ -112,7 +112,7 @@ if (BUILD_LIBWAVPACK)
     add_definitions(${_NQR_CXX_DEFINITIONS})
     set(CMAKE_CXX_FLAGS "${_NQR_CXX_FLAGS} ${CMAKE_CXX_FLAGS}")
 
-    file(GLOB third_wavpack_src "${LIBNYQUIST_ROOT}/third_party/wavpack/src/*")
+    file(GLOB third_wavpack_src "${LIBNYQUIST_ROOT}/third_party/wavpack/src/*.c")
 
     add_library(libwavpack STATIC ${third_wavpack_src})
 
