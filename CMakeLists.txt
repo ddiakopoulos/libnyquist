@@ -171,7 +171,7 @@ project(libnyquist)
 
 file(GLOB nyquist_include "${LIBNYQUIST_ROOT}/include/libnyquist/*")
 file(GLOB nyquist_src     "${LIBNYQUIST_ROOT}/src/*")
-file(GLOB wavpack_src     "${LIBNYQUIST_ROOT}/third_party/wavpack/src/*")
+file(GLOB wavpack_src     "${LIBNYQUIST_ROOT}/third_party/wavpack/src/*.c")
 
 add_library(libnyquist STATIC
     ${nyquist_include}
