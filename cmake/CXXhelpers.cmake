@@ -15,7 +15,9 @@ endfunction()
 
 function(_set_compile_options proj)
     if(MSVC)
-        target_compile_options(${proj} PRIVATE /arch:AVX /Zi )
+		option(LIBNYQUIST_ENABLE_AVX "Enable the use of the AVX instruction set (MSVC only)" ON)
+		
+        target_compile_options(${proj} PRIVATE $<$<BOOL:${LIBNYQUIST_ENABLE_AVX}>:/arch:AVX>  /Zi )
     endif()
 endfunction()
 
