@@ -63,13 +63,7 @@ void NyquistIO::Load(AudioData * data, const std::string & path)
 
 namespace
 {
-const char no_extension[]{"none"};
-}
-
-void NyquistIO::Load(AudioData * data, const std::vector<uint8_t> & buffer)
-{
-
-    const std::map<std::vector<int16_t>, std::string> magic_map{
+static const std::map<std::vector<int16_t>, std::string> magic_map{
         {{ 'w', 'v', 'p', 'k' },                                                     "wv"             },
         {{ 'M', 'P', 'C', 'K' },                                                     "mpc"            },
         {{ 0xFF, 0xFB },                                                             "mp3"            }, // ÿû, mp3 without ID3 header
@@ -77,8 +71,13 @@ void NyquistIO::Load(AudioData * data, const std::vector<uint8_t> & buffer)
         {{ 'O', 'g', 'g', 'S' },                                                     "ogg_or_vorbis"  }, // see `match_ogg_subtype`
         {{ 'f', 'L', 'a', 'C' },                                                     "flac"           },
         {{ 0x52, 0x49, 0x46, 0x46, -0x1, -0x1, -0x1, -0x1, 0x57, 0x41, 0x56, 0x45 }, "wav"            }  // RIFF....WAVE
-    };
+};
 
+const char no_extension[]{"none"};
+}
+
+void NyquistIO::Load(AudioData * data, const std::vector<uint8_t> & buffer)
+{
     auto match_magic = [](const uint8_t * data, const std::vector<int16_t> & magic)
     {
         for (int i = 0; i < magic.size(); ++i)
