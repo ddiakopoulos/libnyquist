@@ -61,6 +61,11 @@ void NyquistIO::Load(AudioData * data, const std::string & path)
     }
 }
 
+namespace
+{
+const char no_extension[]{"none"};
+}
+
 void NyquistIO::Load(AudioData * data, const std::vector<uint8_t> & buffer)
 {
 
@@ -97,21 +102,26 @@ void NyquistIO::Load(AudioData * data, const std::vector<uint8_t> & buffer)
         std::size_t found_vorbis = header.find("vorbis");
         if (found_vorbis != std::string::npos) return "ogg";
 
-        return "none";
+        return no_extension;
     };
 
-    std::string ext = "none";
+    std::string ext = no_extension;
 
     for (auto & filetype : magic_map)
     {
         if (match_magic(buffer.data(), filetype.first))
         {
             ext = filetype.second;
-        }
 
-        if (ext == "ogg_or_vorbis")
-        {
-            ext = match_ogg_subtype(buffer.data());
+            if (ext == "ogg_or_vorbis")
+            {
+                ext = match_ogg_subtype(buffer.data());
+            }
+
+            if (ext != no_extension)
+            {
+                break;
+            }
         }
     }
 
