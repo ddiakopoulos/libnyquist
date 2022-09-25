@@ -167,7 +167,7 @@ endif()
 
 # libnyquist static library
 
-project(libnyquist)
+project(libnyquist VERSION 0.1.0)
 
 file(GLOB nyquist_include "${LIBNYQUIST_ROOT}/include/libnyquist/*")
 file(GLOB nyquist_src     "${LIBNYQUIST_ROOT}/src/*")
@@ -227,11 +227,44 @@ set_target_properties(libnyquist
 #target_link_libraries(libnyquist PRIVATE libwavpack)
 
 install(TARGETS libnyquist
+		EXPORT ${PROJECT_NAME}Targets
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib
         RUNTIME DESTINATION bin)
 
 install(TARGETS libnyquist DESTINATION lib)
+
+install(DIRECTORY include/libnyquist
+		DESTINATION include)
+
+set(INSTALL_CMAKE_DIR "lib/cmake/${PROJECT_NAME}")
+set(INSTALL_CMAKEDIR_ROOT share/cmake)
+
+# Install Targets
+install(EXPORT ${PROJECT_NAME}Targets
+		FILE ${PROJECT_NAME}Targets.cmake
+		DESTINATION "${INSTALL_CMAKE_DIR}")
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+	${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+	VERSION ${PROJECT_VERSION}
+	COMPATIBILITY SameMajorVersion
+	)
+
+configure_package_config_file(
+	${PROJECT_SOURCE_DIR}/${PROJECT_NAME}Config.cmake.in
+	${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+	INSTALL_DESTINATION ${INSTALL_CMAKEDIR_ROOT}/${PROJECT_NAME}
+	)
+
+install(
+	FILES
+		${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+		${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+	DESTINATION
+		${INSTALL_CMAKE_DIR}
+	)
 
 # folders
 source_group(src FILES ${nyquist_src})
