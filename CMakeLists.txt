@@ -227,11 +227,18 @@ set_target_properties(libnyquist
 #target_link_libraries(libnyquist PRIVATE libwavpack)
 
 install(TARGETS libnyquist
+        EXPORT libnyquistConfig
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib
         RUNTIME DESTINATION bin)
-
-install(TARGETS libnyquist DESTINATION lib)
+export(TARGETS libnyquist
+       NAMESPACE libnyquist::
+       FILE "${CMAKE_CURRENT_BINARY_DIR}/libnyquistConfig.cmake"
+)
+install(EXPORT libnyquistConfig
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/libnyquist/cmake"
+        NAMESPACE libnyquist::
+)
 
 # folders
 source_group(src FILES ${nyquist_src})
