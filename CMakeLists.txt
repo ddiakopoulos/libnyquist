@@ -236,7 +236,7 @@ export(TARGETS libnyquist
        FILE "${CMAKE_CURRENT_BINARY_DIR}/libnyquistConfig.cmake"
 )
 install(EXPORT libnyquistConfig
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/libnyquist/cmake"
+        DESTINATION "${CMAKE_INSTALL_PREFIX}/libnyquisxt/cmake"
         NAMESPACE libnyquist::
 )
 
