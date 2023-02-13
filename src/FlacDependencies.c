@@ -85,6 +85,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "FLAC/src/bitmath.c"
 #include "FLAC/src/bitreader.c"
+#undef FLAC__BITS_PER_WORD
 #include "FLAC/src/bitwriter.c"
 #include "FLAC/src/cpu.c"
 #include "FLAC/src/crc.c"

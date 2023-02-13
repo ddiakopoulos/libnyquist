@@ -4,6 +4,8 @@ set(LIBNYQUIST_ROOT "${CMAKE_CURRENT_SOURCE_DIR}")
 set(CMAKE_MODULE_PATH ${LIBNYQUIST_ROOT}/cmake)
 
 include(CXXhelpers)
+include(GNUInstallDirs)
+
 
 if (CMAKE_OSX_ARCHITECTURES)
     if(CMAKE_OSX_SYSROOT MATCHES ".*iphoneos.*")
@@ -219,25 +221,39 @@ set_target_properties(libnyquist PROPERTIES OUTPUT_NAME_DEBUG libnyquist_d)
 
 set_target_properties(libnyquist
     PROPERTIES
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_INSTALL_LIBDIR}"
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_INSTALL_LIBDIR}"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_INSTALL_BINDIR}"
 )
 
 #target_link_libraries(libnyquist PRIVATE libwavpack)
 
+add_library(libnyquist::libnyquist ALIAS libnyquist)
+
+# install the libnyquist binaries
 install(TARGETS libnyquist
-        EXPORT libnyquistConfig
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib
-        RUNTIME DESTINATION bin)
+        EXPORT libnyquist
+        LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+        ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+        RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+        INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+)
+
+# install the cmake configuration files
+install(EXPORT libnyquist
+    FILE libnyquistConfig.cmake
+    NAMESPACE libnyquist::
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/libnyquist"
+)
+
+message(STATUS "CMAKE_INSTALL_INCLUDEDIR: ${CMAKE_INSTALL_INCLUDEDIR}")
+
+# todo, install the headers
+
+# export the targets for use when libnyquist is included as a subproject
 export(TARGETS libnyquist
        NAMESPACE libnyquist::
        FILE "${CMAKE_CURRENT_BINARY_DIR}/libnyquistConfig.cmake"
-)
-install(EXPORT libnyquistConfig
-        DESTINATION "${CMAKE_INSTALL_PREFIX}/libnyquist/cmake"
-        NAMESPACE libnyquist::
 )
 
 # folders
