@@ -581,7 +581,7 @@ inline ChunkHeaderInfo ScanForChunk(const std::vector<uint8_t> & fileData, uint3
     // D[n] aligned to 16 bytes now
     const uint16_t * d = reinterpret_cast<const uint16_t *>(fileData.data());
 
-    for (size_t i = 0; i < fileData.size() / sizeof(uint16_t); i++)
+    for (size_t i = 0; i < fileData.size() / sizeof(uint16_t) - 3; i++)
     {
         // This will be in machine endianess
         uint32_t m = Pack(Read16(d[i]), Read16(d[i + 1]));
