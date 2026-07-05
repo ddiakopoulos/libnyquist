@@ -236,8 +236,10 @@ install(TARGETS libnyquist
         LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
         ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
         RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
-        INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
 )
+# NOTE: the install interface include dir is declared once, via
+# $<INSTALL_INTERFACE:include> in target_include_directories() above. Do not also
+# pass INCLUDES DESTINATION here or it lands in INTERFACE_INCLUDE_DIRECTORIES twice.
 
 # install the cmake configuration files
 install(EXPORT libnyquist
@@ -248,7 +250,10 @@ install(EXPORT libnyquist
 
 message(STATUS "CMAKE_INSTALL_INCLUDEDIR: ${CMAKE_INSTALL_INCLUDEDIR}")
 
-# todo, install the headers
+# install the public headers so an installed libnyquist is usable by consumers
+# (matches the $<INSTALL_INTERFACE:include> above: #include <libnyquist/...>)
+install(DIRECTORY "${LIBNYQUIST_ROOT}/include/libnyquist"
+        DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
 
 # export the targets for use when libnyquist is included as a subproject
 export(TARGETS libnyquist
